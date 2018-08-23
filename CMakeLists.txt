@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.5)
-project(eosio_wasm_sdk)
+project(agrio_wasm_sdk)
 
 set(VERSION_MAJOR 1)
 set(VERSION_MINOR 1)
 set(VERSION_PATCH 1)
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-   message(WARNING "CMAKE_INSTALL_PREFIX is set to default path of ${CMAKE_INSTALL_PREFIX}, resetting to ${CMAKE_INSTALL_PREFIX}/eosio.wasmsdk")
-   set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/eosio.wasmsdk")
+   message(WARNING "CMAKE_INSTALL_PREFIX is set to default path of ${CMAKE_INSTALL_PREFIX}, resetting to ${CMAKE_INSTALL_PREFIX}/agrio.wasmsdk")
+   set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/agrio.wasmsdk")
 elseif ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
    message(WARNING "CMAKE_INSTALL_PREFIX is explicitly set to /usr/local. This is not recommended.")
 endif()
@@ -20,10 +20,10 @@ add_subdirectory(external)
 
 set(WASM_SDK_BUILD true)
 
-configure_file(${CMAKE_SOURCE_DIR}/modules/EosioWasmToolchainBuild.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/EosioWasmToolchain.cmake @ONLY)
+configure_file(${CMAKE_SOURCE_DIR}/modules/AgrioWasmToolchainBuild.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/AgrioWasmToolchain.cmake @ONLY)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_BINARY_DIR}/lib/cmake")
-include(EosioWasmToolchain)
+include(AgrioWasmToolchain)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/modules")
 
@@ -47,7 +47,7 @@ message( STATUS "Using '${CORE_SYMBOL_NAME}' as CORE symbol name" )
 # install examples
 #install(DIRECTORY examples DESTINATION "${CMAKE_INSTALL_PREFIX}")
 
-configure_file(${CMAKE_SOURCE_DIR}/modules/EosioWasmToolchain.cmake.in ${CMAKE_BINARY_DIR}/modules/EosioWasmToolchain.cmake @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/modules/EosioWasmToolchain.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake)
-configure_file(${CMAKE_SOURCE_DIR}/eosio.imports.in ${CMAKE_BINARY_DIR}/eosio.imports COPYONLY)
-install(FILES ${CMAKE_BINARY_DIR}/eosio.imports DESTINATION ${CMAKE_INSTALL_PREFIX})
+configure_file(${CMAKE_SOURCE_DIR}/modules/AgrioWasmToolchain.cmake.in ${CMAKE_BINARY_DIR}/modules/AgrioWasmToolchain.cmake @ONLY)
+install(FILES ${CMAKE_BINARY_DIR}/modules/AgrioWasmToolchain.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake)
+configure_file(${CMAKE_SOURCE_DIR}/agrio.imports.in ${CMAKE_BINARY_DIR}/agrio.imports COPYONLY)
+install(FILES ${CMAKE_BINARY_DIR}/agrio.imports DESTINATION ${CMAKE_INSTALL_PREFIX})

@@ -1,52 +1,52 @@
 # WasmSDK
 ## Version : 1.1.1
 
-WasmSDK is a toolchain for WebAssembly (WASM).  In addition to being a general purpose WebAssembly toolchain, [EOSIO](https://github.com/eosio/eos) specific optimizations are available to support building EOSIO smart contracts.  This new toolchain is built around [Clang 7](https://github.com/eosio/llvm), which means that the SDK has the most currently available optimizations and analyses from LLVM, but as the WASM target is still considered experimental, some optimizations are not available or incomplete.
+WasmSDK is a toolchain for WebAssembly (WASM).  In addition to being a general purpose WebAssembly toolchain, [AGRIO](https://github.com/agrio/agr) specific optimizations are available to support building AGRIO smart contracts.  This new toolchain is built around [Clang 7](https://github.com/agrio/llvm), which means that the SDK has the most currently available optimizations and analyses from LLVM, but as the WASM target is still considered experimental, some optimizations are not available or incomplete.
 
-## New Features from EOSIO
+## New Features from AGRIO
 - Compile (-c) option flag will compile to a WASM-elf object file
 - ranlib and ar support for static libraries for WASM
 - \_\_FILE\_\_ and \_\_BASE\_FILE\_\_ will now only return the file name and not the fullpath. This eliminates any non-determinism from location of the compiled binary
 - Global constructors and global destructors are now supported
-- _eosio-cpp_, _eosio-cc_, _eosio-ld_, and _eosio-pp_ are set the core set of tools that you will interact with.
+- _agrio-cpp_, _agrio-cc_, _agrio-ld_, and _agrio-pp_ are set the core set of tools that you will interact with.
     * These are the C++ compiler, C compiler, linker and postpass tools.
-- A simple CMake interface to build EOSIO smart contracts against WasmSDK
+- A simple CMake interface to build AGRIO smart contracts against WasmSDK
 - ABI generator (Coming Soon)
 
 ### Guided Installation
 First clone
 
 ```sh
-$ git clone --recursive https://github.com/eosio/eosio.wasmsdk
-$ cd eosio.wasmsdk
+$ git clone --recursive https://github.com/agrio/agrio.wasmsdk
+$ cd agrio.wasmsdk
 ```
 
-Now run `build.sh` and give the core symbol for the EOSIO blockchain that intend to deploy to.
+Now run `build.sh` and give the core symbol for the AGRIO blockchain that intend to deploy to.
     *`build.sh` will install any dependencies that are needed.
 ```sh
 $ ./build.sh <CORE_SYMBOL>
 ```
 
 Finally, install the build
-    *This install will install the core to ```/usr/local/eosio.wasmsdk``` and symlinks to the top level tools (compiler, ld, etc.) to ```/usr/local/bin```
+    *This install will install the core to ```/usr/local/agrio.wasmsdk``` and symlinks to the top level tools (compiler, ld, etc.) to ```/usr/local/bin```
 ```sh
 $ sudo ./install.sh
 ```
 
 ### Installed Tools
 ---
-* [eosio-cpp](#eosio-cpp)
-* [eosio-cc](#eosio-cc)
-* [eosio-ld](#eosio-ld)
-* eosio-pp (post processing pass for WASM, automatically runs with eosio-cpp and eosio-ld)
-* eosio-ranlib
-* eosio-ar
-* eosio-objdump
-* eosio-readelf
+* [agrio-cpp](#agrio-cpp)
+* [agrio-cc](#agrio-cc)
+* [agrio-ld](#agrio-ld)
+* agrio-pp (post processing pass for WASM, automatically runs with agrio-cpp and agrio-ld)
+* agrio-ranlib
+* agrio-ar
+* agrio-objdump
+* agrio-readelf
 
 ### Usage
 ---
-To compile an EOSIO smart contract, the perferred method is to use the template CMakeLists.txt in the examples folder.
+To compile an AGRIO smart contract, the perferred method is to use the template CMakeLists.txt in the examples folder.
 For example:
 ```CMakeLists.txt```
 ```
@@ -57,33 +57,33 @@ if(WASM_ROOT STREQUAL "" OR NOT WASM_ROOT)
     set(WASM_ROOT ${CMAKE_INSTALL_PREFIX})
 endif()
 list(APPEND CMAKE_MODULE_PATH ${WASM_ROOT}/lib/cmake)
-include(EosioWasmToolchain)
+include(AgrioWasmToolchain)
 
 add_executable( test test.cpp )
 ```
 ```test.cpp```
 ```
-#include <eosiolib/eosio.hpp>
-using namespace eosio;
-class test : public eosio::contract {
+#include <agriolib/agrio.hpp>
+using namespace agrio;
+class test : public agrio::contract {
 public:
    using contract::contract;
    void test_action( account_name test ) {
    }
 };
-EOSIO_ABI( test, (test_action))
+AGRIO_ABI( test, (test_action))
 ```
 
-Since, EosioWasmToolchain overwrites `cmake` to cross-compile WASM, standard cmake commands of _add\_executable/ add\_library_ can then be used.  Also note, the __WASM_ROOT__ variable, this needs to be set if you decided to install to the non-default location.
+Since, AgrioWasmToolchain overwrites `cmake` to cross-compile WASM, standard cmake commands of _add\_executable/ add\_library_ can then be used.  Also note, the __WASM_ROOT__ variable, this needs to be set if you decided to install to the non-default location.
 
 To manually compile source code:
-Use ```eosio-cpp/eosio-cc``` and ```eosio-ld``` as if it were __clang__ and __lld__ , with all includes and options specific to EOSIO and WasmSDK being baked in.
+Use ```agrio-cpp/agrio-cc``` and ```agrio-ld``` as if it were __clang__ and __lld__ , with all includes and options specific to AGRIO and WasmSDK being baked in.
 
-### eosio-cpp
+### agrio-cpp
 ---
 ```bash
-OVERVIEW: eosio-cpp (Eosio C++ -> WebAssembly compiler)
-USAGE: eosio-cpp [options] <input file> ...
+OVERVIEW: agrio-cpp (Agrio C++ -> WebAssembly compiler)
+USAGE: agrio-cpp [options] <input file> ...
 
 OPTIONS:
   -C                       - Include comments in preprocessed output
@@ -132,11 +132,11 @@ Generic Options:
   -version                 - Display the version of this program
 ```
 
-### eosio-ld
+### agrio-ld
 ---
 ```bash
-OVERVIEW: eosio-ld (WebAssembly linker)
-USAGE: eosio-ld [options] <input file> ...
+OVERVIEW: agrio-ld (WebAssembly linker)
+USAGE: agrio-ld [options] <input file> ...
 
 OPTIONS:
 
@@ -146,7 +146,7 @@ Generic Options:
   -help-list        - Display list of available options (-help-list-hidden for more)
   -version          - Display the version of this program
 
-eosio.ld options:
+agrio.ld options:
 
   -L=<string>       - Add directory to library search path
   -fno-cfl-aa       - Disable CFL Alias Analysis
@@ -160,7 +160,7 @@ eosio.ld options:
  
  ### Todos
  ---
- - Add ABI generation to eosio-cpp
+ - Add ABI generation to agrio-cpp
 
 License
 ----

@@ -294,7 +294,7 @@ if (NOT EMSCRIPTEN)
       DEPENDS ${name}
     )
   endfunction()
-  wabt_executable(eosio-pp src/tools/postpass.cc)
+  wabt_executable(agrio-pp src/tools/postpass.cc)
   # wat2wasm
   wabt_executable(wat2wasm src/tools/wat2wasm.cc)
 
@@ -395,7 +395,7 @@ if (NOT EMSCRIPTEN)
   #install(TARGETS ${WABT_EXECUTABLES} DESTINATION bin)
   install(TARGETS wat2wasm DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
   install(TARGETS wasm2wat DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
-  install(TARGETS eosio-pp DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
+  install(TARGETS agrio-pp DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
 
 else ()
   # emscripten stuff

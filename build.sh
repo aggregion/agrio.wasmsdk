@@ -1,6 +1,6 @@
 #! /bin/bash
 
-printf "\t=========== Building eosio.wasmsdk ===========\n\n"
+printf "\t=========== Building agrio.wasmsdk ===========\n\n"
 
 RED='\033[0;31m'
 NC='\033[0m'
@@ -17,7 +17,7 @@ if [[ "${unamestr}" == 'Darwin' ]]; then
    CXX_COMPILER=g++
    export ARCH="Darwin"
    export BOOST_ROOT=${BOOST}
-   bash ./scripts/eosio_build_darwin.sh
+   bash ./scripts/agrio_build_darwin.sh
 else
    BOOST=~/opt/boost
    OS_NAME=$( cat /etc/os-release | grep ^NAME | cut -d'=' -f2 | sed 's/\"//gI' )
@@ -26,27 +26,27 @@ else
    case "$OS_NAME" in
       "Amazon Linux AMI")
          export ARCH="Amazon Linux AMI"
-         bash ./scripts/eosio_build_amazon.sh
+         bash ./scripts/agrio_build_amazon.sh
          ;;
       "CentOS Linux")
          export ARCH="Centos"
-         bash ./scripts/eosio_build_centos.sh
+         bash ./scripts/agrio_build_centos.sh
          ;;
       "elementary OS")
          export ARCH="elementary OS"
-         bash ./scripts/eosio_build_ubuntu.sh
+         bash ./scripts/agrio_build_ubuntu.sh
          ;;
       "Fedora")
          export ARCH="Fedora"
-         bash ./scripts/eosio_build_fedora.sh
+         bash ./scripts/agrio_build_fedora.sh
          ;;
       "Linux Mint")
          export ARCH="Linux Mint"
-         bash ./scripts/eosio_build_ubuntu.sh
+         bash ./scripts/agrio_build_ubuntu.sh
          ;;
       "Ubuntu")
          export ARCH="Ubuntu"
-         bash ./scripts/eosio_build_ubuntu.sh
+         bash ./scripts/agrio_build_ubuntu.sh
          ;;
       *)
          printf "\\n\\tUnsupported Linux Distribution. Exiting now.\\n\\n"
@@ -72,7 +72,7 @@ CORES=$(( $CORES_AVAIL < $MEM_CORES ? $CORES_AVAIL : $MEM_CORES ))
 
 mkdir -p build
 pushd build &> /dev/null
-cmake -DCMAKE_INSTALL_PREFIX=/usr/local/eosio.wasmsdk -DBOOST_ROOT="${BOOST}" -DCORE_SYMBOL_NAME="${CORE_SYMBOL}" ../
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local/agrio.wasmsdk -DBOOST_ROOT="${BOOST}" -DCORE_SYMBOL_NAME="${CORE_SYMBOL}" ../
 if [ $? -ne 0 ]; then
    exit -1;
 fi
@@ -95,4 +95,4 @@ printf "\t    \\  \\::/       \\  \\::/        /__/:/        \\__\\/      \\  \\
 printf "\t     \\__\\/         \\__\\/         \\__\\/                     \\__\\/ \n${txtrst}"
 
 printf "\\tFor more information:\\n"
-printf "\\tEOSIO website: https://eos.io\\n"
+printf "\\tAGRIO website: https://agr.io\\n"

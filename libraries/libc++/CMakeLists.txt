@@ -22,7 +22,7 @@ target_include_directories(c++
 
 target_link_libraries(c++ c)
 
-install(TARGETS c++ EXPORT EosioLib
+install(TARGETS c++ EXPORT AgrioLib
    LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR} 
    ARCHIVE DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
 

@@ -8,4 +8,4 @@
 	branch = agriosdk
 [submodule "agrio_llvm"]
 	path = agrio_llvm
-	url = https://github.com/aggregion/llvm
+	url = https://github.com/aggregion/llvm.git

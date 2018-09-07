@@ -52,7 +52,7 @@ else
          ;;
       "Debian GNU/Linux")
          export ARCH="Debian"
-	 bash ./scripts/eosio_build_ubuntu.sh
+	 bash ./scripts/agrio_build_ubuntu.sh
 	 ;;
       *)
          printf "\\n\\tUnsupported Linux Distribution. Exiting now.\\n\\n"

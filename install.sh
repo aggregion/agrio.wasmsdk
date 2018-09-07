@@ -40,7 +40,7 @@
 	BUILD_DIR="${PWD}/build"
 	CMAKE_BUILD_TYPE=Release
 	TIME_BEGIN=$( date -u +%s )
-   INSTALL_PREFIX="/usr/local/agrio.wasmsdk"
+   INSTALL_PREFIX="/usr/local/agrio.cdt"
 	VERSION=1.2
 
 	txtbld=$(tput bold)
@@ -49,12 +49,12 @@
 
    create_symlink() {
       pushd /usr/local/bin &> /dev/null
-      ln -sf ../agrio.wasmsdk/bin/$1 $2
+      ln -sf ../agrio.cdt/bin/$1 $2
       popd &> /dev/null
    }
 
    install_symlinks() {
-		printf "\\n\\tInstalling AGRIO.WasmSDK Binary Symlinks\\n\\n"
+		printf "\\n\\tInstalling AGRIO.CDT Binary Symlinks\\n\\n"
       create_symlink "llvm-ranlib agrio-ranlib"
       create_symlink "llvm-ar agrio-ar"
       create_symlink "llvm-objdump agrio-objdump"
@@ -63,6 +63,7 @@
       create_symlink "agrio-cpp agrio-cpp"
       create_symlink "agrio-ld agrio-ld"
       create_symlink "agrio-pp agrio-pp"
+      create_symlink "agrio-abigen agrio-abigen"
       create_symlink "wasm2wat agrio-wasm2wast"
       create_symlink "wat2wasm agrio-wast2wasm"
    }

@@ -222,8 +222,8 @@ inline bool operator!=(const checksum160& lhs, const checksum160& rhs) {
 /**
  * name literal operator
  * 
- * @brief "foo"_n is a shortcut for name{eosio::string_to_name("foo")}
+ * @brief "foo"_n is a shortcut for name{agrio::string_to_name("foo")}
  */
-inline constexpr eosio::name operator""_n(const char* s, std::size_t) {
-   return {eosio::string_to_name(s)};
+inline constexpr agrio::name operator""_n(const char* s, std::size_t) {
+   return {agrio::string_to_name(s)};
 }

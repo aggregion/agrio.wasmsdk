@@ -1,9 +1,9 @@
-#include <eosiolib/eosio.hpp>
+#include <agriolib/agrio.hpp>
 #include <hello.hpp>
 
-using namespace eosio;
+using namespace agrio;
 
-CONTRACT send_inline : public eosio::contract {
+CONTRACT send_inline : public agrio::contract {
   public:
       using contract::contract;
 
@@ -18,4 +18,4 @@ CONTRACT send_inline : public eosio::contract {
       using test_action = action_wrapper<"test"_n, &send_inline::test>;
 };
 
-EOSIO_DISPATCH( send_inline, (test) )
+AGRIO_DISPATCH( send_inline, (test) )

@@ -1,1 +1,1 @@
-add_tool(eosio-abigen)
+add_tool(agrio-abigen)

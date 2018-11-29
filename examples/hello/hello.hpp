@@ -1,8 +1,8 @@
-#include <eosiolib/eosio.hpp>
+#include <agriolib/agrio.hpp>
 
-using namespace eosio;
+using namespace agrio;
 
-CONTRACT hello : public eosio::contract {
+CONTRACT hello : public agrio::contract {
   public:
       using contract::contract;
 

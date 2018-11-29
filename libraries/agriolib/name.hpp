@@ -1,15 +1,15 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE.txt
+ *  @copyright defined in agr/LICENSE.txt
  */
 #pragma once
 
-#include <eosiolib/system.h>
-#include <eosiolib/serialize.hpp>
+#include <agriolib/system.h>
+#include <agriolib/serialize.hpp>
 #include <string>
 #include <string_view>
 
-namespace eosio {
+namespace agrio {
 
    /**
     *  Wraps a uint64_t to ensure it is only passed to methods that expect a Name and
@@ -37,7 +37,7 @@ namespace eosio {
       :value(0)
       {
          if( str.size() > 13 ) {
-            eosio_assert( false, "string is too long to be a valid name" );
+            agrio_assert( false, "string is too long to be a valid name" );
          }
 
          auto n = std::min( str.size(), 12u );
@@ -49,16 +49,16 @@ namespace eosio {
          if( str.size() == 13 ) {
             uint64_t v = char_to_value( str[12] );
             if( v > 0x0Full ) {
-               eosio_assert(false, "thirteenth character in name cannot be a letter that comes after j");
+               agrio_assert(false, "thirteenth character in name cannot be a letter that comes after j");
             }
             value |= v;
          }
       }
 
       /**
-       *  Converts a (eosio::name style) Base32 symbol into its corresponding value
+       *  Converts a (agrio::name style) Base32 symbol into its corresponding value
        *
-       *  @brief Converts a (eosio::name style) Base32 symbol into its corresponding value
+       *  @brief Converts a (agrio::name style) Base32 symbol into its corresponding value
        *  @param c - Character to be converted
        *  @return constexpr char - Converted value
        */
@@ -70,7 +70,7 @@ namespace eosio {
          else if( c >= 'a' && c <= 'z' )
             return (c - 'a') + 6;
          else
-            eosio_assert( false, "character is not in allowed character set for names" );
+            agrio_assert( false, "character is not in allowed character set for names" );
 
          return 0; // control flow will never reach here; just added to suppress warning
       }
@@ -200,7 +200,7 @@ namespace eosio {
 
       uint64_t value = 0;
 
-      EOSLIB_SERIALIZE( name, (value) )
+      AGRLIB_SERIALIZE( name, (value) )
    };
    
    namespace detail {
@@ -209,7 +209,7 @@ namespace eosio {
          static constexpr const char value[] = {Str...};
       };
    } /// namespace detail
-} /// namespace eosio
+} /// namespace agrio
 
 /**
  * name literal operator
@@ -217,7 +217,7 @@ namespace eosio {
  * @brief "foo"_n is a shortcut for name{"foo"}
  */
 template <typename T, T... Str>
-inline constexpr eosio::name operator""_n() {
-   constexpr auto x = eosio::name{std::string_view{eosio::detail::to_const_char_arr<Str...>::value, sizeof...(Str)}};
+inline constexpr agrio::name operator""_n() {
+   constexpr auto x = agrio::name{std::string_view{agrio::detail::to_const_char_arr<Str...>::value, sizeof...(Str)}};
    return x;
 }

@@ -1,11 +1,11 @@
 [submodule "libraries/libc/musl"]
 	path = libraries/libc/musl
-	url = https://github.com/eosio/musl
-	branch = eosio
+	url = https://github.com/aggregion/musl
+	branch = agrio
 [submodule "libraries/libc++/libcxx"]
 	path = libraries/libc++/libcxx
-	url = https://github.com/eosio/libcxx
-	branch = eosiosdk
-[submodule "eosio_llvm"]
-	path = eosio_llvm
-	url = https://github.com/eosio/llvm
+	url = https://github.com/aggregion/libcxx
+	branch = agriosdk
+[submodule "agrio_llvm"]
+	path = agrio_llvm
+	url = https://github.com/aggregion/llvm

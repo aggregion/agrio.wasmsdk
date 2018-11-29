@@ -1,17 +1,17 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE.txt
+ *  @copyright defined in agr/LICENSE.txt
  */
 #pragma once
-#include <eosiolib/print.h>
-#include <eosiolib/name.hpp>
-#include <eosiolib/symbol.hpp>
-#include <eosiolib/fixed_key.hpp>
-#include <eosiolib/fixed_bytes.hpp>
+#include <agriolib/print.h>
+#include <agriolib/name.hpp>
+#include <agriolib/symbol.hpp>
+#include <agriolib/fixed_key.hpp>
+#include <agriolib/fixed_bytes.hpp>
 #include <utility>
 #include <string>
 
-namespace eosio {
+namespace agrio {
 
    static_assert( sizeof(long) == sizeof(int), "unexpected size difference" );
 
@@ -207,7 +207,7 @@ namespace eosio {
     * @brief Prints a symbol_code
     * @param sym_code symbol code to be printed
     */
-   inline void print( eosio::symbol_code sym_code ) {
+   inline void print( agrio::symbol_code sym_code ) {
       char buffer[7];
       auto end = sym_code.write_as_string( buffer, buffer + sizeof(buffer) );
       if( buffer < end )

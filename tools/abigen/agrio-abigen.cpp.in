@@ -11,10 +11,10 @@
 #include "clang/Rewrite/Core/Rewriter.h"
 #include "clang/Rewrite/Frontend/Rewriters.h"
 #include "llvm/Support/FileSystem.h"
-#include <eosio/utils.hpp>
-#include <eosio/gen.hpp>
-#include <eosio/whereami/whereami.hpp>
-#include <eosio/abi.hpp>
+#include <agrio/utils.hpp>
+#include <agrio/gen.hpp>
+#include <agrio/whereami/whereami.hpp>
+#include <agrio/abi.hpp>
 
 #include <exception>
 #include <iostream>
@@ -33,22 +33,22 @@
 using namespace clang::tooling;
 using namespace clang::ast_matchers;
 using namespace llvm;
-using namespace eosio;
-using namespace eosio::cdt;
+using namespace agrio;
+using namespace agrio::cdt;
 using jsoncons::json;
 using jsoncons::ojson;
 
 struct abigen_exception : public std::exception {
    virtual const char* what() const throw() {
-      return "eosio.abigen fatal error";
+      return "agrio.abigen fatal error";
    }
 } abigen_ex;
 
 
-DeclarationMatcher function_decl_matcher = cxxMethodDecl().bind("eosio_abis");
-DeclarationMatcher record_decl_matcher   = cxxRecordDecl().bind("eosio_abis");
-DeclarationMatcher typedef_decl_matcher  = typedefDecl().bind("eosio_abis");
-auto               class_tmp_matcher     = classTemplateSpecializationDecl().bind("eosio_abis");
+DeclarationMatcher function_decl_matcher = cxxMethodDecl().bind("agrio_abis");
+DeclarationMatcher record_decl_matcher   = cxxRecordDecl().bind("agrio_abis");
+DeclarationMatcher typedef_decl_matcher  = typedefDecl().bind("agrio_abis");
+auto               class_tmp_matcher     = classTemplateSpecializationDecl().bind("agrio_abis");
 
 class abigen : public generation_utils {
    public:
@@ -67,7 +67,7 @@ class abigen : public generation_utils {
    
    void add_action( const clang::CXXRecordDecl* decl ) {
       abi_action ret;
-      auto action_name = decl->getEosioActionAttr()->getName();
+      auto action_name = decl->getAgrioActionAttr()->getName();
 
       if (rcs[get_action_name(decl)].empty())
          std::cout << "Warning, action <"+get_action_name(decl)+"> does not have a ricardian contract\n";
@@ -78,7 +78,7 @@ class abigen : public generation_utils {
          try {
             validate_name( decl->getName().str(), error_handler );
          } catch (...) {
-            std::cout << "Error, name <" <<decl->getName().str() << "> is an invalid EOSIO name.\n";
+            std::cout << "Error, name <" <<decl->getName().str() << "> is an invalid AGRIO name.\n";
             throw;
          }
          ret.name = decl->getName().str();
@@ -87,7 +87,7 @@ class abigen : public generation_utils {
          try {
             validate_name( action_name.str(), error_handler );
          } catch (...) {
-            std::cout << "Error, name <" << action_name.str() << "> is an invalid EOSIO name.\n";
+            std::cout << "Error, name <" << action_name.str() << "> is an invalid AGRIO name.\n";
             throw;
          }
          ret.name = action_name.str();
@@ -99,7 +99,7 @@ class abigen : public generation_utils {
    void add_action( const clang::CXXMethodDecl* decl ) {
       abi_action ret;
 
-      auto action_name = decl->getEosioActionAttr()->getName();
+      auto action_name = decl->getAgrioActionAttr()->getName();
 
       if (rcs[get_action_name(decl)].empty())
          std::cout << "Warning, action <"+get_action_name(decl)+"> does not have a ricardian contract\n";
@@ -110,7 +110,7 @@ class abigen : public generation_utils {
          try {
             validate_name( decl->getNameAsString(), error_handler );
          } catch (...) {
-            std::cout << "Error, name <" <<decl->getNameAsString() << "> is an invalid EOSIO name.\n";
+            std::cout << "Error, name <" <<decl->getNameAsString() << "> is an invalid AGRIO name.\n";
          }
          ret.name = decl->getNameAsString();
       }
@@ -118,7 +118,7 @@ class abigen : public generation_utils {
          try {
             validate_name( action_name.str(), error_handler );
          } catch (...) {
-            std::cout << "Error, name <" << action_name.str() << "> is an invalid EOSIO name.\n";
+            std::cout << "Error, name <" << action_name.str() << "> is an invalid AGRIO name.\n";
          }
          ret.name = action_name.str();
       }
@@ -217,7 +217,7 @@ class abigen : public generation_utils {
       tables.insert(decl);
       abi_table t;
       t.type = decl->getNameAsString();
-      auto table_name = decl->getEosioTableAttr()->getName();
+      auto table_name = decl->getAgrioTableAttr()->getName();
       if (!table_name.empty()) {
          try {
             validate_name( table_name.str(), error_handler );
@@ -232,7 +232,7 @@ class abigen : public generation_utils {
    }
 
    void add_table( uint64_t name, const clang::CXXRecordDecl* decl ) {
-      if (!(decl->isEosioTable() && abigen::is_eosio_contract(decl, get_contract_name())))
+      if (!(decl->isAgrioTable() && abigen::is_agrio_contract(decl, get_contract_name())))
          return;
       abi_table t;
       t.type = decl->getNameAsString();
@@ -286,7 +286,7 @@ class abigen : public generation_utils {
 
    std::string generate_json_comment() {
       std::stringstream ss;
-      ss << "This file was generated with eosio-abigen.";
+      ss << "This file was generated with agrio-abigen.";
       ss << " DO NOT EDIT ";
       auto t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
       ss << std::ctime(&t);
@@ -468,12 +468,12 @@ abigen& get_abigen_ref() {
    return ag;
 }
 
-class EosioMethodMatcher : public MatchFinder::MatchCallback {
+class AgrioMethodMatcher : public MatchFinder::MatchCallback {
    public:
       virtual void run( const MatchFinder::MatchResult& res ) {
-         if (const clang::CXXMethodDecl* decl = res.Nodes.getNodeAs<clang::CXXMethodDecl>("eosio_abis")->getCanonicalDecl()) {
+         if (const clang::CXXMethodDecl* decl = res.Nodes.getNodeAs<clang::CXXMethodDecl>("agrio_abis")->getCanonicalDecl()) {
             abi abi;
-            if (decl->isEosioAction() && abigen::is_eosio_contract(decl, get_abigen_ref().get_contract_name())) {
+            if (decl->isAgrioAction() && abigen::is_agrio_contract(decl, get_abigen_ref().get_contract_name())) {
                get_abigen_ref().add_struct(decl);
                get_abigen_ref().add_action(decl);
                auto params = decl->parameters();
@@ -485,24 +485,24 @@ class EosioMethodMatcher : public MatchFinder::MatchCallback {
       }
 };
 
-class EosioRecordMatcher : public MatchFinder::MatchCallback {
+class AgrioRecordMatcher : public MatchFinder::MatchCallback {
    public:
       bool has_added_clauses = false;
       virtual void run( const MatchFinder::MatchResult& res ) {
-         if (const clang::CXXRecordDecl* decl = res.Nodes.getNodeAs<clang::CXXRecordDecl>("eosio_abis")) {
+         if (const clang::CXXRecordDecl* decl = res.Nodes.getNodeAs<clang::CXXRecordDecl>("agrio_abis")) {
             if (!has_added_clauses) {
                get_abigen_ref().add_clauses(get_abigen_ref().parse_clauses());
                get_abigen_ref().add_contracts(get_abigen_ref().parse_contracts());
                has_added_clauses = true;
             }
-            if (decl->isEosioAction() && abigen::is_eosio_contract(decl, get_abigen_ref().get_contract_name())) {
+            if (decl->isAgrioAction() && abigen::is_agrio_contract(decl, get_abigen_ref().get_contract_name())) {
                get_abigen_ref().add_struct(decl);
                get_abigen_ref().add_action(decl);
                for (auto field : decl->fields()) {
                   get_abigen_ref().add_type( field->getType() );
                }
             }
-            if (decl->isEosioTable() && abigen::is_eosio_contract(decl, get_abigen_ref().get_contract_name())) {
+            if (decl->isAgrioTable() && abigen::is_agrio_contract(decl, get_abigen_ref().get_contract_name())) {
                get_abigen_ref().add_struct(decl);
                get_abigen_ref().add_table(decl);
                for (auto field : decl->fields())
@@ -510,7 +510,7 @@ class EosioRecordMatcher : public MatchFinder::MatchCallback {
             }
          }
       
-         if (const clang::ClassTemplateSpecializationDecl* decl = res.Nodes.getNodeAs<clang::ClassTemplateSpecializationDecl>("eosio_abis")) {
+         if (const clang::ClassTemplateSpecializationDecl* decl = res.Nodes.getNodeAs<clang::ClassTemplateSpecializationDecl>("agrio_abis")) {
             if ( decl->getName() == "multi_index" ) {
                get_abigen_ref().add_table(decl->getTemplateArgs()[0].getAsIntegral().getExtValue(),
                                          (clang::CXXRecordDecl*)((clang::RecordType*)decl->getTemplateArgs()[1].getAsType().getTypePtr())->getDecl());
@@ -524,9 +524,9 @@ class EosioRecordMatcher : public MatchFinder::MatchCallback {
 int main(int argc, const char **argv) {
 
    cl::SetVersionPrinter([](llvm::raw_ostream& os) {
-        os << "eosio-abigen version " << ${VERSION_MAJOR} << "." << ${VERSION_MINOR} << "." << ${VERSION_PATCH} << "\n";
+        os << "agrio-abigen version " << ${VERSION_MAJOR} << "." << ${VERSION_MINOR} << "." << ${VERSION_PATCH} << "\n";
   });
-   cl::OptionCategory cat("eosio-abigen", "generates an abi from C++ project input");
+   cl::OptionCategory cat("agrio-abigen", "generates an abi from C++ project input");
 
    cl::opt<std::string> abidir(
     "output",
@@ -574,13 +574,13 @@ int main(int argc, const char **argv) {
    options.push_back("-DBOOST_EXCEPTION_DISABLE");
    options.push_back("-Wno-everything");
    options.push_back("-std=c++17");
-   options.push_back(std::string("-I")+eosio::cdt::whereami::where()+"/../include/libcxx");
-   options.push_back(std::string("-I")+eosio::cdt::whereami::where()+"/../include/libc");
-   options.push_back(std::string("-I")+eosio::cdt::whereami::where()+"/../include");
-   options.push_back(std::string("-I")+eosio::cdt::whereami::where()+"/../../../../../libraries/libc++/libcxx/include");
-   options.push_back(std::string("-I")+eosio::cdt::whereami::where()+"/../../../../../libraries/libc/musl/include");
-   options.push_back(std::string("-I")+eosio::cdt::whereami::where()+"/../../../../../libraries");
-   options.push_back(std::string("-I")+eosio::cdt::whereami::where()+"/../../../../../libraries/boost/include");
+   options.push_back(std::string("-I")+agrio::cdt::whereami::where()+"/../include/libcxx");
+   options.push_back(std::string("-I")+agrio::cdt::whereami::where()+"/../include/libc");
+   options.push_back(std::string("-I")+agrio::cdt::whereami::where()+"/../include");
+   options.push_back(std::string("-I")+agrio::cdt::whereami::where()+"/../../../../../libraries/libc++/libcxx/include");
+   options.push_back(std::string("-I")+agrio::cdt::whereami::where()+"/../../../../../libraries/libc/musl/include");
+   options.push_back(std::string("-I")+agrio::cdt::whereami::where()+"/../../../../../libraries");
+   options.push_back(std::string("-I")+agrio::cdt::whereami::where()+"/../../../../../libraries/boost/include");
 
    int size = options.size();
    const char** new_argv = new const char*[size];
@@ -592,12 +592,12 @@ int main(int argc, const char **argv) {
    ClangTool tool( opts.getCompilations(), opts.getSourcePathList());
    get_abigen_ref().set_contract_name(contract_name);
    get_abigen_ref().set_resource_dirs(resource_paths);
-   EosioMethodMatcher eosio_method_matcher;
-   EosioRecordMatcher eosio_record_matcher;
+   AgrioMethodMatcher agrio_method_matcher;
+   AgrioRecordMatcher agrio_record_matcher;
    MatchFinder finder;
-   finder.addMatcher(function_decl_matcher, &eosio_method_matcher);
-   finder.addMatcher(record_decl_matcher, &eosio_record_matcher);
-   finder.addMatcher(class_tmp_matcher, &eosio_record_matcher);
+   finder.addMatcher(function_decl_matcher, &agrio_method_matcher);
+   finder.addMatcher(record_decl_matcher, &agrio_record_matcher);
+   finder.addMatcher(class_tmp_matcher, &agrio_record_matcher);
 
 
    int tool_run = -1;

@@ -12,9 +12,9 @@
 #include <map>
 #include <utility>
 #include <regex>
-#include <eosio/utils.hpp>
+#include <agrio/utils.hpp>
 
-namespace eosio { namespace cdt {
+namespace agrio { namespace cdt {
 
 struct simple_ricardian_tokenizer {
    simple_ricardian_tokenizer( const std::string& src ) : source(src), index(0) {}
@@ -112,7 +112,7 @@ struct generation_utils {
       auto check = [&](const clang::Type* pt) {
         if (auto tst = llvm::dyn_cast<clang::TemplateSpecializationType>(pt))
          if (auto rt = llvm::dyn_cast<clang::RecordType>(tst->desugar()))
-            return rt->getDecl()->isEosioIgnore();
+            return rt->getDecl()->isAgrioIgnore();
 
          return false;
       };
@@ -131,7 +131,7 @@ struct generation_utils {
       auto get = [&](const clang::Type* pt) {
          if (auto tst = llvm::dyn_cast<clang::TemplateSpecializationType>(pt))
             if (auto decl = llvm::dyn_cast<clang::RecordType>(tst->desugar()))
-               return decl->getDecl()->isEosioIgnore() ? tst->getArg(0).getAsType() : type;
+               return decl->getDecl()->isAgrioIgnore() ? tst->getArg(0).getAsType() : type;
          return type;
       };
 
@@ -160,30 +160,30 @@ struct generation_utils {
       }
    }
 
-   static inline bool has_eosio_ricardian( const clang::CXXMethodDecl* decl ) {
-      return decl->hasEosioRicardian();
+   static inline bool has_agrio_ricardian( const clang::CXXMethodDecl* decl ) {
+      return decl->hasAgrioRicardian();
    }
-   static inline bool has_eosio_ricardian( const clang::CXXRecordDecl* decl ) {
-      return decl->hasEosioRicardian();
+   static inline bool has_agrio_ricardian( const clang::CXXRecordDecl* decl ) {
+      return decl->hasAgrioRicardian();
    }
 
-   static inline std::string get_eosio_ricardian( const clang::CXXMethodDecl* decl ) {
-      return decl->getEosioRicardianAttr()->getName();
+   static inline std::string get_agrio_ricardian( const clang::CXXMethodDecl* decl ) {
+      return decl->getAgrioRicardianAttr()->getName();
    }
-   static inline std::string get_eosio_ricardian( const clang::CXXRecordDecl* decl ) {
-      return decl->getEosioRicardianAttr()->getName();
+   static inline std::string get_agrio_ricardian( const clang::CXXRecordDecl* decl ) {
+      return decl->getAgrioRicardianAttr()->getName();
    }
 
    static inline std::string get_action_name( const clang::CXXMethodDecl* decl ) {
       std::string action_name = "";
-      auto tmp = decl->getEosioActionAttr()->getName();
+      auto tmp = decl->getAgrioActionAttr()->getName();
       if (!tmp.empty())
          return tmp;
       return decl->getNameAsString();
    }
    static inline std::string get_action_name( const clang::CXXRecordDecl* decl ) {
       std::string action_name = "";
-      auto tmp = decl->getEosioActionAttr()->getName();
+      auto tmp = decl->getAgrioActionAttr()->getName();
       if (!tmp.empty())
          return tmp;
       return decl->getName();
@@ -250,27 +250,27 @@ struct generation_utils {
       return clause_pairs;
    }
 
-   static inline bool is_eosio_contract( const clang::CXXMethodDecl* decl, const std::string& cn ) {
+   static inline bool is_agrio_contract( const clang::CXXMethodDecl* decl, const std::string& cn ) {
       std::string name = "";
-      if (decl->isEosioContract())
-         name = decl->getEosioContractAttr()->getName();
-      else if (decl->getParent()->isEosioContract())
-         name = decl->getParent()->getEosioContractAttr()->getName();
+      if (decl->isAgrioContract())
+         name = decl->getAgrioContractAttr()->getName();
+      else if (decl->getParent()->isAgrioContract())
+         name = decl->getParent()->getAgrioContractAttr()->getName();
       if (name.empty()) {
          name = decl->getParent()->getName().str();
       }
       return name == cn;
    }
 
-   static inline bool is_eosio_contract( const clang::CXXRecordDecl* decl, const std::string& cn ) {
+   static inline bool is_agrio_contract( const clang::CXXRecordDecl* decl, const std::string& cn ) {
       std::string name = "";
       auto pd = llvm::dyn_cast<clang::CXXRecordDecl>(decl->getParent());
-      if (decl->isEosioContract()) {
-         auto nm = decl->getEosioContractAttr()->getName().str();
+      if (decl->isAgrioContract()) {
+         auto nm = decl->getAgrioContractAttr()->getName().str();
          name = nm.empty() ? decl->getName().str() : nm;
       }
-      else if (pd && pd->isEosioContract()) {
-         auto nm = pd->getEosioContractAttr()->getName().str();
+      else if (pd && pd->isAgrioContract()) {
+         auto nm = pd->getAgrioContractAttr()->getName().str();
          name = nm.empty() ? pd->getName().str() : nm;
       }
       return cn == name;
@@ -582,4 +582,4 @@ struct generation_utils {
       return get_base_type_name(t).compare(get_type_alias_string(t)) != 0;
    }
 };
-}} // ns eosio::cdt
+}} // ns agrio::cdt

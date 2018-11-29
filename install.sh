@@ -1,7 +1,7 @@
 #!/bin/bash
 ##########################################################################
-# This is the EOSIO automated install script for Linux and Mac OS.
-# This file was downloaded from https://github.com/EOSIO/eos
+# This is the AGRIO automated install script for Linux and Mac OS.
+# This file was downloaded from https://github.com/aggregion/agr
 #
 # Copyright (c) 2017, Respective Authors all rights reserved.
 #
@@ -27,7 +27,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #
-# https://github.com/EOSIO/eos/blob/master/LICENSE.txt
+# https://github.com/aggregion/agr/blob/master/LICENSE.txt
 ##########################################################################
    
 
@@ -40,7 +40,7 @@
 	BUILD_DIR="${PWD}/build"
 	CMAKE_BUILD_TYPE=Release
 	TIME_BEGIN=$( date -u +%s )
-   INSTALL_PREFIX="/usr/local/eosio.cdt"
+   INSTALL_PREFIX="/usr/local/agrio.cdt"
 	VERSION=1.2
 
 	txtbld=$(tput bold)
@@ -49,29 +49,29 @@
 
    create_symlink() {
       pushd /usr/local/bin &> /dev/null
-      ln -sf ../eosio.cdt/bin/$1 $2
+      ln -sf ../agrio.cdt/bin/$1 $2
       popd &> /dev/null
    }
 
    install_symlinks() {
-		printf "\\n\\tInstalling EOSIO.CDT Binary Symlinks\\n\\n"
-      create_symlink "llvm-ranlib eosio-ranlib"
-      create_symlink "llvm-ar eosio-ar"
-      create_symlink "llvm-objdump eosio-objdump"
-      create_symlink "llvm-readelf eosio-readelf"
-      create_symlink "eosio-cc eosio-cc"
-      create_symlink "eosio-cpp eosio-cpp"
-      create_symlink "eosio-ld eosio-ld"
-      create_symlink "eosio-pp eosio-pp"
-      create_symlink "eosio-abigen eosio-abigen"
-      create_symlink "eosio-wasm2wast eosio-wasm2wast"
-      create_symlink "eosio-wast2wasm eosio-wast2wasm"
+		printf "\\n\\tInstalling AGRIO.CDT Binary Symlinks\\n\\n"
+      create_symlink "llvm-ranlib agrio-ranlib"
+      create_symlink "llvm-ar agrio-ar"
+      create_symlink "llvm-objdump agrio-objdump"
+      create_symlink "llvm-readelf agrio-readelf"
+      create_symlink "agrio-cc agrio-cc"
+      create_symlink "agrio-cpp agrio-cpp"
+      create_symlink "agrio-ld agrio-ld"
+      create_symlink "agrio-pp agrio-pp"
+      create_symlink "agrio-abigen agrio-abigen"
+      create_symlink "agrio-wasm2wast agrio-wasm2wast"
+      create_symlink "agrio-wast2wasm agrio-wast2wasm"
    }
    
    create_cmake_symlink() {
-      mkdir -p /usr/local/lib/cmake/eosio.cdt
-      pushd /usr/local/lib/cmake/eosio.cdt &> /dev/null
-      ln -sf ../../../eosio.cdt/lib/cmake/eosio.cdt/$1 $1
+      mkdir -p /usr/local/lib/cmake/agrio.cdt
+      pushd /usr/local/lib/cmake/agrio.cdt &> /dev/null
+      ln -sf ../../../agrio.cdt/lib/cmake/agrio.cdt/$1 $1
       popd &> /dev/null
    }
 	if [ ! -d "${BUILD_DIR}" ]; then
@@ -87,13 +87,13 @@
    
 	if ! make install
 	then
-		printf "\\n\\t>>>>>>>>>>>>>>>>>>>> MAKE installing EOSIO has exited with the above error.\\n\\n"
+		printf "\\n\\t>>>>>>>>>>>>>>>>>>>> MAKE installing AGRIO has exited with the above error.\\n\\n"
 		exit -1
 	fi
    popd &> /dev/null 
 
    install_symlinks   
-   create_cmake_symlink "eosio.cdt-config.cmake"
+   create_cmake_symlink "agrio.cdt-config.cmake"
 
    printf "\n${bldred}\t      ___           ___           ___                       ___\n"
    printf "\t     /  /\\         /  /\\         /  /\\        ___          /  /\\ \n"
@@ -108,4 +108,4 @@
    printf "\t     \\__\\/         \\__\\/         \\__\\/                     \\__\\/ \n${txtrst}"
 
 	printf "\\tFor more information:\\n"
-	printf "\\tEOSIO website: https://eos.io\\n"
+	printf "\\tAGRIO website: https://agr.io\\n"

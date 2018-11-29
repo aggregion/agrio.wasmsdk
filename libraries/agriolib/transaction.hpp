@@ -1,15 +1,15 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE.txt
+ *  @copyright defined in agr/LICENSE.txt
  */
 #pragma once
-#include <eosiolib/transaction.h>
-#include <eosiolib/action.hpp>
-#include <eosiolib/time.hpp>
-#include <eosiolib/serialize.hpp>
+#include <agriolib/transaction.h>
+#include <agriolib/action.hpp>
+#include <agriolib/time.hpp>
+#include <agriolib/serialize.hpp>
 #include <vector>
 
-namespace eosio {
+namespace agrio {
    typedef std::tuple<uint16_t, std::vector<char>> extension;
    typedef std::vector<extension> extensions_type;
 
@@ -36,7 +36,7 @@ namespace eosio {
       uint8_t         max_cpu_usage_ms = 0UL; /// number of CPU usage units to bill transaction for
       unsigned_int    delay_sec = 0UL; /// number of seconds to delay transaction, default: 0
 
-      EOSLIB_SERIALIZE( transaction_header, (expiration)(ref_block_num)(ref_block_prefix)(max_net_usage_words)(max_cpu_usage_ms)(delay_sec) )
+      AGRLIB_SERIALIZE( transaction_header, (expiration)(ref_block_num)(ref_block_prefix)(max_net_usage_words)(max_cpu_usage_ms)(delay_sec) )
    };
 
    class transaction : public transaction_header {
@@ -52,7 +52,7 @@ namespace eosio {
       std::vector<action>  actions;
       extensions_type      transaction_extensions;
 
-      EOSLIB_SERIALIZE_DERIVED( transaction, transaction_header, (context_free_actions)(actions)(transaction_extensions) )
+      AGRLIB_SERIALIZE_DERIVED( transaction, transaction_header, (context_free_actions)(actions)(transaction_extensions) )
    };
 
    /**
@@ -73,7 +73,7 @@ namespace eosio {
          return unpack<transaction>(sent_trx);
       }
 
-      EOSLIB_SERIALIZE( onerror, (sender_id)(sent_trx) )
+      AGRLIB_SERIALIZE( onerror, (sender_id)(sent_trx) )
    };
 
    /**
@@ -85,14 +85,14 @@ namespace eosio {
    inline action get_action( uint32_t type, uint32_t index ) {
       constexpr size_t max_stack_buffer_size = 512;
       int s = ::get_action( type, index, nullptr, 0 );
-      eosio_assert( s > 0, "get_action size failed" );
+      agrio_assert( s > 0, "get_action size failed" );
       size_t size = static_cast<size_t>(s);
       char* buffer = (char*)( max_stack_buffer_size < size ? malloc(size) : alloca(size) );
       auto size2 = ::get_action( type, index, buffer, size );
-      eosio_assert( size == static_cast<size_t>(size2), "get_action failed" );
-      return eosio::unpack<eosio::action>( buffer, size );
+      agrio_assert( size == static_cast<size_t>(size2), "get_action failed" );
+      return agrio::unpack<agrio::action>( buffer, size );
    }
 
    ///@} transactioncpp api
 
-} // namespace eos
+} // namespace agr

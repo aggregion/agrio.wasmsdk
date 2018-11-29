@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE.txt
+ *  @copyright defined in agr/LICENSE.txt
  */
 #pragma once
 
@@ -30,16 +30,16 @@ extern "C" {
 typedef uint64_t capi_name;
 
 /**
- * @brief EOSIO Public Key
- * @details EOSIO Public Key. It is 34 bytes.
+ * @brief AGRIO Public Key
+ * @details AGRIO Public Key. It is 34 bytes.
  */
 struct capi_public_key {
    char data[34];
 };
 
 /**
- * @brief EOSIO Signature
- * @details EOSIO Signature. It is 66 bytes.
+ * @brief AGRIO Signature
+ * @details AGRIO Signature. It is 66 bytes.
  */
 struct capi_signature {
    uint8_t data[66];

@@ -1,1 +1,1 @@
-add_tool(eosio-abidiff)
+add_tool(agrio-abidiff)

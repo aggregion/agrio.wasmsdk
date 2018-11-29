@@ -1,6 +1,6 @@
 #pragma once
 
-namespace eosio { namespace cdt {
+namespace agrio { namespace cdt {
 enum sys {
    _win,
    _linux,
@@ -11,20 +11,20 @@ enum sys {
 #include <stdlib.h>
 #if defined(_WIN32)
 #include "win.hpp"
-#define __EOSIO_OS__ sys::_win
+#define __AGRIO_OS__ sys::_win
 
 #elif defined(__linux__) || defined(__CYGWIN__)
 #include "linux.hpp"
-#define __EOSIO_OS__ sys::_linux
+#define __AGRIO_OS__ sys::_linux
 
 #elif defined(__APPLE__)
 #include "osx.hpp"
-#define __EOSIO_OS__ sys::_osx
+#define __AGRIO_OS__ sys::_osx
 
 #elif defined(__DragonFly__) || defined(__FreeBSD__) || \
       defined(__FreeBSD_kernel__) || defined(__NetBSD__)
 #include "bsd.hpp"
-#define __EOSIO_OS__ sys::_bsd
+#define __AGRIO_OS__ sys::_bsd
 
 #else
 #error unsupported platform
@@ -32,11 +32,11 @@ enum sys {
 
 struct whereami {
    static inline int getExecutablePath(char* out, int capacity, int* dirname_length) {
-      return _getExecutablePath<__EOSIO_OS__>(out, capacity, dirname_length);
+      return _getExecutablePath<__AGRIO_OS__>(out, capacity, dirname_length);
    }
 
    static inline int getModulePath(char* out, int capacity, int* dirname_length) {
-      return _getModulePath<__EOSIO_OS__>(out, capacity, dirname_length);
+      return _getModulePath<__AGRIO_OS__>(out, capacity, dirname_length);
    }
 
    static std::string where() {
@@ -57,4 +57,4 @@ struct whereami {
    }
 };
 
-}} // ns eosio::cdt
+}} // ns agrio::cdt

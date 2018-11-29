@@ -1,26 +1,26 @@
-message(STATUS "Setting up Eosio Wasm Toolchain @VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_PATCH@ at @CDT_ROOT_DIR@")
+message(STATUS "Setting up Agrio Wasm Toolchain @VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_PATCH@ at @CDT_ROOT_DIR@")
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_CROSSCOMPILING 1)
 set(CMAKE_C_COMPILER_WORKS 1)
 set(CMAKE_CXX_COMPILER_WORKS 1)
 
-set(EOSIO_CDT_VERSION "@VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_PATCH@")
-set(EOSIO_WASMSDK_VERSION "@VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_PATCH@")
+set(AGRIO_CDT_VERSION "@VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_PATCH@")
+set(AGRIO_WASMSDK_VERSION "@VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_PATCH@")
 
-set(CMAKE_C_COMPILER "@CDT_ROOT_DIR@/bin/eosio-cc" CACHE PATH "cc" FORCE)
-set(CMAKE_CXX_COMPILER "@CDT_ROOT_DIR@/bin/eosio-cpp" CACHE PATH "cxx" FORCE)
+set(CMAKE_C_COMPILER "@CDT_ROOT_DIR@/bin/agrio-cc" CACHE PATH "cc" FORCE)
+set(CMAKE_CXX_COMPILER "@CDT_ROOT_DIR@/bin/agrio-cpp" CACHE PATH "cxx" FORCE)
 
 set(CMAKE_C_FLAGS " -O3 ")
 set(CMAKE_CXX_FLAGS " -O3 ")
 
-set(WASM_LINKER "@CDT_ROOT_DIR@/bin/eosio-ld")
+set(WASM_LINKER "@CDT_ROOT_DIR@/bin/agrio-ld")
 
 set(CMAKE_C_LINK_EXECUTABLE "${WASM_LINKER} <LINK_FLAGS> <OBJECTS> -o <TARGET> <LINK_LIBRARIES>")
 set(CMAKE_CXX_LINK_EXECUTABLE "${WASM_LINKER} <LINK_FLAGS> <OBJECTS> -o <TARGET> <LINK_LIBRARIES>")
 
-set(CMAKE_AR "@CDT_ROOT_DIR@/bin/eosio-ar" CACHE PATH "ar" FORCE)
-set(CMAKE_RANLIB "@CDT_ROOT_DIR@/bin/eosio-ranlib" CACHE PATH "ranlib" FORCE)
-set(ABIGEN "@CDT_ROOT_DIR@/bin/eosio-abigen")
+set(CMAKE_AR "@CDT_ROOT_DIR@/bin/agrio-ar" CACHE PATH "ar" FORCE)
+set(CMAKE_RANLIB "@CDT_ROOT_DIR@/bin/agrio-ranlib" CACHE PATH "ranlib" FORCE)
+set(ABIGEN "@CDT_ROOT_DIR@/bin/agrio-abigen")
 
 # hack for CMake on Linux
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS)
@@ -30,9 +30,9 @@ set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS)
 set(CMAKE_OSX_SYSROOT="@SYSROOT_DIR@")
 set(CMAKE_OSX_DEPLOYMENT_TARGET="")
 include_directories(
-      @CDT_ROOT_DIR@/eosio.cdt/include/libcxx
-      @CDT_ROOT_DIR@/eosio.cdt/include/libc
-      @CDT_ROOT_DIR@/eosio.cdt/include/)
+      @CDT_ROOT_DIR@/agrio.cdt/include/libcxx
+      @CDT_ROOT_DIR@/agrio.cdt/include/libc
+      @CDT_ROOT_DIR@/agrio.cdt/include/)
 
 macro(add_contract CONTRACT_NAME TARGET)
    add_executable( ${TARGET}.wasm ${ARGN} )

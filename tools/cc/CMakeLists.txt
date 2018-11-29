@@ -1,2 +1,2 @@
-add_tool(eosio-cc)
-add_tool(eosio-cpp)
+add_tool(agrio-cc)
+add_tool(agrio-cpp)

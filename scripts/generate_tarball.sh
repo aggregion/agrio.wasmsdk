@@ -18,14 +18,14 @@ cp -R ${BUILD_DIR}/bin/* ${CDT_PREFIX}/bin
 cp -R ${BUILD_DIR}/licenses/* ${CDT_PREFIX}/licenses
 
 # install cmake modules
-sed "s/_PREFIX_/\/${SPREFIX}/g" ${BUILD_DIR}/modules/EosioWasmToolchainPackage.cmake &> ${CDT_PREFIX}/lib/cmake/${PROJECT}/EosioWasmToolchain.cmake
+sed "s/_PREFIX_/\/${SPREFIX}/g" ${BUILD_DIR}/modules/AgrioWasmToolchainPackage.cmake &> ${CDT_PREFIX}/lib/cmake/${PROJECT}/AgrioWasmToolchain.cmake
 sed "s/_PREFIX_/\/${SPREFIX}\/${SSUBPREFIX}/g" ${BUILD_DIR}/modules/${PROJECT}-config.cmake.package &> ${CDT_PREFIX}/lib/cmake/${PROJECT}/${PROJECT}-config.cmake
 
 # install scripts
 cp -R ${BUILD_DIR}/scripts/* ${CDT_PREFIX}/scripts 
 
 # install misc.
-cp ${BUILD_DIR}/eosio.imports ${CDT_PREFIX}
+cp ${BUILD_DIR}/agrio.imports ${CDT_PREFIX}
 
 # install wasm includes
 cp -R ${BUILD_DIR}/include/* ${CDT_PREFIX}/include
@@ -36,11 +36,11 @@ cp ${BUILD_DIR}/lib/*.a ${CDT_PREFIX}/lib
 # make symlinks
 pushd ${PREFIX}/lib/cmake/${PROJECT} &> /dev/null
 ln -sf ../../../${SUBPREFIX}/lib/cmake/${PROJECT}/${PROJECT}-config.cmake ${PROJECT}-config.cmake
-ln -sf ../../../${SUBPREFIX}/lib/cmake/${PROJECT}/EosioWasmToolchain.cmake EosioWasmToolchain.cmake
+ln -sf ../../../${SUBPREFIX}/lib/cmake/${PROJECT}/AgrioWasmToolchain.cmake AgrioWasmToolchain.cmake
 popd &> /dev/null
 
 pushd ${PREFIX}/bin &> /dev/null
-for f in `find ${BUILD_DIR}/bin -name "eosio-*"`; do
+for f in `find ${BUILD_DIR}/bin -name "agrio-*"`; do
    bn=$(basename $f)
    ln -sf ../${SUBPREFIX}/bin/$bn $bn
 done

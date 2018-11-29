@@ -1,6 +1,6 @@
 #pragma once
- #include <eosiolib/print.hpp>
- namespace eosio {
+ #include <agriolib/print.hpp>
+ namespace agrio {
     /**
     *  @defgroup binary_extension Binary Extension
     *  @brief container to hold a binary payload for an extension
@@ -62,14 +62,14 @@
           /** get the contained value */
          constexpr T& value()& {
             if (!_has_value) {
-               eosio_assert(false, "cannot get value of empty binary_extension");
+               agrio_assert(false, "cannot get value of empty binary_extension");
             }
             return _get();
          }
           /** get the contained value */
          constexpr const T& value()const & {
             if (!_has_value) {
-               eosio_assert(false, "cannot get value of empty binary_extension");
+               agrio_assert(false, "cannot get value of empty binary_extension");
             }
             return _get();
          }
@@ -157,4 +157,4 @@
             return *reinterpret_cast<const T*>(&_data);
          }
    };
-} // namespace eosio
+} // namespace agrio

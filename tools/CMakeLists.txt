@@ -11,7 +11,7 @@ include_directories(${LLVM_BINDIR}/include)
 link_directories(${LLVM_LIBRARY_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
 
-set(EOSIO_STACK_SIZE 8192)
+set(AGRIO_STACK_SIZE 8192)
 
 macro (add_tool name)
    set(LLVM_LINK_COMPONENTS support)
@@ -23,7 +23,7 @@ macro (add_tool name)
    add_executable(${name} ${CMAKE_BINARY_DIR}/${name}.cpp)
    set_property(TARGET ${name} PROPERTY CXX_STANDARD 14)
    target_compile_options(${name} PRIVATE -fexceptions -fno-rtti)
-   target_include_directories(${name} PUBLIC ${CMAKE_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../include ${CMAKE_CURRENT_SOURCE_DIR}/../jsoncons/include ${CMAKE_SOURCE_DIR}/eosio_llvm/tools/clang/include ${LLVM_INCLUDE_DIR})
+   target_include_directories(${name} PUBLIC ${CMAKE_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../include ${CMAKE_CURRENT_SOURCE_DIR}/../jsoncons/include ${CMAKE_SOURCE_DIR}/agrio_llvm/tools/clang/include ${LLVM_INCLUDE_DIR})
    target_link_libraries(${name}
      clangTooling
      clangBasic

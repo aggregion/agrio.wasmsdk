@@ -20,7 +20,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-everything")
 
 file(GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/musl/include/*.h"
                   "${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal/*.h"
-                  "${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos/*.h"
+                  "${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/agr/*.h"
 )
 
 add_library(c 
@@ -44,13 +44,13 @@ add_library(c
             "musl/src/malloc/memalign.c"
             ${HEADERS})
 
-add_dependencies(c EosioTools)
+add_dependencies(c AgrioTools)
 target_include_directories(c 
                            PUBLIC 
-                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/musl/include;${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal;${CMAKE_CURRENT_SOURCE_DIR}/musl/src/crypt;${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos;${CMAKE_CURRENT_SOURCE_DIR}/../>"
+                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/musl/include;${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal;${CMAKE_CURRENT_SOURCE_DIR}/musl/src/crypt;${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/agr;${CMAKE_CURRENT_SOURCE_DIR}/../>"
                            $<INSTALL_INTERFACE:${CMAKE_INSTALL_FULL_INCLUDEDIR}>)
 
-install(TARGETS c EXPORT EosioLib
+install(TARGETS c EXPORT AgrioLib
    LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR} 
    ARCHIVE DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
 
@@ -58,8 +58,8 @@ add_custom_command( TARGET c POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGE
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/include/ DESTINATION ${CMAKE_BINARY_DIR}/include/libc/)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal/ DESTINATION ${CMAKE_BINARY_DIR}/include/libc/)
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos/ DESTINATION ${CMAKE_BINARY_DIR}/include/libc/)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/agr/ DESTINATION ${CMAKE_BINARY_DIR}/include/libc/)
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/musl/include/ DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/libc)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal/ DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/libc)
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos/ DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/libc)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/agr/ DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/libc)

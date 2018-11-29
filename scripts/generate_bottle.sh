@@ -14,7 +14,7 @@ else
    MAC_VERSION="high_sierra"
 fi
 
-mkdir -p ${PROJECT}/${VERSION}/opt/eosio_cdt/lib/cmake
+mkdir -p ${PROJECT}/${VERSION}/opt/agrio_cdt/lib/cmake
 
 PREFIX="${PROJECT}/${VERSION}"
 SPREFIX="\/usr\/local"
@@ -30,11 +30,11 @@ bash generate_tarball.sh ${NAME}
 
 hash=`openssl dgst -sha256 ${NAME} | awk 'NF>1{print $NF}'`
 
-echo "class EosioCdt < Formula
+echo "class AgrioCdt < Formula
 
    homepage \"${URL}\"
    revision 0
-   url \"https://github.com/eosio/eosio.cdt/archive/v${VERSION}.tar.gz\"
+   url \"https://github.com/aggregion/agrio.cdt/archive/v${VERSION}.tar.gz\"
    version \"${VERSION}\"
    
    option :universal
@@ -53,13 +53,13 @@ echo "class EosioCdt < Formula
    depends_on :arch =>  :intel
   
    bottle do
-      root_url \"https://github.com/eosio/eosio.cdt/releases/download/v${VERSION}\"
+      root_url \"https://github.com/aggregion/agrio.cdt/releases/download/v${VERSION}\"
       sha256 \"${hash}\" => :${MAC_VERSION}
    end
    def install
       raise \"Error, only supporting binary packages at this time\"
    end
 end
-__END__" &> eosio.cdt.rb
+__END__" &> agrio.cdt.rb
 
 rm -r ${PROJECT}

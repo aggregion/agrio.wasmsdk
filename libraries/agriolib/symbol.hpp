@@ -1,18 +1,18 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE.txt
+ *  @copyright defined in agr/LICENSE.txt
  */
 #pragma once
 
-#include <eosiolib/system.h>
-#include <eosiolib/print.h>
-#include <eosiolib/name.hpp>
-#include <eosiolib/serialize.hpp>
+#include <agriolib/system.h>
+#include <agriolib/print.h>
+#include <agriolib/name.hpp>
+#include <agriolib/serialize.hpp>
 #include <tuple>
 #include <limits>
 #include <string_view>
 
-namespace eosio {
+namespace agrio {
 
   /**
    *  @defgroup symbolapi Symbol API
@@ -43,11 +43,11 @@ namespace eosio {
       :value(0)
       {
          if( str.size() > 7 ) {
-            eosio_assert( false, "string is too long to be a valid symbol_code" );
+            agrio_assert( false, "string is too long to be a valid symbol_code" );
          }
          for( auto itr = str.rbegin(); itr != str.rend(); ++itr ) {
             if( *itr < 'A' || *itr > 'Z') {
-               eosio_assert( false, "only uppercase letters allowed in symbol_code string" );
+               agrio_assert( false, "only uppercase letters allowed in symbol_code string" );
             }
             value <<= 8;
             value |= *itr;
@@ -310,9 +310,9 @@ namespace eosio {
       symbol symbol; ///< the symbol
       name   contract; ///< the token contract hosting the symbol
 
-      EOSLIB_SERIALIZE( extended_symbol, (symbol)(contract) )
+      AGRLIB_SERIALIZE( extended_symbol, (symbol)(contract) )
    };
 
    // }@ symbolapi
 
-} /// namespace eosio
+} /// namespace agrio

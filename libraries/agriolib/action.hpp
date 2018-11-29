@@ -1,18 +1,18 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE.txt
+ *  @copyright defined in agr/LICENSE.txt
  */
 #pragma once
-#include <eosiolib/action.h>
-#include <eosiolib/datastream.hpp>
-#include <eosiolib/serialize.hpp>
+#include <agriolib/action.h>
+#include <agriolib/datastream.hpp>
+#include <agriolib/serialize.hpp>
 
 #include <boost/preprocessor/variadic/size.hpp>
 #include <boost/preprocessor/variadic/to_tuple.hpp>
 #include <boost/preprocessor/tuple/enum.hpp>
 #include <boost/preprocessor/facilities/overload.hpp>
 
-namespace eosio {
+namespace agrio {
 
    /**
     * @defgroup actioncppapi Action C++ API
@@ -39,7 +39,7 @@ namespace eosio {
     *    unsigned long long b; //8
     *    int  c; //4
     *
-    *    EOSLIB_SERIALIZE( dummy_action, (a)(b)(c) )
+    *    AGRLIB_SERIALIZE( dummy_action, (a)(b)(c) )
     *  };
     *  dummy_action msg = unpack_action_data<dummy_action>();
     *  @endcode
@@ -145,7 +145,7 @@ namespace eosio {
          return std::tie( a.actor, a.permission ) == std::tie( b.actor, b.permission );
       }
 
-      EOSLIB_SERIALIZE( permission_level, (actor)(permission) )
+      AGRLIB_SERIALIZE( permission_level, (actor)(permission) )
    };
 
    /**
@@ -249,7 +249,7 @@ namespace eosio {
       action( std::vector<permission_level> auths, struct name a, struct name n, T&& value )
       :account(a), name(n), authorization(std::move(auths)), data(pack(std::forward<T>(value))) {}
 
-      EOSLIB_SERIALIZE( action, (account)(name)(authorization)(data) )
+      AGRLIB_SERIALIZE( action, (account)(name)(authorization)(data) )
 
       /**
        * Send the action as inline action
@@ -268,7 +268,7 @@ namespace eosio {
        * @pre This action should not contain any authorizations
        */
       void send_context_free() const {
-         eosio_assert( authorization.size() == 0, "context free actions cannot have authorizations");
+         agrio_assert( authorization.size() == 0, "context free actions cannot have authorizations");
          auto serialize = pack(*this);
          ::send_context_free_inline(serialize.data(), serialize.size());
       }
@@ -358,27 +358,27 @@ namespace eosio {
       }
    }
 
-   template <eosio::name::raw Name, auto Action>
+   template <agrio::name::raw Name, auto Action>
    struct action_wrapper {
       template <typename Code>
-      constexpr action_wrapper(Code&& code, std::vector<eosio::permission_level>&& perms)
+      constexpr action_wrapper(Code&& code, std::vector<agrio::permission_level>&& perms)
          : code_name(std::forward<Code>(code)), permissions(std::move(perms)) {}
 
       template <typename Code>
-      constexpr action_wrapper(Code&& code, const std::vector<eosio::permission_level>& perms)
+      constexpr action_wrapper(Code&& code, const std::vector<agrio::permission_level>& perms)
          : code_name(std::forward<Code>(code)), permissions(perms) {}
 
       template <typename Code>
-      constexpr action_wrapper(Code&& code, eosio::permission_level&& perm)
+      constexpr action_wrapper(Code&& code, agrio::permission_level&& perm)
          : code_name(std::forward<Code>(code)), permissions({1, std::move(perm)}) {}
 
       template <typename Code>
-      constexpr action_wrapper(Code&& code, const eosio::permission_level& perm)
+      constexpr action_wrapper(Code&& code, const agrio::permission_level& perm)
          : code_name(std::forward<Code>(code)), permissions({1, perm}) {}
 
-      static constexpr eosio::name action_name = eosio::name(Name);
-      eosio::name code_name;
-      std::vector<eosio::permission_level> permissions;
+      static constexpr agrio::name action_name = agrio::name(Name);
+      agrio::name code_name;
+      std::vector<agrio::permission_level> permissions;
 
       static constexpr auto get_mem_ptr() {
          return Action;
@@ -401,27 +401,27 @@ namespace eosio {
 
    };
 
-   template <eosio::name::raw Name, auto... Actions>
+   template <agrio::name::raw Name, auto... Actions>
    struct variant_action_wrapper {
       template <typename Code>
-      constexpr variant_action_wrapper(Code&& code, std::vector<eosio::permission_level>&& perms)
+      constexpr variant_action_wrapper(Code&& code, std::vector<agrio::permission_level>&& perms)
          : code_name(std::forward<Code>(code)), permissions(std::move(perms)) {}
 
       template <typename Code>
-      constexpr variant_action_wrapper(Code&& code, const std::vector<eosio::permission_level>& perms)
+      constexpr variant_action_wrapper(Code&& code, const std::vector<agrio::permission_level>& perms)
          : code_name(std::forward<Code>(code)), permissions(perms) {}
 
       template <typename Code>
-      constexpr variant_action_wrapper(Code&& code, eosio::permission_level&& perm)
+      constexpr variant_action_wrapper(Code&& code, agrio::permission_level&& perm)
          : code_name(std::forward<Code>(code)), permissions({1, std::move(perm)}) {}
 
       template <typename Code>
-      constexpr variant_action_wrapper(Code&& code, const eosio::permission_level& perm)
+      constexpr variant_action_wrapper(Code&& code, const agrio::permission_level& perm)
          : code_name(std::forward<Code>(code)), permissions({1, perm}) {}
 
-      static constexpr eosio::name action_name = eosio::name(Name);
-      eosio::name code_name;
-      std::vector<eosio::permission_level> permissions;
+      static constexpr agrio::name action_name = agrio::name(Name);
+      agrio::name code_name;
+      std::vector<agrio::permission_level> permissions;
 
       template <size_t Variant>
       static constexpr auto get_mem_ptr() {
@@ -469,13 +469,13 @@ namespace eosio {
       }
    };
 
-} // namespace eosio
+} // namespace agrio
 
 #define INLINE_ACTION_SENDER3( CONTRACT_CLASS, FUNCTION_NAME, ACTION_NAME  )\
-::eosio::inline_dispatcher<decltype(&CONTRACT_CLASS::FUNCTION_NAME), ACTION_NAME>::call
+::agrio::inline_dispatcher<decltype(&CONTRACT_CLASS::FUNCTION_NAME), ACTION_NAME>::call
 
 #define INLINE_ACTION_SENDER2( CONTRACT_CLASS, NAME )\
-INLINE_ACTION_SENDER3( CONTRACT_CLASS, NAME, ::eosio::name(#NAME) )
+INLINE_ACTION_SENDER3( CONTRACT_CLASS, NAME, ::agrio::name(#NAME) )
 
 #define INLINE_ACTION_SENDER(...) BOOST_PP_OVERLOAD(INLINE_ACTION_SENDER,__VA_ARGS__)(__VA_ARGS__)
 

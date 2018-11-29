@@ -15,7 +15,7 @@ extern char **environ;
 #include <vector>
 #include <sstream>
 
-namespace eosio { namespace cdt {
+namespace agrio { namespace cdt {
 
 uint64_t char_to_symbol( char c ) {
    if( c >= 'a' && c <= 'z' )
@@ -137,7 +137,7 @@ struct environment {
       std::stringstream args;
       for (auto s : options)
          args << s << " ";
-      if ( auto path = llvm::sys::findProgramByName(prog.c_str(), {eosio::cdt::whereami::where()}) )
+      if ( auto path = llvm::sys::findProgramByName(prog.c_str(), {agrio::cdt::whereami::where()}) )
          std::system((*path+" "+args.str()).c_str());
       else
          return false;
@@ -145,4 +145,4 @@ struct environment {
    }
 
 };
-}} // ns eosio::cdt
+}} // ns agrio::cdt

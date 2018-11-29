@@ -1,1 +1,1 @@
-add_tool(eosio-ld)
+add_tool(agrio-ld)

@@ -1,13 +1,13 @@
 #include <boost/test/unit_test.hpp>
-#include <eosio/chain/contract_table_objects.hpp>
-#include <eosio/chain/global_property_object.hpp>
-#include <eosio/chain/resource_limits.hpp>
-#include <eosio/chain/wast_to_wasm.hpp>
+#include <agrio/chain/contract_table_objects.hpp>
+#include <agrio/chain/global_property_object.hpp>
+#include <agrio/chain/resource_limits.hpp>
+#include <agrio/chain/wast_to_wasm.hpp>
 #include <cstdlib>
 #include <iostream>
 #include <boost/test/included/unit_test.hpp>
 #include <fc/log/logger.hpp>
-#include <eosio/chain/exceptions.hpp>
+#include <agrio/chain/exceptions.hpp>
 #include <Runtime/Runtime.h>
 
 #define BOOST_TEST_STATIC_LINK

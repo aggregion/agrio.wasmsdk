@@ -1,20 +1,20 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in agrio.cdt/LICENSE.txt
  */
 
 #include <string>
 
-#include <eosio/eosio.hpp>
-#include <eosio/tester.hpp>
+#include <agrio/agrio.hpp>
+#include <agrio/tester.hpp>
 
 using std::move;
 using std::string;
 
-using eosio::check;
+using agrio::check;
 
-// Definitions in `eosio.cdt/libraries/eosiolib/system.hpp`
-EOSIO_TEST_BEGIN(system_test)
+// Definitions in `agrio.cdt/libraries/agriolib/system.hpp`
+AGRIO_TEST_BEGIN(system_test)
    silence_output(true);
 
    // ------------------------------------
@@ -45,9 +45,9 @@ EOSIO_TEST_BEGIN(system_test)
    CHECK_ASSERT("18446744073709551615", []() { check(false, -1ULL);} );
 
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
 int main(int argc, char* argv[]) {
-   EOSIO_TEST(system_test);
+   AGRIO_TEST(system_test);
    return has_failed();
 }

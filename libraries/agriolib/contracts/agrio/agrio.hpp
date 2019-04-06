@@ -1,15 +1,15 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 #include "action.hpp"
-#include "../../core/eosio/print.hpp"
+#include "../../core/agrio/print.hpp"
 #include "multi_index.hpp"
 #include "dispatcher.hpp"
 #include "contract.hpp"
 
-#ifndef EOSIO_NATIVE
+#ifndef AGRIO_NATIVE
 static_assert( sizeof(long) == sizeof(int), "unexpected size difference" );
 #endif
 
@@ -25,5 +25,5 @@ static_assert( sizeof(long) == sizeof(int), "unexpected size difference" );
 
 /**
  * @defgroup types Types
- * @brief C++ Types API for data layout of data-structures available for the EOSIO platform
+ * @brief C++ Types API for data layout of data-structures available for the AGRIO platform
  */

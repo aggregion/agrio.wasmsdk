@@ -7,9 +7,9 @@
 #include <tuple>
 #include <limits>
 
-#warning "<eosiolib/asset.hpp> is deprecated use <eosio/asset.hpp>"
+#warning "<agriolib/asset.hpp> is deprecated use <agrio/asset.hpp>"
 
-namespace eosio {
+namespace agrio {
   /**
    *  Defines C++ API for managing assets
    *  @addtogroup asset Asset C++ API
@@ -48,8 +48,8 @@ namespace eosio {
       asset( int64_t a, class symbol s )
       :amount(a),symbol{s}
       {
-         eosio::check( is_amount_within_range(), "magnitude of asset amount must be less than 2^62" );
-         eosio::check( symbol.is_valid(),        "invalid symbol name" );
+         agrio::check( is_amount_within_range(), "magnitude of asset amount must be less than 2^62" );
+         agrio::check( symbol.is_valid(),        "invalid symbol name" );
       }
 
       /**
@@ -75,7 +75,7 @@ namespace eosio {
        */
       void set_amount( int64_t a ) {
          amount = a;
-         eosio::check( is_amount_within_range(), "magnitude of asset amount must be less than 2^62" );
+         agrio::check( is_amount_within_range(), "magnitude of asset amount must be less than 2^62" );
       }
 
       /**
@@ -97,10 +97,10 @@ namespace eosio {
        * @post The amount of this asset is subtracted by the amount of asset a
        */
       asset& operator-=( const asset& a ) {
-         eosio::check( a.symbol == symbol, "attempt to subtract asset with different symbol" );
+         agrio::check( a.symbol == symbol, "attempt to subtract asset with different symbol" );
          amount -= a.amount;
-         eosio::check( -max_amount <= amount, "subtraction underflow" );
-         eosio::check( amount <= max_amount,  "subtraction overflow" );
+         agrio::check( -max_amount <= amount, "subtraction underflow" );
+         agrio::check( amount <= max_amount,  "subtraction overflow" );
          return *this;
       }
 
@@ -112,10 +112,10 @@ namespace eosio {
        * @post The amount of this asset is added with the amount of asset a
        */
       asset& operator+=( const asset& a ) {
-         eosio::check( a.symbol == symbol, "attempt to add asset with different symbol" );
+         agrio::check( a.symbol == symbol, "attempt to add asset with different symbol" );
          amount += a.amount;
-         eosio::check( -max_amount <= amount, "addition underflow" );
-         eosio::check( amount <= max_amount,  "addition overflow" );
+         agrio::check( -max_amount <= amount, "addition underflow" );
+         agrio::check( amount <= max_amount,  "addition overflow" );
          return *this;
       }
 
@@ -155,8 +155,8 @@ namespace eosio {
        */
       asset& operator*=( int64_t a ) {
          int128_t tmp = (int128_t)amount * (int128_t)a;
-         eosio::check( tmp <= max_amount, "multiplication overflow" );
-         eosio::check( tmp >= -max_amount, "multiplication underflow" );
+         agrio::check( tmp <= max_amount, "multiplication overflow" );
+         agrio::check( tmp >= -max_amount, "multiplication underflow" );
          amount = (int64_t)tmp;
          return *this;
       }
@@ -198,8 +198,8 @@ namespace eosio {
        * @post The amount of this asset is divided by a
        */
       asset& operator/=( int64_t a ) {
-         eosio::check( a != 0, "divide by zero" );
-         eosio::check( !(amount == std::numeric_limits<int64_t>::min() && a == -1), "signed division overflow" );
+         agrio::check( a != 0, "divide by zero" );
+         agrio::check( !(amount == std::numeric_limits<int64_t>::min() && a == -1), "signed division overflow" );
          amount /= a;
          return *this;
       }
@@ -226,8 +226,8 @@ namespace eosio {
        * @pre Both asset must have the same symbol
        */
       friend int64_t operator/( const asset& a, const asset& b ) {
-         eosio::check( b.amount != 0, "divide by zero" );
-         eosio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
+         agrio::check( b.amount != 0, "divide by zero" );
+         agrio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
          return a.amount / b.amount;
       }
 
@@ -241,7 +241,7 @@ namespace eosio {
        * @pre Both asset must have the same symbol
        */
       friend bool operator==( const asset& a, const asset& b ) {
-         eosio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
+         agrio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
          return a.amount == b.amount;
       }
 
@@ -268,7 +268,7 @@ namespace eosio {
        * @pre Both asset must have the same symbol
        */
       friend bool operator<( const asset& a, const asset& b ) {
-         eosio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
+         agrio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
          return a.amount < b.amount;
       }
 
@@ -282,7 +282,7 @@ namespace eosio {
        * @pre Both asset must have the same symbol
        */
       friend bool operator<=( const asset& a, const asset& b ) {
-         eosio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
+         agrio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
          return a.amount <= b.amount;
       }
 
@@ -296,7 +296,7 @@ namespace eosio {
        * @pre Both asset must have the same symbol
        */
       friend bool operator>( const asset& a, const asset& b ) {
-         eosio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
+         agrio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
          return a.amount > b.amount;
       }
 
@@ -310,7 +310,7 @@ namespace eosio {
        * @pre Both asset must have the same symbol
        */
       friend bool operator>=( const asset& a, const asset& b ) {
-         eosio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
+         agrio::check( a.symbol == b.symbol, "comparison of assets with different symbols is not allowed" );
          return a.amount >= b.amount;
       }
 
@@ -359,10 +359,10 @@ namespace eosio {
        * @brief %Print the asset
        */
       void print()const {
-         eosio::print(to_string());
+         agrio::print(to_string());
       }
 
-      EOSLIB_SERIALIZE( asset, (amount)(symbol) )
+      AGRLIB_SERIALIZE( asset, (amount)(symbol) )
    };
 
   /**
@@ -428,7 +428,7 @@ namespace eosio {
        * @pre The owner of both extended asset need to be the same
        */
       friend extended_asset operator - ( const extended_asset& a, const extended_asset& b ) {
-         eosio::check( a.contract == b.contract, "type mismatch" );
+         agrio::check( a.contract == b.contract, "type mismatch" );
          return {a.quantity - b.quantity, a.contract};
       }
 
@@ -442,27 +442,27 @@ namespace eosio {
        * @pre The owner of both extended asset need to be the same
        */
       friend extended_asset operator + ( const extended_asset& a, const extended_asset& b ) {
-         eosio::check( a.contract == b.contract, "type mismatch" );
+         agrio::check( a.contract == b.contract, "type mismatch" );
          return {a.quantity + b.quantity, a.contract};
       }
 
       /// Addition operator.
       friend extended_asset& operator+=( extended_asset& a, const extended_asset& b ) {
-         eosio::check( a.contract == b.contract, "type mismatch" );
+         agrio::check( a.contract == b.contract, "type mismatch" );
          a.quantity += b.quantity;
          return a;
       }
 
       /// Subtraction operator.
       friend extended_asset& operator-=( extended_asset& a, const extended_asset& b ) {
-         eosio::check( a.contract == b.contract, "type mismatch" );
+         agrio::check( a.contract == b.contract, "type mismatch" );
          a.quantity -= b.quantity;
          return a;
       }
 
       /// Less than operator
       friend bool operator<( const extended_asset& a, const extended_asset& b ) {
-         eosio::check( a.contract == b.contract, "type mismatch" );
+         agrio::check( a.contract == b.contract, "type mismatch" );
          return a.quantity < b.quantity;
       }
 
@@ -479,17 +479,17 @@ namespace eosio {
 
       /// Comparison operator
       friend bool operator<=( const extended_asset& a, const extended_asset& b ) {
-         eosio::check( a.contract == b.contract, "type mismatch" );
+         agrio::check( a.contract == b.contract, "type mismatch" );
          return a.quantity <= b.quantity;
       }
 
       /// Comparison operator
       friend bool operator>=( const extended_asset& a, const extended_asset& b ) {
-         eosio::check( a.contract == b.contract, "type mismatch" );
+         agrio::check( a.contract == b.contract, "type mismatch" );
          return a.quantity >= b.quantity;
       }
 
-      EOSLIB_SERIALIZE( extended_asset, (quantity)(contract) )
+      AGRLIB_SERIALIZE( extended_asset, (quantity)(contract) )
    };
 
 /// @} asset type

@@ -4,19 +4,19 @@
 #include "datastream.hpp"
 
 
-#warning "<eosiolib/contract.hpp> is deprecated use <eosio/contract.hpp>"
+#warning "<agriolib/contract.hpp> is deprecated use <agrio/contract.hpp>"
 
 /**
  * @defgroup contract Contract
  * @ingroup types
- * @brief Defines contract type which is %base class for every EOSIO contract
+ * @brief Defines contract type which is %base class for every AGRIO contract
  * @{
  */
-namespace eosio {
+namespace agrio {
 
 /**
- * @brief %Base class for EOSIO contract.
- * @details %Base class for EOSIO contract. %A new contract should derive from this class, so it can make use of EOSIO_ABI macro.
+ * @brief %Base class for AGRIO contract.
+ * @details %Base class for AGRIO contract. %A new contract should derive from this class, so it can make use of AGRIO_ABI macro.
  */
 class contract {
    public:

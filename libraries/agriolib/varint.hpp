@@ -1,10 +1,10 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
-#warning "<eosiolib/varint.hpp> is deprecated use <eosio/varint.hpp>"
+#warning "<agriolib/varint.hpp> is deprecated use <agrio/varint.hpp>"
 /**
  * @defgroup varint Variable Length Integer Type
  * @brief Defines variable length integer type which provides more efficient serialization

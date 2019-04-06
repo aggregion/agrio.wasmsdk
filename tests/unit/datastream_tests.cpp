@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in agrio.cdt/LICENSE.txt
  */
 
 #include <array>
@@ -10,12 +10,12 @@
 #include <string>
 #include <vector>
 
-#include <eosio/tester.hpp>
-#include <eosio/binary_extension.hpp>
-#include <eosio/crypto.hpp>
-#include <eosio/datastream.hpp>
-#include <eosio/ignore.hpp>
-#include <eosio/symbol.hpp>
+#include <agrio/tester.hpp>
+#include <agrio/binary_extension.hpp>
+#include <agrio/crypto.hpp>
+#include <agrio/datastream.hpp>
+#include <agrio/ignore.hpp>
+#include <agrio/symbol.hpp>
 
 using std::array;
 using std::begin;
@@ -32,18 +32,18 @@ using std::tuple;
 using std::variant;
 using std::vector;
 
-using eosio::binary_extension;
-using eosio::datastream;
-using eosio::fixed_bytes;
-using eosio::ignore;
-using eosio::ignore_wrapper;
-using eosio::pack;
-using eosio::pack_size;
-using eosio::public_key;
-using eosio::signature;
-using eosio::symbol;
-using eosio::symbol_code;
-using eosio::unpack;
+using agrio::binary_extension;
+using agrio::datastream;
+using agrio::fixed_bytes;
+using agrio::ignore;
+using agrio::ignore_wrapper;
+using agrio::pack;
+using agrio::pack_size;
+using agrio::public_key;
+using agrio::signature;
+using agrio::symbol;
+using agrio::symbol_code;
+using agrio::unpack;
 
 // This data structure (which cannot be defined within a test macro block) needs both a default and a
 // user-defined constructor for a specific `binary extension` test
@@ -51,11 +51,11 @@ struct be_test {
    be_test() : val{42} {}
    be_test(int i) : val{i} {}
    int val;
-   EOSLIB_SERIALIZE( be_test, (val) )
+   AGRLIB_SERIALIZE( be_test, (val) )
 };
 
-// Definitions in `eosio.cdt/libraries/eosio/datastream.hpp`
-EOSIO_TEST_BEGIN(datastream_test)
+// Definitions in `agrio.cdt/libraries/agrio/datastream.hpp`
+AGRIO_TEST_BEGIN(datastream_test)
    silence_output(true);
 
    static constexpr uint16_t buffer_size{256};
@@ -143,10 +143,10 @@ EOSIO_TEST_BEGIN(datastream_test)
    CHECK_EQUAL( ds.remaining(), -1)
 
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
-// Definitions in `eosio.cdt/libraries/eosio/datastream.hpp`
-EOSIO_TEST_BEGIN(datastream_specialization_test)
+// Definitions in `agrio.cdt/libraries/agrio/datastream.hpp`
+AGRIO_TEST_BEGIN(datastream_specialization_test)
    silence_output(true);
 
    static constexpr uint16_t buffer_size{256};
@@ -219,10 +219,10 @@ EOSIO_TEST_BEGIN(datastream_specialization_test)
    CHECK_EQUAL( ds.remaining(), 0 )
 
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
-// Definitions in `eosio.cdt/libraries/eosio/datastream.hpp`
-EOSIO_TEST_BEGIN(datastream_stream_test)
+// Definitions in `agrio.cdt/libraries/agrio/datastream.hpp`
+AGRIO_TEST_BEGIN(datastream_stream_test)
    silence_output(true);
 
    static constexpr uint16_t buffer_size{256};
@@ -445,7 +445,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( cchar_vec, char_vec )
 
    // -----------------------
-   // eosio::binary_extension
+   // agrio::binary_extension
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const binary_extension<char> cbe_char{'c'};
@@ -481,7 +481,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( 42, be_default_test.value_or().val )
 
    // ------------------
-   // eosio::fixed_bytes
+   // agrio::fixed_bytes
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const fixed_bytes<32> cfb{fixed_bytes<32>::make_from_word_sequence<uint64_t>(1ULL,2ULL,3ULL,4ULL)};
@@ -492,7 +492,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( cfb, fb )
 
    // -------------
-   // eosio::ignore
+   // agrio::ignore
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const ignore<char> cig{};
@@ -503,7 +503,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( ds.tellp(), 0 )
 
    // ---------------------
-   // eosio::ignore_wrapper
+   // agrio::ignore_wrapper
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const ignore_wrapper<char> cigw{'c'};
@@ -514,7 +514,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( cigw.value, igw )
 
    // -----------------
-   // eosio::public_key
+   // agrio::public_key
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const public_key cpubkey{{},'a','b','c','d','e','f','g','h','i'};
@@ -525,7 +525,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( cpubkey, pubkey )
 
    // ----------------
-   // eosio::signature
+   // agrio::signature
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const signature csig{{},'a','b','c','d','e','f','g','h','i'};
@@ -536,7 +536,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( csig, sig )
 
    // -------------
-   // eosio::symbol
+   // agrio::symbol
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const symbol csym_no_prec{"SYMBOLL", 0};
@@ -555,7 +555,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( csym_prec, sym )
    
    // ------------------
-   // eosio::symbol_code
+   // agrio::symbol_code
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const symbol_code csc{"SYMBOLL"};
@@ -566,10 +566,10 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( csc, sc )
 
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
-// Definitions in `eosio.cdt/libraries/eosio/datastream.hpp`
-EOSIO_TEST_BEGIN(misc_datastream_test)
+// Definitions in `agrio.cdt/libraries/agrio/datastream.hpp`
+AGRIO_TEST_BEGIN(misc_datastream_test)
    silence_output(true);
 
    // ---------------------------
@@ -606,12 +606,12 @@ EOSIO_TEST_BEGIN(misc_datastream_test)
    }
    
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
 int main(int argc, char* argv[]) {
-   EOSIO_TEST(datastream_test);
-   EOSIO_TEST(datastream_specialization_test);
-   EOSIO_TEST(datastream_stream_test);
-   EOSIO_TEST(misc_datastream_test);
+   AGRIO_TEST(datastream_test);
+   AGRIO_TEST(datastream_specialization_test);
+   AGRIO_TEST(datastream_stream_test);
+   AGRIO_TEST(misc_datastream_test);
    return has_failed();
 }

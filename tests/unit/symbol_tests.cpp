@@ -1,27 +1,27 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in agrio.cdt/LICENSE.txt
  */
 
 #include <limits>
 #include <string>
 
-#include <eosio/tester.hpp>
-#include <eosio/symbol.hpp>
+#include <agrio/tester.hpp>
+#include <agrio/symbol.hpp>
 
 using std::numeric_limits;
 using std::string;
 
-using eosio::name;
-using eosio::symbol_code;
-using eosio::symbol;
-using eosio::extended_symbol;
+using agrio::name;
+using agrio::symbol_code;
+using agrio::symbol;
+using agrio::extended_symbol;
 
 static constexpr uint64_t u64min = numeric_limits<uint64_t>::min(); // 0ULL
 static constexpr uint64_t u64max = numeric_limits<uint64_t>::max(); // 18446744073709551615ULL
 
-// Definitions in `eosio.cdt/libraries/eosio/symbol.hpp`
-EOSIO_TEST_BEGIN(symbol_code_type_test)
+// Definitions in `agrio.cdt/libraries/agrio/symbol.hpp`
+AGRIO_TEST_BEGIN(symbol_code_type_test)
    silence_output(true);
 
    //// constexpr symbol_code()
@@ -121,10 +121,10 @@ EOSIO_TEST_BEGIN(symbol_code_type_test)
    CHECK_EQUAL( symbol_code{} < symbol_code{"ZZZZZZZ"}, true )
 
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
-// Definitions in `eosio.cdt/libraries/eosio/symbol.hpp`
-EOSIO_TEST_BEGIN(symbol_type_test)
+// Definitions in `agrio.cdt/libraries/agrio/symbol.hpp`
+AGRIO_TEST_BEGIN(symbol_type_test)
    silence_output(true);
 
    static constexpr symbol_code sc0{"A"};
@@ -227,10 +227,10 @@ EOSIO_TEST_BEGIN(symbol_type_test)
    CHECK_EQUAL( (symbol{} < symbol{sc3, 0}), true )
 
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
-// Definitions in `eosio.cdt/libraries/eosio/symbol.hpp`
-EOSIO_TEST_BEGIN(extended_symbol_type_test)
+// Definitions in `agrio.cdt/libraries/agrio/symbol.hpp`
+AGRIO_TEST_BEGIN(extended_symbol_type_test)
    silence_output(true);
 
    static constexpr name n0{"1"};
@@ -306,11 +306,11 @@ EOSIO_TEST_BEGIN(extended_symbol_type_test)
    CHECK_EQUAL( (extended_symbol{} < extended_symbol{s3, {}}), true )
 
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
 int main(int argc, char* argv[]) {
-   EOSIO_TEST(symbol_code_type_test);
-   EOSIO_TEST(symbol_type_test);
-   EOSIO_TEST(extended_symbol_type_test);
+   AGRIO_TEST(symbol_code_type_test);
+   AGRIO_TEST(symbol_type_test);
+   AGRIO_TEST(extended_symbol_type_test);
    return has_failed();
 }

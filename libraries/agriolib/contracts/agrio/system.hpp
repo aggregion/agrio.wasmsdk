@@ -1,23 +1,23 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
-#include "../../core/eosio/time.hpp"
-#include "../../core/eosio/check.hpp"
+#include "../../core/agrio/time.hpp"
+#include "../../core/agrio/check.hpp"
 
-namespace eosio {
+namespace agrio {
   namespace internal_use_do_not_use {
     extern "C" {
-      __attribute__((eosio_wasm_import, noreturn))
-      void eosio_exit( int32_t code );
+      __attribute__((agrio_wasm_import, noreturn))
+      void agrio_exit( int32_t code );
     }
   }
 
   /**
    *  @addtogroup system System
    *  @ingroup contracts
-   *  @brief Defines time related functions and eosio_exit
+   *  @brief Defines time related functions and agrio_exit
    */
 
    /**
@@ -28,14 +28,14 @@ namespace eosio {
     *  Example:
     *
     *  @code
-    *  eosio_exit(0);
-    *  eosio_exit(1);
-    *  eosio_exit(2);
-    *  eosio_exit(3);
+    *  agrio_exit(0);
+    *  agrio_exit(1);
+    *  agrio_exit(2);
+    *  agrio_exit(3);
     *  @endcode
     */
-   inline void eosio_exit( int32_t code ) {
-     internal_use_do_not_use::eosio_exit(code);
+   inline void agrio_exit( int32_t code ) {
+     internal_use_do_not_use::agrio_exit(code);
    }
 
    /**

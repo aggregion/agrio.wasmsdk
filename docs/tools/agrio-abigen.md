@@ -1,17 +1,17 @@
-# eosio-abigen
-### This tool is deprecated, please use `eosio-cpp` for generation of your ABIs
-To generate an ABI with ```eosio-abigen```, only requires that you give the main '.cpp' file to compile and the output filename `--output` and generating against the contract name `--contract`.
+# agrio-abigen
+### This tool is deprecated, please use `agrio-cpp` for generation of your ABIs
+To generate an ABI with ```agrio-abigen```, only requires that you give the main '.cpp' file to compile and the output filename `--output` and generating against the contract name `--contract`.
 
 Example:
 ```bash
-$ eosio-abigen hello.cpp --contract=hello --output=hello.abi
+$ agrio-abigen hello.cpp --contract=hello --output=hello.abi
 ```
 
 This will generate one file:
 * The generated ABI file (hello.abi)
 ---
 ```
-USAGE: eosio-abigen [options] <source0> [... <sourceN>]
+USAGE: agrio-abigen [options] <source0> [... <sourceN>]
 
 OPTIONS:
 
@@ -21,7 +21,7 @@ Generic Options:
   -help-list                 - Display list of available options (-help-list-hidden for more)
   -version                   - Display the version of this program
 
-eosio-abigen:
+agrio-abigen:
 generates an ABI from C++ project input
 
   -extra-arg=<string>        - Additional argument to append to the compiler command line

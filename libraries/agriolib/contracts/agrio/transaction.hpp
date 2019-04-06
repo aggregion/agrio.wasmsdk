@@ -1,43 +1,43 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 #include "action.hpp"
 #include "system.hpp"
-#include "../../core/eosio/time.hpp"
-#include "../../core/eosio/serialize.hpp"
+#include "../../core/agrio/time.hpp"
+#include "../../core/agrio/serialize.hpp"
 
 #include <vector>
 
-namespace eosio {
+namespace agrio {
    namespace internal_use_do_not_use {
       extern "C" {
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void send_deferred(const uint128_t&, uint64_t, const char*, size_t, uint32_t);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          int cancel_deferred(const uint128_t&);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          size_t read_transaction(char*, size_t);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          size_t transaction_size();
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          int tapos_block_num();
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          int tapos_block_prefix();
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          uint32_t expiration();
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          int get_action( uint32_t, uint32_t, char*, size_t);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          int get_context_free_data( uint32_t, char*, size_t);
       }
    }
@@ -98,7 +98,7 @@ namespace eosio {
       uint8_t         max_cpu_usage_ms = 0UL; /// number of CPU usage units to bill transaction for
       unsigned_int    delay_sec = 0UL; /// number of seconds to delay transaction, default: 0
 
-      EOSLIB_SERIALIZE( transaction_header, (expiration)(ref_block_num)(ref_block_prefix)(max_net_usage_words)(max_cpu_usage_ms)(delay_sec) )
+      AGRLIB_SERIALIZE( transaction_header, (expiration)(ref_block_num)(ref_block_prefix)(max_net_usage_words)(max_cpu_usage_ms)(delay_sec) )
    };
 
    /**
@@ -131,7 +131,7 @@ namespace eosio {
       std::vector<action>  actions;
       extensions_type      transaction_extensions;
 
-      EOSLIB_SERIALIZE_DERIVED( transaction, transaction_header, (context_free_actions)(actions)(transaction_extensions) )
+      AGRLIB_SERIALIZE_DERIVED( transaction, transaction_header, (context_free_actions)(actions)(transaction_extensions) )
    };
 
    /**
@@ -159,7 +159,7 @@ namespace eosio {
          return unpack<transaction>(sent_trx);
       }
 
-      EOSLIB_SERIALIZE( onerror, (sender_id)(sent_trx) )
+      AGRLIB_SERIALIZE( onerror, (sender_id)(sent_trx) )
    };
 
    /**
@@ -186,12 +186,12 @@ namespace eosio {
    inline action get_action( uint32_t type, uint32_t index ) {
       constexpr size_t max_stack_buffer_size = 512;
       int s = internal_use_do_not_use::get_action( type, index, nullptr, 0 );
-      eosio::check( s > 0, "get_action size failed" );
+      agrio::check( s > 0, "get_action size failed" );
       size_t size = static_cast<size_t>(s);
       char* buffer = (char*)( max_stack_buffer_size < size ? malloc(size) : alloca(size) );
       auto size2 = internal_use_do_not_use::get_action( type, index, buffer, size );
-      eosio::check( size == static_cast<size_t>(size2), "get_action failed" );
-      return eosio::unpack<eosio::action>( buffer, size );
+      agrio::check( size == static_cast<size_t>(size2), "get_action failed" );
+      return agrio::unpack<agrio::action>( buffer, size );
    }
 
    /**

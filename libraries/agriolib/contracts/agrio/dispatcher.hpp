@@ -6,7 +6,7 @@
 
 #include <boost/mp11/tuple.hpp>
 
-namespace eosio {
+namespace agrio {
 
   /**
    * @defgroup dispatcher Dispatcher
@@ -35,7 +35,7 @@ namespace eosio {
     * static Contract::on( ActionType )
     * ```
     *
-    * For this to work the Actions must be derived from eosio::contract
+    * For this to work the Actions must be derived from agrio::contract
     *
     * @ingroup dispatcher
     *
@@ -46,7 +46,7 @@ namespace eosio {
          Contract().on( unpack_action_data<FirstAction>() );
          return true;
       }
-      return eosio::dispatch<Contract,SecondAction,Actions...>( code, act );
+      return agrio::dispatch<Contract,SecondAction,Actions...>( code, act );
    }
 
 
@@ -56,7 +56,7 @@ namespace eosio {
     * Unpack the received action and execute the correponding action handler
     *
     * @ingroup dispatcher
-    * @tparam T - The contract class that has the correponding action handler, this contract should be derived from eosio::contract
+    * @tparam T - The contract class that has the correponding action handler, this contract should be derived from agrio::contract
     * @tparam Q - The namespace of the action handler function
     * @tparam Args - The arguments that the action handler accepts, i.e. members of the action
     * @param obj - The contract object that has the correponding action handler
@@ -94,15 +94,15 @@ namespace eosio {
 
   /// @cond INTERNAL
 
- // Helper macro for EOSIO_DISPATCH_INTERNAL
- #define EOSIO_DISPATCH_INTERNAL( r, OP, elem ) \
-    case eosio::name( BOOST_PP_STRINGIZE(elem) ).value: \
-       eosio::execute_action( eosio::name(receiver), eosio::name(code), &OP::elem ); \
+ // Helper macro for AGRIO_DISPATCH_INTERNAL
+ #define AGRIO_DISPATCH_INTERNAL( r, OP, elem ) \
+    case agrio::name( BOOST_PP_STRINGIZE(elem) ).value: \
+       agrio::execute_action( agrio::name(receiver), agrio::name(code), &OP::elem ); \
        break;
 
- // Helper macro for EOSIO_DISPATCH
- #define EOSIO_DISPATCH_HELPER( TYPE,  MEMBERS ) \
-    BOOST_PP_SEQ_FOR_EACH( EOSIO_DISPATCH_INTERNAL, TYPE, MEMBERS )
+ // Helper macro for AGRIO_DISPATCH
+ #define AGRIO_DISPATCH_HELPER( TYPE,  MEMBERS ) \
+    BOOST_PP_SEQ_FOR_EACH( AGRIO_DISPATCH_INTERNAL, TYPE, MEMBERS )
 
 /// @endcond
 
@@ -110,24 +110,24 @@ namespace eosio {
  * Convenient macro to create contract apply handler
  *
  * @ingroup dispatcher
- * @note To be able to use this macro, the contract needs to be derived from eosio::contract
+ * @note To be able to use this macro, the contract needs to be derived from agrio::contract
  * @param TYPE - The class name of the contract
  * @param MEMBERS - The sequence of available actions supported by this contract
  *
  * Example:
  * @code
- * EOSIO_DISPATCH( eosio::bios, (setpriv)(setalimits)(setglimits)(setprods)(reqauth) )
+ * AGRIO_DISPATCH( agrio::bios, (setpriv)(setalimits)(setglimits)(setprods)(reqauth) )
  * @endcode
  */
-#define EOSIO_DISPATCH( TYPE, MEMBERS ) \
+#define AGRIO_DISPATCH( TYPE, MEMBERS ) \
 extern "C" { \
-   [[eosio::wasm_entry]] \
+   [[agrio::wasm_entry]] \
    void apply( uint64_t receiver, uint64_t code, uint64_t action ) { \
       if( code == receiver ) { \
          switch( action ) { \
-            EOSIO_DISPATCH_HELPER( TYPE, MEMBERS ) \
+            AGRIO_DISPATCH_HELPER( TYPE, MEMBERS ) \
          } \
-         /* does not allow destructor of thiscontract to run: eosio_exit(0); */ \
+         /* does not allow destructor of thiscontract to run: agrio_exit(0); */ \
       } \
    } \
 } \

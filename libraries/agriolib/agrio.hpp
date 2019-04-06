@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 #include "action.hpp"
@@ -9,18 +9,18 @@
 #include "dispatcher.hpp"
 #include "contract.hpp"
 
-#warning "<eosiolib/eosio.hpp> is deprecated use <eosio/eosio.hpp>"
+#warning "<agriolib/agrio.hpp> is deprecated use <agrio/agrio.hpp>"
 
-#ifndef EOSIO_NATIVE
+#ifndef AGRIO_NATIVE
 static_assert( sizeof(long) == sizeof(int), "unexpected size difference" );
 #endif
 
 /**
  * Helper macros to reduce the verbosity for common contracts
  */
-#define CONTRACT class [[eosio::contract]]
-#define ACTION   [[eosio::action]] void
-#define TABLE struct [[eosio::table]]
+#define CONTRACT class [[agrio::contract]]
+#define ACTION   [[agrio::action]] void
+#define TABLE struct [[agrio::table]]
 
 /**
  * @defgroup core Core API

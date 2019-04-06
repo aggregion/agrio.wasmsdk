@@ -13,7 +13,7 @@ ACTION multi_index_example::set( name user ) {
 ACTION multi_index_example::print( name user ) {
    auto itr = testtab.find(user.value);
    check( itr != testtab.end(), "test table not set" );
-   eosio::print_f("Test Table : {%, %, %}\n", itr->test_primary, itr->secondary, itr->datum);
+   agrio::print_f("Test Table : {%, %, %}\n", itr->test_primary, itr->secondary, itr->datum);
 }
 
 ACTION multi_index_example::bysec( name secid ) {

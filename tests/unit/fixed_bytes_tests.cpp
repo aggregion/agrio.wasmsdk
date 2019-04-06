@@ -1,19 +1,19 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in agrio.cdt/LICENSE.txt
  */
 
 #include <array>
 
-#include <eosio/tester.hpp>
-#include <eosio/fixed_bytes.hpp>
+#include <agrio/tester.hpp>
+#include <agrio/fixed_bytes.hpp>
 
 using std::array;
 
-using eosio::fixed_bytes;
+using agrio::fixed_bytes;
 
-// Definitions in `eosio.cdt/libraries/eosio/fixed_bytes.hpp`
-EOSIO_TEST_BEGIN(fixed_bytes_test)
+// Definitions in `agrio.cdt/libraries/agrio/fixed_bytes.hpp`
+AGRIO_TEST_BEGIN(fixed_bytes_test)
    silence_output(true);
 
    //// constexpr fixed_bytes()
@@ -177,9 +177,9 @@ EOSIO_TEST_BEGIN(fixed_bytes_test)
    CHECK_EQUAL( fb_cmp1 >= fb_cmp2, false )
 
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
 int main(int argc, char* argv[]) {
-   EOSIO_TEST(fixed_bytes_test);
+   AGRIO_TEST(fixed_bytes_test);
    return has_failed();
 }

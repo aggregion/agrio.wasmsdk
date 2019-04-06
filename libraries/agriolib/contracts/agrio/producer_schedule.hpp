@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
-#include "../../core/eosio/name.hpp"
-#include "../../core/eosio/crypto.hpp"
+#include "../../core/agrio/name.hpp"
+#include "../../core/agrio/crypto.hpp"
 
-namespace eosio {
+namespace agrio {
 
   /**
    *  @defgroup producer_key Producer Key
@@ -41,7 +41,7 @@ namespace eosio {
 
     /// @endcond
 
-    EOSLIB_SERIALIZE( producer_key, (producer_name)(block_signing_key) )
+    AGRLIB_SERIALIZE( producer_key, (producer_name)(block_signing_key) )
   };
 
    /**
@@ -75,4 +75,4 @@ namespace eosio {
     */
    std::vector<name> get_active_producers();
 
-} /// namespace eosio
+} /// namespace agrio

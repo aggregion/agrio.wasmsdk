@@ -32,13 +32,13 @@
 	fi
 
 	if [ "${OS_MIN}" -lt 12 ]; then
-		echo "You must be running Mac OS 10.12.x or higher to install EOSIO."
+		echo "You must be running Mac OS 10.12.x or higher to install AGRIO."
 		echo "Exiting now."
 		exit 1
 	fi
 
 	if [ "${DISK_AVAIL}" -lt "$DISK_MIN" ]; then
-		echo "You must have at least ${DISK_MIN}GB of available storage to install EOSIO."
+		echo "You must have at least ${DISK_MIN}GB of available storage to install AGRIO."
 		echo "Exiting now."
 		exit 1
 	fi
@@ -68,7 +68,7 @@
 	printf "\\tChecking Home Brew installation\\n"
 	if ! BREW=$( command -v brew )
 	then
-		printf "\\tHomebrew must be installed to compile EOS.IO\\n\\n"
+		printf "\\tHomebrew must be installed to compile AGR.IO\\n\\n"
 		printf "\\tDo you wish to install Home Brew?\\n"
 		select yn in "Yes" "No"; do
 			case "${yn}" in
@@ -121,7 +121,7 @@
 		DISPLAY="${DISPLAY}${COUNT}. ${name}\\n\\t"
 		printf "\\t\\t %s ${bldred}NOT${txtrst} found.\\n" "${name}"
 		(( COUNT++ ))
-	done < scripts/eosio_build_dep
+	done < scripts/agrio_build_dep
 	IFS="${var_ifs}"
 		
 	printf "\\tChecking Python3 ... "
@@ -135,7 +135,7 @@
 	fi
 
 	if [ $COUNT -gt 1 ]; then
-		printf "\\n\\tThe following dependencies are required to install EOSIO.\\n"
+		printf "\\n\\tThe following dependencies are required to install AGRIO.\\n"
 		printf "\\n\\t%s\\n\\n" "${DISPLAY}"
 		echo "Do you wish to install these packages?"
 		select yn in "Yes" "No"; do

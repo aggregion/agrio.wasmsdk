@@ -1,14 +1,14 @@
-if(EOSIO_CDT_ROOT STREQUAL "" OR NOT EOSIO_CDT_ROOT)
-   set(EOSIO_CDT_ROOT "@CDT_ROOT_DIR@")
+if(AGRIO_CDT_ROOT STREQUAL "" OR NOT AGRIO_CDT_ROOT)
+   set(AGRIO_CDT_ROOT "@CDT_ROOT_DIR@")
 endif()
 
-list(APPEND CMAKE_MODULE_PATH ${EOSIO_CDT_ROOT}/lib/cmake/eosio.cdt)
-if (NOT EOSIO_WASM_OLD_BEHAVIOR STREQUAL "Off")
-    set(EOSIO_WASM_OLD_BEHAVIOR "On")
-    include(EosioWasmToolchain)
+list(APPEND CMAKE_MODULE_PATH ${AGRIO_CDT_ROOT}/lib/cmake/agrio.cdt)
+if (NOT AGRIO_WASM_OLD_BEHAVIOR STREQUAL "Off")
+    set(AGRIO_WASM_OLD_BEHAVIOR "On")
+    include(AgrioWasmToolchain)
 endif()
 
-include(EosioCDTMacros)
+include(AgrioCDTMacros)
   
 
 function(EXTRACT_MAJOR_MINOR_FROM_VERSION version success major minor)
@@ -29,7 +29,7 @@ function(EXTRACT_MAJOR_MINOR_FROM_VERSION version success major minor)
    set(${success} TRUE      PARENT_SCOPE)
 endfunction(EXTRACT_MAJOR_MINOR_FROM_VERSION)
 
-function(EOSIO_CHECK_VERSION output version hard_min soft_max hard_max) # optional 6th argument for error message
+function(AGRIO_CHECK_VERSION output version hard_min soft_max hard_max) # optional 6th argument for error message
    set(${output} "INVALID" PARENT_SCOPE)
 
    EXTRACT_MAJOR_MINOR_FROM_VERSION("${version}" success major minor)
@@ -100,4 +100,4 @@ function(EOSIO_CHECK_VERSION output version hard_min soft_max hard_max) # option
    endif()
 
    set(${output} "MATCH" PARENT_SCOPE)
-endfunction(EOSIO_CHECK_VERSION)
+endfunction(AGRIO_CHECK_VERSION)

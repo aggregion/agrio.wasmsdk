@@ -1,11 +1,11 @@
 ### Usage
 ---
-To manually compile the source code, use `eosio-cpp/eosio-cc` and `eosio-ld` as if it were __clang__ and __lld__. All the includes and options specific to EOSIO and CDT are baked in.
+To manually compile the source code, use `agrio-cpp/agrio-cc` and `agrio-ld` as if it were __clang__ and __lld__. All the includes and options specific to AGRIO and CDT are baked in.
 
-###$ eosio-cpp
+###$ agrio-cpp
 ---
 ```
-USAGE: eosio-cpp [options] <input file> ...
+USAGE: agrio-cpp [options] <input file> ...
 
 OPTIONS:
 

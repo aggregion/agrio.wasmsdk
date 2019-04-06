@@ -1,10 +1,10 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
-namespace eosio {
+namespace agrio {
    /**
     * @defgroup varint Variable Length Integer Type
     * @ingroup core

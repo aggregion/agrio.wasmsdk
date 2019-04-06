@@ -1,13 +1,13 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
 #include <stdint.h>
 #include <wchar.h>
 
-#warning "<eosiolib/types.h> is deprecated use <eosio/types.h>. If you are using C++ the .h header files will be removed from inclusion entirely in v1.7.0"
+#warning "<agriolib/types.h> is deprecated use <agrio/types.h>. If you are using C++ the .h header files will be removed from inclusion entirely in v1.7.0"
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,14 +29,14 @@ extern "C" {
 typedef uint64_t capi_name;
 
 /**
- * EOSIO Public Key. It is 34 bytes.
+ * AGRIO Public Key. It is 34 bytes.
  */
 struct capi_public_key {
    char data[34];
 };
 
 /**
- * EOSIO Signature. It is 66 bytes.
+ * AGRIO Signature. It is 66 bytes.
  */
 struct capi_signature {
    uint8_t data[66];

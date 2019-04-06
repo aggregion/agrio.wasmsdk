@@ -55,9 +55,9 @@ struct abi_error_message {
    std::string error_msg;
 };
 
-/// From eosio libraries/chain/include/eosio/chain/abi_def.hpp
+/// From agrio libraries/chain/include/agrio/chain/abi_def.hpp
 struct abi {
-   std::string version = "eosio::abi/1.1";
+   std::string version = "agrio::abi/1.1";
    std::set<abi_struct>  structs;
    std::set<abi_typedef> typedefs;
    std::set<abi_action>  actions;

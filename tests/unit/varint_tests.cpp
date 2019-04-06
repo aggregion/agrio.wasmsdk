@@ -1,19 +1,19 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in agrio.cdt/LICENSE.txt
  */
 
 #include <limits>
 
-#include <eosio/tester.hpp>
-#include <eosio/datastream.hpp>
-#include <eosio/varint.hpp>
+#include <agrio/tester.hpp>
+#include <agrio/datastream.hpp>
+#include <agrio/varint.hpp>
 
 using std::numeric_limits;
 
-using eosio::datastream;
-using eosio::unsigned_int;
-using eosio::signed_int;
+using agrio::datastream;
+using agrio::unsigned_int;
+using agrio::signed_int;
 
 static constexpr uint32_t u32min = numeric_limits<uint32_t>::min(); // 0
 static constexpr uint32_t u32max = numeric_limits<uint32_t>::max(); // 4294967295
@@ -21,8 +21,8 @@ static constexpr uint32_t u32max = numeric_limits<uint32_t>::max(); // 429496729
 static constexpr int32_t i32min = numeric_limits<int32_t>::min(); // -2147483648
 static constexpr int32_t i32max = numeric_limits<int32_t>::max(); //  2147483647
 
-// Defined in `eosio.cdt/libraries/eosio/varint.hpp`
-EOSIO_TEST_BEGIN(unsigned_int_type_test)
+// Defined in `agrio.cdt/libraries/agrio/varint.hpp`
+AGRIO_TEST_BEGIN(unsigned_int_type_test)
    silence_output(false);
 
    //// unsigned_int(uint32_t)
@@ -125,10 +125,10 @@ EOSIO_TEST_BEGIN(unsigned_int_type_test)
    CHECK_EQUAL( cui, ui)
    
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
-// Defined in `eosio.cdt/libraries/eosio/varint.hpp`
-EOSIO_TEST_BEGIN(signed_int_type_test)
+// Defined in `agrio.cdt/libraries/agrio/varint.hpp`
+AGRIO_TEST_BEGIN(signed_int_type_test)
    silence_output(false);
    
    //// signed_int(uint32_t)
@@ -258,10 +258,10 @@ EOSIO_TEST_BEGIN(signed_int_type_test)
    CHECK_EQUAL( d, dd )
 
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
 int main(int argc, char* argv[]) {
-   EOSIO_TEST(unsigned_int_type_test)
-   EOSIO_TEST(signed_int_type_test);
+   AGRIO_TEST(unsigned_int_type_test)
+   AGRIO_TEST(signed_int_type_test);
    return has_failed();
 }

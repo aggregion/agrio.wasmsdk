@@ -1,56 +1,56 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 #include <cstdlib>
 
-#include "../../core/eosio/serialize.hpp"
-#include "../../core/eosio/datastream.hpp"
-#include "../../core/eosio/name.hpp"
-#include "../../core/eosio/ignore.hpp"
-#include "../../core/eosio/time.hpp"
+#include "../../core/agrio/serialize.hpp"
+#include "../../core/agrio/datastream.hpp"
+#include "../../core/agrio/name.hpp"
+#include "../../core/agrio/ignore.hpp"
+#include "../../core/agrio/time.hpp"
 
 #include <boost/preprocessor/variadic/size.hpp>
 #include <boost/preprocessor/variadic/to_tuple.hpp>
 #include <boost/preprocessor/tuple/enum.hpp>
 #include <boost/preprocessor/facilities/overload.hpp>
 
-namespace eosio {
+namespace agrio {
 
    namespace internal_use_do_not_use {
       extern "C" {
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          uint32_t read_action_data( void* msg, uint32_t len );
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          uint32_t action_data_size();
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void require_recipient( uint64_t name );
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void require_auth( uint64_t name );
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          bool has_auth( uint64_t name );
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void require_auth2( uint64_t name, uint64_t permission );
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          bool is_account( uint64_t name );
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void send_inline(char *serialized_action, size_t size);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void send_context_free_inline(char *serialized_action, size_t size);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          uint64_t  publication_time();
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          uint64_t current_receiver();
       }
    };
@@ -74,7 +74,7 @@ namespace eosio {
     *    unsigned long long b; //8
     *    int  c; //4
     *
-    *    EOSLIB_SERIALIZE( dummy_action, (a)(b)(c) )
+    *    AGRLIB_SERIALIZE( dummy_action, (a)(b)(c) )
     *  };
     *  dummy_action msg = unpack_action_data<dummy_action>();
     *  @endcode
@@ -213,7 +213,7 @@ namespace eosio {
          return std::tie( a.actor, a.permission ) == std::tie( b.actor, b.permission );
       }
 
-      EOSLIB_SERIALIZE( permission_level, (actor)(permission) )
+      AGRLIB_SERIALIZE( permission_level, (actor)(permission) )
    };
 
    /**
@@ -306,7 +306,7 @@ namespace eosio {
 
       /// @cond INTERNAL
 
-      EOSLIB_SERIALIZE( action, (account)(name)(authorization)(data) )
+      AGRLIB_SERIALIZE( action, (account)(name)(authorization)(data) )
 
       /// @endcond
 
@@ -324,7 +324,7 @@ namespace eosio {
        * @pre This action should not contain any authorizations
        */
       void send_context_free() const {
-         eosio::check( authorization.size() == 0, "context free actions cannot have authorizations");
+         agrio::check( authorization.size() == 0, "context free actions cannot have authorizations");
          auto serialize = pack(*this);
          internal_use_do_not_use::send_context_free_inline(serialize.data(), serialize.size());
       }
@@ -427,33 +427,33 @@ namespace eosio {
     * // defined by contract writer of the actions
     * using transfer act = action_wrapper<"transfer"_n, &token::transfer>;( *this, transfer, {st.issuer,N(active)}, {st.issuer, to, quantity, memo} );
     * // usage by different contract writer
-    * transfer_act{"eosio.token"_n, {st.issuer, "active"_n}}.send(st.issuer, to, quantity, memo);
+    * transfer_act{"agrio.token"_n, {st.issuer, "active"_n}}.send(st.issuer, to, quantity, memo);
     * // or
-    * transfer_act trans_action{ "eosio.token"_n, {st.issuer, "active"_n}};
+    * transfer_act trans_action{ "agrio.token"_n, {st.issuer, "active"_n}};
     * trans_action.send(st.issuer, to, quantity, memo);
     * @endcode
     */
-   template <eosio::name::raw Name, auto Action>
+   template <agrio::name::raw Name, auto Action>
    struct action_wrapper {
       template <typename Code>
-      constexpr action_wrapper(Code&& code, std::vector<eosio::permission_level>&& perms)
+      constexpr action_wrapper(Code&& code, std::vector<agrio::permission_level>&& perms)
          : code_name(std::forward<Code>(code)), permissions(std::move(perms)) {}
 
       template <typename Code>
-      constexpr action_wrapper(Code&& code, const std::vector<eosio::permission_level>& perms)
+      constexpr action_wrapper(Code&& code, const std::vector<agrio::permission_level>& perms)
          : code_name(std::forward<Code>(code)), permissions(perms) {}
 
       template <typename Code>
-      constexpr action_wrapper(Code&& code, eosio::permission_level&& perm)
+      constexpr action_wrapper(Code&& code, agrio::permission_level&& perm)
          : code_name(std::forward<Code>(code)), permissions({1, std::move(perm)}) {}
 
       template <typename Code>
-      constexpr action_wrapper(Code&& code, const eosio::permission_level& perm)
+      constexpr action_wrapper(Code&& code, const agrio::permission_level& perm)
          : code_name(std::forward<Code>(code)), permissions({1, perm}) {}
 
-      static constexpr eosio::name action_name = eosio::name(Name);
-      eosio::name code_name;
-      std::vector<eosio::permission_level> permissions;
+      static constexpr agrio::name action_name = agrio::name(Name);
+      agrio::name code_name;
+      std::vector<agrio::permission_level> permissions;
 
       static constexpr auto get_mem_ptr() {
          return Action;
@@ -476,27 +476,27 @@ namespace eosio {
 
    };
 
-   template <eosio::name::raw Name, auto... Actions>
+   template <agrio::name::raw Name, auto... Actions>
    struct variant_action_wrapper {
       template <typename Code>
-      constexpr variant_action_wrapper(Code&& code, std::vector<eosio::permission_level>&& perms)
+      constexpr variant_action_wrapper(Code&& code, std::vector<agrio::permission_level>&& perms)
          : code_name(std::forward<Code>(code)), permissions(std::move(perms)) {}
 
       template <typename Code>
-      constexpr variant_action_wrapper(Code&& code, const std::vector<eosio::permission_level>& perms)
+      constexpr variant_action_wrapper(Code&& code, const std::vector<agrio::permission_level>& perms)
          : code_name(std::forward<Code>(code)), permissions(perms) {}
 
       template <typename Code>
-      constexpr variant_action_wrapper(Code&& code, eosio::permission_level&& perm)
+      constexpr variant_action_wrapper(Code&& code, agrio::permission_level&& perm)
          : code_name(std::forward<Code>(code)), permissions({1, std::move(perm)}) {}
 
       template <typename Code>
-      constexpr variant_action_wrapper(Code&& code, const eosio::permission_level& perm)
+      constexpr variant_action_wrapper(Code&& code, const agrio::permission_level& perm)
          : code_name(std::forward<Code>(code)), permissions({1, perm}) {}
 
-      static constexpr eosio::name action_name = eosio::name(Name);
-      eosio::name code_name;
-      std::vector<eosio::permission_level> permissions;
+      static constexpr agrio::name action_name = agrio::name(Name);
+      agrio::name code_name;
+      std::vector<agrio::permission_level> permissions;
 
       template <size_t Variant>
       static constexpr auto get_mem_ptr() {
@@ -544,13 +544,13 @@ namespace eosio {
       }
    };
 
-} // namespace eosio
+} // namespace agrio
 
 #define INLINE_ACTION_SENDER3( CONTRACT_CLASS, FUNCTION_NAME, ACTION_NAME  )\
-::eosio::inline_dispatcher<decltype(&CONTRACT_CLASS::FUNCTION_NAME), ACTION_NAME>::call
+::agrio::inline_dispatcher<decltype(&CONTRACT_CLASS::FUNCTION_NAME), ACTION_NAME>::call
 
 #define INLINE_ACTION_SENDER2( CONTRACT_CLASS, NAME )\
-INLINE_ACTION_SENDER3( CONTRACT_CLASS, NAME, ::eosio::name(#NAME) )
+INLINE_ACTION_SENDER3( CONTRACT_CLASS, NAME, ::agrio::name(#NAME) )
 
 #define INLINE_ACTION_SENDER(...) BOOST_PP_OVERLOAD(INLINE_ACTION_SENDER,__VA_ARGS__)(__VA_ARGS__)
 
@@ -559,7 +559,7 @@ INLINE_ACTION_SENDER3( CONTRACT_CLASS, NAME, ::eosio::name(#NAME) )
  *
  * @brief A macro to simplify calling inline actions
  * @details The send inline action macro is intended to simplify the process of calling inline actions. When calling new actions from existing actions 
- * EOSIO supports two communication models, inline and deferred. Inline actions are executed as part of the current transaction. This macro
+ * AGRIO supports two communication models, inline and deferred. Inline actions are executed as part of the current transaction. This macro
  * creates an @ref action using the supplied parameters and automatically calls action.send() on this newly created action.
  *
  * Example:
@@ -567,10 +567,10 @@ INLINE_ACTION_SENDER3( CONTRACT_CLASS, NAME, ::eosio::name(#NAME) )
  * SEND_INLINE_ACTION( *this, transfer, {st.issuer,N(active)}, {st.issuer, to, quantity, memo} );
  * @endcode
  * 
- * The example above is taken from eosio.token. 
+ * The example above is taken from agrio.token. 
  * This example:  
- *       uses the passed in, dereferenced `this` pointer, to call this.get_self() i.e. the eosio.token contract; 
- *       calls the eosio.token::transfer() action; 
+ *       uses the passed in, dereferenced `this` pointer, to call this.get_self() i.e. the agrio.token contract; 
+ *       calls the agrio.token::transfer() action; 
  *       uses the active permission of the "issuer" account;
  *       uses parameters st.issuer, to, quantity and memo. 
  * This macro creates an action struct used to 'send()' (call) transfer(account_name from, account_name to, asset quantity, string memo)

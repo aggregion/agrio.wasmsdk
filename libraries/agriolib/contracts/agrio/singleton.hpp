@@ -2,12 +2,12 @@
 #include "multi_index.hpp"
 #include "system.hpp"
 
-namespace  eosio {
+namespace  agrio {
 
    /**
     *  @defgroup singleton Singleton Table
     *  @ingroup contracts
-    *  @brief Defines EOSIO Singleton Table used with %multiindex
+    *  @brief Defines AGRIO Singleton Table used with %multiindex
     */
 
    /**
@@ -41,10 +41,10 @@ namespace  eosio {
           */
          uint64_t primary_key() const { return pk_value; }
 
-         EOSLIB_SERIALIZE( row, (value) )
+         AGRLIB_SERIALIZE( row, (value) )
       };
 
-      typedef eosio::multi_index<SingletonName, row> table;
+      typedef agrio::multi_index<SingletonName, row> table;
 
       public:
 
@@ -74,7 +74,7 @@ namespace  eosio {
           */
          T get() {
             auto itr = _t.find( pk_value );
-            eosio::check( itr != _t.end(), "singleton does not exist" );
+            agrio::check( itr != _t.end(), "singleton does not exist" );
             return itr->value;
          }
 
@@ -130,4 +130,4 @@ namespace  eosio {
       private:
          table _t;
    };
-} /// namespace eosio
+} /// namespace agrio

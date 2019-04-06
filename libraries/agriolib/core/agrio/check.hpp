@@ -1,31 +1,31 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
 #include <alloca.h>
 #include <string>
 
-namespace eosio {
+namespace agrio {
 
    namespace internal_use_do_not_use {
       extern "C" {
-         __attribute__((eosio_wasm_import))
-         void eosio_assert( uint32_t test, const char* msg );
+         __attribute__((agrio_wasm_import))
+         void agrio_assert( uint32_t test, const char* msg );
 
-         __attribute__((eosio_wasm_import))
-         void eosio_assert_message( uint32_t test, const char* msg, uint32_t msg_len );
+         __attribute__((agrio_wasm_import))
+         void agrio_assert_message( uint32_t test, const char* msg, uint32_t msg_len );
 
-         __attribute__((eosio_wasm_import))
-         void eosio_assert_code( uint32_t test, uint64_t code );
+         __attribute__((agrio_wasm_import))
+         void agrio_assert_code( uint32_t test, uint64_t code );
       }
    }
 
    /**
     *  @defgroup system System
     *  @ingroup core
-    *  @brief Defines wrappers over eosio_assert
+    *  @brief Defines wrappers over agrio_assert
     */
 
    /**
@@ -35,12 +35,12 @@ namespace eosio {
     *
     *  Example:
     *  @code
-    *  eosio::check(a == b, "a does not equal b");
+    *  agrio::check(a == b, "a does not equal b");
     *  @endcode
     */
    inline void check(bool pred, const char* msg) {
       if (!pred) {
-         internal_use_do_not_use::eosio_assert(false, msg);
+         internal_use_do_not_use::agrio_assert(false, msg);
       }
    }
 
@@ -51,12 +51,12 @@ namespace eosio {
     *
     *  Example:
     *  @code
-    *  eosio::check(a == b, "a does not equal b");
+    *  agrio::check(a == b, "a does not equal b");
     *  @endcode
     */
    inline void check(bool pred, const std::string& msg) {
       if (!pred) {
-         internal_use_do_not_use::eosio_assert(false, msg.c_str());
+         internal_use_do_not_use::agrio_assert(false, msg.c_str());
       }
    }
 
@@ -67,12 +67,12 @@ namespace eosio {
     *
     *  Example:
     *  @code
-    *  eosio::check(a == b, "a does not equal b");
+    *  agrio::check(a == b, "a does not equal b");
     *  @endcode
     */
    inline void check(bool pred, std::string&& msg) {
       if (!pred) {
-         internal_use_do_not_use::eosio_assert(false, msg.c_str());
+         internal_use_do_not_use::agrio_assert(false, msg.c_str());
       }
    }
 
@@ -84,12 +84,12 @@ namespace eosio {
     *  Example:
     *  @code
     *  const char* msg = "a does not equal b b does not equal a";
-    *  eosio::check(a == b, "a does not equal b", 18);
+    *  agrio::check(a == b, "a does not equal b", 18);
     *  @endcode
     */
    inline void check(bool pred, const char* msg, size_t n) {
       if (!pred) {
-         internal_use_do_not_use::eosio_assert_message(false, msg, n);
+         internal_use_do_not_use::agrio_assert_message(false, msg, n);
       }
    }
 
@@ -101,12 +101,12 @@ namespace eosio {
     *  Example:
     *  @code
     *  std::string msg = "a does not equal b b does not equal a";
-    *  eosio::check(a == b, msg, 18);
+    *  agrio::check(a == b, msg, 18);
     *  @endcode
     */
    inline void check(bool pred, const std::string& msg, size_t n) {
       if (!pred) {
-         internal_use_do_not_use::eosio_assert_message(false, msg.c_str(), n);
+         internal_use_do_not_use::agrio_assert_message(false, msg.c_str(), n);
       }
    }
 
@@ -117,12 +117,12 @@ namespace eosio {
     *
     *  Example:
     *  @code
-    *  eosio::check(a == b, 13);
+    *  agrio::check(a == b, 13);
     *  @endcode
     */
    inline void check(bool pred, uint64_t code) {
       if (!pred) {
-         internal_use_do_not_use::eosio_assert_code(false, code);
+         internal_use_do_not_use::agrio_assert_code(false, code);
       }
    }
-} // namespace eosio
+} // namespace agrio

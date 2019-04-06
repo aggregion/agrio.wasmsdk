@@ -3,7 +3,7 @@
 #include <string>
 #include "serialize.hpp"
 
-namespace eosio {
+namespace agrio {
   /**
    *  @defgroup time
    *  @ingroup core
@@ -35,7 +35,7 @@ namespace eosio {
 
         int64_t _count;
         /// @endcond
-        EOSLIB_SERIALIZE( microseconds, (_count) )
+        AGRLIB_SERIALIZE( microseconds, (_count) )
     private:
         friend class time_point;
   };
@@ -73,7 +73,7 @@ namespace eosio {
         microseconds elapsed;
         /// @endcond
 
-        EOSLIB_SERIALIZE( time_point, (elapsed) )
+        AGRLIB_SERIALIZE( time_point, (elapsed) )
   };
 
   /**
@@ -96,11 +96,11 @@ namespace eosio {
         static time_point_sec maximum() { return time_point_sec(0xffffffff); }
         static time_point_sec min() { return time_point_sec(0); }
 
-        operator time_point()const { return time_point( eosio::seconds( utc_seconds) ); }
+        operator time_point()const { return time_point( agrio::seconds( utc_seconds) ); }
         uint32_t sec_since_epoch()const { return utc_seconds; }
 
         /// @cond INTERNAL
-        time_point_sec operator = ( const eosio::time_point& t )
+        time_point_sec operator = ( const agrio::time_point& t )
         {
           utc_seconds = uint32_t(t.time_since_epoch().count() / 1000000ll);
           return *this;
@@ -128,7 +128,7 @@ namespace eosio {
 
         /// @endcond
 
-        EOSLIB_SERIALIZE( time_point_sec, (utc_seconds) )
+        AGRLIB_SERIALIZE( time_point_sec, (utc_seconds) )
   };
 
    /**
@@ -154,7 +154,7 @@ namespace eosio {
          static block_timestamp min() { return block_timestamp(0); }
 
          block_timestamp next() const {
-            eosio::check( std::numeric_limits<uint32_t>::max() - slot >= 1, "block timestamp overflow" );
+            agrio::check( std::numeric_limits<uint32_t>::max() - slot >= 1, "block timestamp overflow" );
             auto result = block_timestamp(*this);
             result.slot += 1;
             return result;
@@ -186,7 +186,7 @@ namespace eosio {
          static constexpr int64_t block_timestamp_epoch = 946684800000ll;  // epoch is year 2000
          /// @endcond
 
-         EOSLIB_SERIALIZE( block_timestamp, (slot) )
+         AGRLIB_SERIALIZE( block_timestamp, (slot) )
       private:
 
 
@@ -207,4 +207,4 @@ namespace eosio {
     */
    typedef block_timestamp block_timestamp_type;
 
-} // namespace eosio
+} // namespace agrio

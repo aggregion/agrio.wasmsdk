@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
@@ -11,9 +11,9 @@
 
 #include <array>
 
-#warning "<eosiolib/crypto.hpp> is deprecated use <eosio/crypto.hpp>"
+#warning "<agriolib/crypto.hpp> is deprecated use <agrio/crypto.hpp>"
 
-namespace eosio {
+namespace agrio {
 
    /**
    *  @defgroup public_key Public Key Type
@@ -24,8 +24,8 @@ namespace eosio {
    */
 
    /**
-    * EOSIO Public Key
-    * @brief EOSIO Public Key
+    * AGRIO Public Key
+    * @brief AGRIO Public Key
     */
    struct public_key {
       /**
@@ -47,7 +47,7 @@ namespace eosio {
       friend bool operator != ( const public_key& a, const public_key& b ) {
         return std::tie(a.type,a.data) != std::tie(b.type,b.data);
       }
-      EOSLIB_SERIALIZE( public_key, (type)(data) )
+      AGRLIB_SERIALIZE( public_key, (type)(data) )
    };
 
    /// @} publickeytype
@@ -61,8 +61,8 @@ namespace eosio {
    */
 
    /**
-    * EOSIO Signature
-    * @brief EOSIO Signature
+    * AGRIO Signature
+    * @brief AGRIO Signature
     */
    struct signature {
       /**
@@ -84,7 +84,7 @@ namespace eosio {
       friend bool operator != ( const signature& a, const signature& b ) {
         return std::tie(a.type,a.data) != std::tie(b.type,b.data);
       }
-      EOSLIB_SERIALIZE( signature, (type)(data) )
+      AGRLIB_SERIALIZE( signature, (type)(data) )
    };
 
    /// @} signaturetype
@@ -105,7 +105,7 @@ namespace eosio {
     *  @param length - Data length
     *  @param hash - digest to compare to
     */
-   void assert_sha256( const char* data, uint32_t length, const eosio::checksum256& hash );
+   void assert_sha256( const char* data, uint32_t length, const agrio::checksum256& hash );
 
    /**
     *  Tests if the SHA1 hash generated from data matches the provided digest.
@@ -116,7 +116,7 @@ namespace eosio {
     *  @param length - Data length
     *  @param hash - digest to compare to
     */
-   void assert_sha1( const char* data, uint32_t length, const eosio::checksum160& hash );
+   void assert_sha1( const char* data, uint32_t length, const agrio::checksum160& hash );
 
    /**
     *  Tests if the SHA512 hash generated from data matches the provided digest.
@@ -127,7 +127,7 @@ namespace eosio {
     *  @param length - Data length
     *  @param hash - digest to compare to
     */
-   void assert_sha512( const char* data, uint32_t length, const eosio::checksum512& hash );
+   void assert_sha512( const char* data, uint32_t length, const agrio::checksum512& hash );
 
    /**
     *  Tests if the RIPEMD160 hash generated from data matches the provided digest.
@@ -137,7 +137,7 @@ namespace eosio {
     *  @param length - Data length
     *  @param hash - digest to compare to
     */
-   void assert_ripemd160( const char* data, uint32_t length, const eosio::checksum160& hash );
+   void assert_ripemd160( const char* data, uint32_t length, const agrio::checksum160& hash );
 
    /**
     *  Hashes `data` using SHA256.
@@ -145,9 +145,9 @@ namespace eosio {
     *
     *  @param data - Data you want to hash
     *  @param length - Data length
-    *  @return eosio::checksum256 - Computed digest
+    *  @return agrio::checksum256 - Computed digest
     */
-   eosio::checksum256 sha256( const char* data, uint32_t length );
+   agrio::checksum256 sha256( const char* data, uint32_t length );
 
    /**
     *  Hashes `data` using SHA1.
@@ -155,9 +155,9 @@ namespace eosio {
     *
     *  @param data - Data you want to hash
     *  @param length - Data length
-    *  @return eosio::checksum160 - Computed digest
+    *  @return agrio::checksum160 - Computed digest
     */
-   eosio::checksum160 sha1( const char* data, uint32_t length );
+   agrio::checksum160 sha1( const char* data, uint32_t length );
 
    /**
     *  Hashes `data` using SHA512.
@@ -165,9 +165,9 @@ namespace eosio {
     *
     *  @param data - Data you want to hash
     *  @param length - Data length
-    *  @return eosio::checksum512 - Computed digest
+    *  @return agrio::checksum512 - Computed digest
     */
-   eosio::checksum512 sha512( const char* data, uint32_t length );
+   agrio::checksum512 sha512( const char* data, uint32_t length );
 
    /**
     *  Hashes `data` using RIPEMD160.
@@ -175,9 +175,9 @@ namespace eosio {
     *
     *  @param data - Data you want to hash
     *  @param length - Data length
-    *  @return eosio::checksum160 - Computed digest
+    *  @return agrio::checksum160 - Computed digest
     */
-   eosio::checksum160 ripemd160( const char* data, uint32_t length );
+   agrio::checksum160 ripemd160( const char* data, uint32_t length );
 
    /**
     *  Calculates the public key used for a given signature on a given digest.
@@ -185,9 +185,9 @@ namespace eosio {
     *
     *  @param digest - Digest of the message that was signed
     *  @param sig - Signature
-    *  @return eosio::public_key - Recovered public key
+    *  @return agrio::public_key - Recovered public key
     */
-   eosio::public_key recover_key( const eosio::checksum256& digest, const eosio::signature& sig );
+   agrio::public_key recover_key( const agrio::checksum256& digest, const agrio::signature& sig );
 
    /**
     *  Tests a given public key with the recovered public key from digest and signature.
@@ -197,7 +197,7 @@ namespace eosio {
     *  @param sig - Signature
     *  @param pubkey - Public key
     */
-   void assert_recover_key( const eosio::checksum256& digest, const eosio::signature& sig, const eosio::public_key& pubkey );
+   void assert_recover_key( const agrio::checksum256& digest, const agrio::signature& sig, const agrio::public_key& pubkey );
 
    /// }@cryptoapi
 }

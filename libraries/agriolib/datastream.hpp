@@ -1,6 +1,6 @@
 /**
  *  @file datastream.hpp
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 #include "types.h"
@@ -31,9 +31,9 @@
 #include <boost/mp11/tuple.hpp>
 #include <boost/pfr.hpp>
 
-#warning "<eosiolib/datastream.hpp> is deprecated use <eosio/datastream.hpp>"
+#warning "<agriolib/datastream.hpp> is deprecated use <agrio/datastream.hpp>"
 
-namespace eosio {
+namespace agrio {
 
 /**
  *  A data stream for reading and writing data in the form of bytes
@@ -68,7 +68,7 @@ class datastream {
       *  @return true
       */
       inline bool read( char* d, size_t s ) {
-        eosio::check( size_t(_end - _pos) >= (size_t)s, "read" );
+        agrio::check( size_t(_end - _pos) >= (size_t)s, "read" );
         memcpy( d, _pos, s );
         _pos += s;
         return true;
@@ -82,7 +82,7 @@ class datastream {
       *  @return true
       */
       inline bool write( const char* d, size_t s ) {
-        eosio::check( _end - _pos >= (int32_t)s, "write" );
+        agrio::check( _end - _pos >= (int32_t)s, "write" );
         memcpy( (void*)_pos, d, s );
         _pos += s;
         return true;
@@ -96,7 +96,7 @@ class datastream {
       *  @return true
       */
       inline bool put(char c) {
-        eosio::check( _pos < _end, "put" );
+        agrio::check( _pos < _end, "put" );
         *_pos = c;
         ++_pos;
         return true;
@@ -120,7 +120,7 @@ class datastream {
       */
       inline bool get( char& c )
       {
-        eosio::check( _pos < _end, "get" );
+        agrio::check( _pos < _end, "get" );
         c = *_pos;
         ++_pos;
         return true;
@@ -363,7 +363,7 @@ void deserialize(datastream<Stream>& ds, std::variant<Ts...>& var, int i) {
          deserialize<I+1>(ds,var,i);
       }
    } else {
-      eosio::check(false, "invalid variant index");
+      agrio::check(false, "invalid variant index");
    }
 }
 
@@ -470,7 +470,7 @@ inline datastream<Stream>& operator>>(datastream<Stream>& ds, std::optional<T>& 
  *  @return datastream<Stream>& - Reference to the datastream
  */
 template<typename Stream>
-inline datastream<Stream>& operator<<(datastream<Stream>& ds, const eosio::symbol sym) {
+inline datastream<Stream>& operator<<(datastream<Stream>& ds, const agrio::symbol sym) {
   uint64_t raw = sym.raw();
   ds.write( (const char*)&raw, sizeof(raw));
   return ds;
@@ -486,7 +486,7 @@ inline datastream<Stream>& operator<<(datastream<Stream>& ds, const eosio::symbo
  *  @return datastream<Stream>& - Reference to the datastream
  */
 template<typename Stream>
-inline datastream<Stream>& operator>>(datastream<Stream>& ds, eosio::symbol& sym) {
+inline datastream<Stream>& operator>>(datastream<Stream>& ds, agrio::symbol& sym) {
   uint64_t raw = 0;
   ds.read((char*)&raw, sizeof(raw));
   sym = symbol(raw);
@@ -503,7 +503,7 @@ inline datastream<Stream>& operator>>(datastream<Stream>& ds, eosio::symbol& sym
  *  @return datastream<Stream>& - Reference to the datastream
  */
 template<typename Stream, typename T>
-inline datastream<Stream>& operator<<(datastream<Stream>& ds, const ::eosio::ignore_wrapper<T>& val) {
+inline datastream<Stream>& operator<<(datastream<Stream>& ds, const ::agrio::ignore_wrapper<T>& val) {
   ds << val.value;
   return ds;
 }
@@ -518,7 +518,7 @@ inline datastream<Stream>& operator<<(datastream<Stream>& ds, const ::eosio::ign
  *  @return datastream<Stream>& - Reference to the datastream
  */
 template<typename Stream, typename T>
-inline datastream<Stream>& operator<<(datastream<Stream>& ds, const ::eosio::ignore<T>& val) {
+inline datastream<Stream>& operator<<(datastream<Stream>& ds, const ::agrio::ignore<T>& val) {
   return ds;
 }
 
@@ -532,7 +532,7 @@ inline datastream<Stream>& operator<<(datastream<Stream>& ds, const ::eosio::ign
  *  @return datastream<Stream>& - Reference to the datastream
  */
 template<typename Stream, typename T>
-inline datastream<Stream>& operator>>(datastream<Stream>& ds, ::eosio::ignore<T>) {
+inline datastream<Stream>& operator>>(datastream<Stream>& ds, ::agrio::ignore<T>) {
   return ds;
 }
 
@@ -567,64 +567,64 @@ inline datastream<Stream>& operator>>(datastream<Stream>& ds, capi_public_key& p
 }
 
 /**
- *  Serialize an eosio::public_key into a stream
+ *  Serialize an agrio::public_key into a stream
  *
- *  @brief Serialize an eosio::public_key
+ *  @brief Serialize an agrio::public_key
  *  @param ds - The stream to write
  *  @param pubkey - The value to serialize
  *  @tparam Stream - Type of datastream buffer
  *  @return datastream<Stream>& - Reference to the datastream
  */
 template<typename Stream>
-inline datastream<Stream>& operator<<(datastream<Stream>& ds, const eosio::public_key& pubkey) {
+inline datastream<Stream>& operator<<(datastream<Stream>& ds, const agrio::public_key& pubkey) {
    ds << pubkey.type;
    ds.write( pubkey.data.data(), pubkey.data.size() );
    return ds;
 }
 
 /**
- *  Deserialize an eosio::public_key from a stream
+ *  Deserialize an agrio::public_key from a stream
  *
- *  @brief Deserialize an eosio::public_key
+ *  @brief Deserialize an agrio::public_key
  *  @param ds - The stream to read
  *  @param pubkey - The destination for deserialized value
  *  @tparam Stream - Type of datastream buffer
  *  @return datastream<Stream>& - Reference to the datastream
  */
 template<typename Stream>
-inline datastream<Stream>& operator>>(datastream<Stream>& ds, eosio::public_key& pubkey) {
+inline datastream<Stream>& operator>>(datastream<Stream>& ds, agrio::public_key& pubkey) {
    ds >> pubkey.type;
    ds.read( pubkey.data.data(), pubkey.data.size() );
    return ds;
 }
 
 /**
- *  Serialize an eosio::signature into a stream
+ *  Serialize an agrio::signature into a stream
  *
- *  @brief Serialize an eosio::signature
+ *  @brief Serialize an agrio::signature
  *  @param ds - The stream to write
  *  @param sig - The value to serialize
  *  @tparam Stream - Type of datastream buffer
  *  @return datastream<Stream>& - Reference to the datastream
  */
 template<typename Stream>
-inline datastream<Stream>& operator<<(datastream<Stream>& ds, const eosio::signature& sig) {
+inline datastream<Stream>& operator<<(datastream<Stream>& ds, const agrio::signature& sig) {
    ds << sig.type;
    ds.write( sig.data.data(), sig.data.size() );
    return ds;
 }
 
 /**
- *  Deserialize an eosio::signature from a stream
+ *  Deserialize an agrio::signature from a stream
  *
- *  @brief Deserialize an eosio::signature
+ *  @brief Deserialize an agrio::signature
  *  @param ds - The stream to read
  *  @param sig - The destination for deserialized value
  *  @tparam Stream - Type of datastream buffer
  *  @return datastream<Stream>& - Reference to the datastream
  */
 template<typename Stream>
-inline datastream<Stream>& operator>>(datastream<Stream>& ds, eosio::signature& sig) {
+inline datastream<Stream>& operator>>(datastream<Stream>& ds, agrio::signature& sig) {
    ds >> sig.type;
    ds.read( sig.data.data(), sig.data.size() );
    return ds;
@@ -900,7 +900,7 @@ template<typename DataStream, typename T, std::size_t N,
 DataStream& operator >> ( DataStream& ds, T (&v)[N] ) {
    unsigned_int s;
    ds >> s;
-   eosio::check( N == s.value, "T[] size and unpacked size don't match");
+   agrio::check( N == s.value, "T[] size and unpacked size don't match");
    for( uint32_t i = 0; i < N; ++i )
       ds >> v[i];
    return ds;
@@ -922,7 +922,7 @@ template<typename DataStream, typename T, std::size_t N,
 DataStream& operator >> ( DataStream& ds, T (&v)[N] ) {
    unsigned_int s;
    ds >> s;
-   eosio::check( N == s.value, "T[] size and unpacked size don't match");
+   agrio::check( N == s.value, "T[] size and unpacked size don't match");
    ds.read((char*)&v[0], sizeof(v));
    return ds;
 }

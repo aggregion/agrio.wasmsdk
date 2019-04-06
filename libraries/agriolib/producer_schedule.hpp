@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#warning "<eosiolib/producer_schedule.hpp> is deprecated use <eosio/producer_schedule.hpp>"
-namespace eosio {
+#warning "<agriolib/producer_schedule.hpp> is deprecated use <agrio/producer_schedule.hpp>"
+namespace agrio {
 
    /**
    *  @defgroup producer_schedule Producer Schedule
@@ -26,4 +26,4 @@ namespace eosio {
    };
 
    /// @} producer_schedule
-} /// namespace eosio
+} /// namespace agrio

@@ -1,10 +1,10 @@
-#include <eosio/action.hpp>
+#include <agrio/action.hpp>
 #include "intrinsics_def.hpp"
 
 #pragma once
 
-#warning "<eosio/native/intrinsics.hpp> is deprecated use <eosio/intrinsics.hpp>"
-namespace eosio { namespace native {
+#warning "<agrio/native/intrinsics.hpp> is deprecated use <agrio/intrinsics.hpp>"
+namespace agrio { namespace native {
    
    class intrinsics {
       public:
@@ -42,4 +42,4 @@ namespace eosio { namespace native {
          }
    };
 
-}} //ns eosio::native
+}} //ns agrio::native

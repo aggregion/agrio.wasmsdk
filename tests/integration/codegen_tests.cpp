@@ -1,6 +1,6 @@
 #include <boost/test/unit_test.hpp>
-#include <eosio/testing/tester.hpp>
-#include <eosio/chain/abi_serializer.hpp>
+#include <agrio/testing/tester.hpp>
+#include <agrio/chain/abi_serializer.hpp>
 
 #include <Runtime/Runtime.h>
 
@@ -8,10 +8,10 @@
 
 #include <contracts.hpp>
 
-using namespace eosio;
-using namespace eosio::testing;
-using namespace eosio::chain;
-using namespace eosio::testing;
+using namespace agrio;
+using namespace agrio::testing;
+using namespace agrio::chain;
+using namespace agrio::testing;
 using namespace fc;
 
 using mvo = fc::mutable_variant_object;
@@ -19,11 +19,11 @@ using mvo = fc::mutable_variant_object;
 BOOST_AUTO_TEST_SUITE(codegen_tests)
 
 BOOST_FIXTURE_TEST_CASE( simple_tests, tester ) try {
-   create_accounts( { N(test), N(eosio.token), N(someone), N(other) } );
+   create_accounts( { N(test), N(agrio.token), N(someone), N(other) } );
    produce_block();
 
-   set_code( N(eosio.token), contracts::transfer_wasm() );
-   set_abi(  N(eosio.token),  contracts::transfer_abi().data() );
+   set_code( N(agrio.token), contracts::transfer_wasm() );
+   set_abi(  N(agrio.token),  contracts::transfer_abi().data() );
 
    set_code( N(someone), contracts::transfer_wasm() );
    set_abi(  N(someone),  contracts::transfer_abi().data() );
@@ -69,25 +69,25 @@ BOOST_FIXTURE_TEST_CASE( simple_tests, tester ) try {
 
 } FC_LOG_AND_RETHROW()
 
-BOOST_FIXTURE_TEST_CASE( simple_eosio_tests, tester ) try {
-   set_code( N(eosio), contracts::simple_wasm() );
-   set_abi( N(eosio),  contracts::simple_wrong_abi().data() );
+BOOST_FIXTURE_TEST_CASE( simple_agrio_tests, tester ) try {
+   set_code( N(agrio), contracts::simple_wasm() );
+   set_abi( N(agrio),  contracts::simple_wrong_abi().data() );
    produce_blocks();
-   push_action(N(eosio), N(test1), N(eosio), 
+   push_action(N(agrio), N(test1), N(agrio), 
          mvo()
          ("nm", "bucky"));
 
-   BOOST_CHECK_THROW(push_action(N(eosio), N(test1), N(eosio), mvo()("nm", "notbucky")), 
+   BOOST_CHECK_THROW(push_action(N(agrio), N(test1), N(agrio), mvo()("nm", "notbucky")), 
          fc::exception);
 
-   push_action(N(eosio), N(test2), N(eosio), 
+   push_action(N(agrio), N(test2), N(agrio), 
          mvo()
          ("arg0", 33)
          ("arg1", "some string"));
-   BOOST_CHECK_THROW(push_action(N(eosio), N(test2), N(eosio), mvo() ("arg0", 30)("arg1", "some string")), fc::exception);
-   BOOST_CHECK_THROW(push_action(N(eosio), N(test2), N(eosio), mvo() ("arg0", 33)("arg1", "not some string")), fc::exception);
+   BOOST_CHECK_THROW(push_action(N(agrio), N(test2), N(agrio), mvo() ("arg0", 30)("arg1", "some string")), fc::exception);
+   BOOST_CHECK_THROW(push_action(N(agrio), N(test2), N(agrio), mvo() ("arg0", 33)("arg1", "not some string")), fc::exception);
    
-   push_action(N(eosio), N(test3), N(eosio), 
+   push_action(N(agrio), N(test3), N(agrio), 
          mvo()
          ("arg0", 33)
          ("arg1", "some string"));

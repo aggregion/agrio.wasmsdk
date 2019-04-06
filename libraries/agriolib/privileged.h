@@ -1,6 +1,6 @@
 #pragma once
 
-#warning "<eosiolib/privileged.h> is deprecated use <eosio/privileged.h>. If you are using C++ the .h header files will be removed from inclusion entirely in v1.7.0"
+#warning "<agriolib/privileged.h> is deprecated use <agrio/privileged.h>. If you are using C++ the .h header files will be removed from inclusion entirely in v1.7.0"
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,7 +20,7 @@ extern "C" {
     * @param net_weight - pointer to `int64_t` to hold net limit
     * @param cpu_weight - pointer to `int64_t` to hold cpu limit
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    void get_resource_limits( capi_name account, int64_t* ram_bytes, int64_t* net_weight, int64_t* cpu_weight );
 
    /**
@@ -31,7 +31,7 @@ extern "C" {
     * @param net_weight - fractionally proportionate net limit of available resources based on (weight / total_weight_of_all_accounts)
     * @param cpu_weight - fractionally proportionate cpu limit of available resources based on (weight / total_weight_of_all_accounts)
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    void set_resource_limits( capi_name account, int64_t ram_bytes, int64_t net_weight, int64_t cpu_weight );
 
    /**
@@ -43,7 +43,7 @@ extern "C" {
     *
     * @return -1 if proposing a new producer schedule was unsuccessful, otherwise returns the version of the new proposed schedule
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    int64_t set_proposed_producers( char *producer_data, uint32_t producer_data_size );
 
    /**
@@ -53,7 +53,7 @@ extern "C" {
     * @return true if the account is privileged
     * @return false if the account is not privileged
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    bool is_privileged( capi_name account );
 
    /**
@@ -62,7 +62,7 @@ extern "C" {
     * @param account - name of the account whose privileged account to be set
     * @param is_priv - privileged status
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    void set_privileged( capi_name account, bool is_priv );
 
    /**
@@ -72,7 +72,7 @@ extern "C" {
     * @param datalen - size of the packed blockchain parameters
     * @pre `data` is a valid pointer to a range of memory at least `datalen` bytes long that contains packed blockchain params data
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    void set_blockchain_parameters_packed( char* data, uint32_t datalen );
 
    /**
@@ -84,7 +84,7 @@ extern "C" {
     * @pre `data` is a valid pointer to a range of memory at least `datalen` bytes long
     * @post `data` is filled with packed blockchain parameters
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    uint32_t get_blockchain_parameters_packed( char* data, uint32_t datalen );
 
 #ifdef __cplusplus

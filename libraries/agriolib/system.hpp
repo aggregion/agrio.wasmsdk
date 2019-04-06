@@ -1,19 +1,19 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 #include "system.h"
 #include <alloca.h>
 #include <string>
 
-#warning "<eosiolib/system.hpp> is deprecated use <eosio/system.hpp>"
-namespace eosio {
+#warning "<agriolib/system.hpp> is deprecated use <agrio/system.hpp>"
+namespace agrio {
 
    /**
     *  @addtogroup system System C++ API
     *  @ingroup core
-    *  @brief Defines wrappers over eosio_assert
+    *  @brief Defines wrappers over agrio_assert
     *
     *  @{
     */
@@ -25,12 +25,12 @@ namespace eosio {
     *  Example:
     *
     *  @code
-    *  eosio::check(a == b, "a does not equal b");
+    *  agrio::check(a == b, "a does not equal b");
     *  @endcode
     */
    inline void check(bool pred, const char* msg) {
       if (!pred) {
-         eosio_assert(false, msg);
+         agrio_assert(false, msg);
       }
    }
 
@@ -41,12 +41,12 @@ namespace eosio {
     *  Example:
     *
     *  @code
-    *  eosio::check(a == b, "a does not equal b");
+    *  agrio::check(a == b, "a does not equal b");
     *  @endcode
     */
    inline void check(bool pred, const std::string& msg) {
       if (!pred) {
-         eosio_assert(false, msg.c_str());
+         agrio_assert(false, msg.c_str());
       }
    }
 
@@ -57,12 +57,12 @@ namespace eosio {
     *  Example:
     *
     *  @code
-    *  eosio::check(a == b, "a does not equal b");
+    *  agrio::check(a == b, "a does not equal b");
     *  @endcode
     */
    inline void check(bool pred, std::string&& msg) {
       if (!pred) {
-         eosio_assert(false, msg.c_str());
+         agrio_assert(false, msg.c_str());
       }
    }
 
@@ -74,12 +74,12 @@ namespace eosio {
     *
     *  @code
     *  const char* msg = "a does not equal b b does not equal a";
-    *  eosio::check(a == b, "a does not equal b", 18);
+    *  agrio::check(a == b, "a does not equal b", 18);
     *  @endcode
     */
    inline void check(bool pred, const char* msg, size_t n) {
       if (!pred) {
-         eosio_assert_message(false, msg, n);
+         agrio_assert_message(false, msg, n);
       }
    }
 
@@ -91,12 +91,12 @@ namespace eosio {
     *
     *  @code
     *  std::string msg = "a does not equal b b does not equal a";
-    *  eosio::check(a == b, msg, 18);
+    *  agrio::check(a == b, msg, 18);
     *  @endcode
     */
    inline void check(bool pred, const std::string& msg, size_t n) {
       if (!pred) {
-         eosio_assert_message(false, msg.c_str(), n);
+         agrio_assert_message(false, msg.c_str(), n);
       }
    }
 
@@ -107,13 +107,13 @@ namespace eosio {
     *  Example:
     *
     *  @code
-    *  eosio::check(a == b, 13);
+    *  agrio::check(a == b, 13);
     *  @endcode
     */
    inline void check(bool pred, uint64_t code) {
       if (!pred) {
-         eosio_assert_code(false, code);
+         agrio_assert_code(false, code);
       }
    }
-} // namespace eosio
+} // namespace agrio
    /// @}

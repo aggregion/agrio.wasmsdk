@@ -1,12 +1,12 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
 #include "types.h"
 
-#warning "<eosiolib/chain.h> is deprecated use <eosio/chain.h>. If you are using C++ the .h header files will be removed from inclusion entirely in v1.7.0"
+#warning "<agriolib/chain.h> is deprecated use <agrio/chain.h>. If you are using C++ the .h header files will be removed from inclusion entirely in v1.7.0"
 /**
  *  @addtogroup chain
  *  @ingroup c_api
@@ -32,7 +32,7 @@ extern "C" {
      *  uint32_t bytes_populated = get_active_producers(producers, sizeof(capi_name)*21);
      *  @endcode
      */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    uint32_t get_active_producers( capi_name* producers, uint32_t datalen );
 }
 

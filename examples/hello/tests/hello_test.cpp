@@ -1,15 +1,15 @@
-#include <eosio/eosio.hpp>
-#include <eosio/tester.hpp>
+#include <agrio/agrio.hpp>
+#include <agrio/tester.hpp>
 
 #include <hello.hpp>
 
-using namespace eosio;
-using namespace eosio::native;
+using namespace agrio;
+using namespace agrio::native;
 
 // need to create a dispatcher, codegen will not be done for native builds until a later release
-EOSIO_DISPATCH(hello, (hi)(check))
+AGRIO_DISPATCH(hello, (hi)(check))
 
-EOSIO_TEST_BEGIN(hello_test)
+AGRIO_TEST_BEGIN(hello_test)
    // These can be redefined by the user to suit there needs per unit test
    // the idea is that in a future release we will have a base library that 
    // initializes these to "useable" default implementations and probably 
@@ -17,14 +17,14 @@ EOSIO_TEST_BEGIN(hello_test)
    // like these
    intrinsics::set_intrinsic<intrinsics::read_action_data>(
          [](void* m, uint32_t len) {
-            check(len <= sizeof(eosio::name), "failed from read_action_data");
-            *((eosio::name*)m) = "hello"_n;
+            check(len <= sizeof(agrio::name), "failed from read_action_data");
+            *((agrio::name*)m) = "hello"_n;
             return len; 
          });
 
    intrinsics::set_intrinsic<intrinsics::action_data_size>(
          []() {
-            return (uint32_t)sizeof(eosio::name);
+            return (uint32_t)sizeof(agrio::name);
          });
    
    intrinsics::set_intrinsic<intrinsics::require_auth>(
@@ -44,8 +44,8 @@ EOSIO_TEST_BEGIN(hello_test)
    name nm = "null"_n;
    intrinsics::set_intrinsic<intrinsics::read_action_data>(
          [&](void* m, uint32_t len) {
-            check(len <= sizeof(eosio::name), "failed from read_action_data");
-            *((eosio::name*)m) = nm;
+            check(len <= sizeof(agrio::name), "failed from read_action_data");
+            *((agrio::name*)m) = nm;
             return len; 
          });
 
@@ -55,11 +55,11 @@ EOSIO_TEST_BEGIN(hello_test)
             apply("test"_n.value, "test"_n.value, "check"_n.value);
             });
 
-EOSIO_TEST_END
+AGRIO_TEST_END
 
 // boilerplate main, this will be generated in a future release
 int main(int argc, char** argv) {
    silence_output(true);
-   EOSIO_TEST(hello_test);
+   AGRIO_TEST(hello_test);
    return has_failed();
 }

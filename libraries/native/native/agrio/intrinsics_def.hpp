@@ -1,19 +1,19 @@
 #pragma once
 
-#include <eosio/action.h>
-#include <eosio/chain.h>
-#include <eosio/crypto.h>
-#include <eosio/db.h>
-#include <eosio/permission.h>
-#include <eosio/print.h>
-#include <eosio/privileged.h>
-#include <eosio/system.h>
-#include <eosio/transaction.h>
-#include <eosio/types.h>
+#include <agrio/action.h>
+#include <agrio/chain.h>
+#include <agrio/crypto.h>
+#include <agrio/db.h>
+#include <agrio/permission.h>
+#include <agrio/print.h>
+#include <agrio/privileged.h>
+#include <agrio/system.h>
+#include <agrio/transaction.h>
+#include <agrio/types.h>
 
 #include <type_traits>
 
-namespace eosio { namespace native {
+namespace agrio { namespace native {
    template <typename... Args, size_t... Is>
    auto get_args_full(std::index_sequence<Is...>) {
        std::tuple<std::decay_t<Args>...> tup;
@@ -34,7 +34,7 @@ namespace eosio { namespace native {
    auto create_function(std::index_sequence<Is...>) {
       return std::function<R(typename std::tuple_element<Is, Args>::type ...)>{ 
          [](typename std::tuple_element<Is, Args>::type ...) { 
-            eosio_assert(false, "unsupported intrinsic"); return (R)0;
+            agrio_assert(false, "unsupported intrinsic"); return (R)0;
          }
       };
    }   
@@ -160,18 +160,18 @@ intrinsic_macro(get_context_free_data)
 
 #define GENERATE_TYPE_MAPPING(name) \
    struct __ ## name ## _types { \
-      using deduced_full_ts = decltype(eosio::native::get_args_full(::name)); \
-      using deduced_ts      = decltype(eosio::native::get_args(::name)); \
+      using deduced_full_ts = decltype(agrio::native::get_args_full(::name)); \
+      using deduced_ts      = decltype(agrio::native::get_args(::name)); \
       using res_t           = decltype(std::apply(::name, deduced_ts{})); \
       static constexpr auto is = std::make_index_sequence<std::tuple_size<deduced_ts>::value>(); \
    };
 
 #define GET_TYPE(name) \
-   decltype(create_function<eosio::native::intrinsics::__ ## name ## _types::res_t, \
-         eosio::native::intrinsics::__ ## name ## _types::deduced_full_ts>(eosio::native::intrinsics::__ ## name ## _types::is)),
+   decltype(create_function<agrio::native::intrinsics::__ ## name ## _types::res_t, \
+         agrio::native::intrinsics::__ ## name ## _types::deduced_full_ts>(agrio::native::intrinsics::__ ## name ## _types::is)),
 
 #define REGISTER_INTRINSIC(name) \
-   create_function<eosio::native::intrinsics::__ ## name ## _types::res_t, \
-         eosio::native::intrinsics::__ ## name ## _types::deduced_full_ts>(eosio::native::intrinsics::__ ## name ## _types::is),
+   create_function<agrio::native::intrinsics::__ ## name ## _types::res_t, \
+         agrio::native::intrinsics::__ ## name ## _types::deduced_full_ts>(agrio::native::intrinsics::__ ## name ## _types::is),
 
-}} //ns eosio::native
+}} //ns agrio::native

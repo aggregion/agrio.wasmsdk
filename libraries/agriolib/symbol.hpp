@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
@@ -13,8 +13,8 @@
 #include <limits>
 #include <string_view>
 
-#warning "<eosiolib/symbol.hpp> is deprecated use <eosio/symbol.hpp>"
-namespace eosio {
+#warning "<agriolib/symbol.hpp> is deprecated use <agrio/symbol.hpp>"
+namespace agrio {
 
   /**
    *  @addtogroup symbol Symbol C++ API
@@ -60,11 +60,11 @@ namespace eosio {
       :value(0)
       {
          if( str.size() > 7 ) {
-            eosio::check( false, "string is too long to be a valid symbol_code" );
+            agrio::check( false, "string is too long to be a valid symbol_code" );
          }
          for( auto itr = str.rbegin(); itr != str.rend(); ++itr ) {
             if( *itr < 'A' || *itr > 'Z') {
-               eosio::check( false, "only uppercase letters allowed in symbol_code string" );
+               agrio::check( false, "only uppercase letters allowed in symbol_code string" );
             }
             value <<= 8;
             value |= *itr;
@@ -198,7 +198,7 @@ namespace eosio {
       *  @return DataStream& - Reference to the datastream
       */
       template<typename DataStream>
-      friend inline DataStream& operator<<(DataStream& ds, const eosio::symbol_code sym_code) {
+      friend inline DataStream& operator<<(DataStream& ds, const agrio::symbol_code sym_code) {
          uint64_t raw = sym_code.raw();
          ds.write( (const char*)&raw, sizeof(raw));
          return ds;
@@ -214,7 +214,7 @@ namespace eosio {
       *  @return DataStream& - Reference to the datastream
       */
       template<typename DataStream>
-      friend inline DataStream& operator>>(DataStream& ds, eosio::symbol_code& sym_code) {
+      friend inline DataStream& operator>>(DataStream& ds, agrio::symbol_code& sym_code) {
          uint64_t raw = 0;
          ds.read((char*)&raw, sizeof(raw));
          sym_code = symbol_code(raw);
@@ -428,7 +428,7 @@ namespace eosio {
       symbol symbol; ///< the symbol
       name   contract; ///< the token contract hosting the symbol
 
-      EOSLIB_SERIALIZE( extended_symbol, (symbol)(contract) )
+      AGRLIB_SERIALIZE( extended_symbol, (symbol)(contract) )
    };
 
    /// @}

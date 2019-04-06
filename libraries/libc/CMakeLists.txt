@@ -20,7 +20,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-everything -allow-sse")
 
 file(GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/musl/include/*.h"
                   "${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal/*.h"
-                  "${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos/*.h")
+                  "${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/agr/*.h")
 
 add_library(c 
             ${CRYPT_SOURCES} 
@@ -69,7 +69,7 @@ target_include_directories(c
                            ${CMAKE_CURRENT_SOURCE_DIR}/musl/include
                            ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal
                            ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/crypt
-                           ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos
+                           ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/agr
                            ${CMAKE_SOURCE_DIR})
 
 target_include_directories(native_c 
@@ -77,7 +77,7 @@ target_include_directories(native_c
                            ${CMAKE_CURRENT_SOURCE_DIR}/musl/include
                            ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal
                            ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/crypt
-                           ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos
+                           ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/agr
                            ${CMAKE_SOURCE_DIR})
 
 add_custom_command( TARGET c POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:c> ${BASE_BINARY_DIR}/lib )
@@ -85,4 +85,4 @@ add_custom_command( TARGET native_c POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/include/ DESTINATION ${BASE_BINARY_DIR}/include/libc/)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal/ DESTINATION ${BASE_BINARY_DIR}/include/libc/)
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos/ DESTINATION ${BASE_BINARY_DIR}/include/libc/)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/agr/ DESTINATION ${BASE_BINARY_DIR}/include/libc/)

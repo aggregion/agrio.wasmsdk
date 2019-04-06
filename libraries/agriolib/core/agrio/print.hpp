@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 #include <utility>
@@ -8,40 +8,40 @@
 
 
 
-namespace eosio {
+namespace agrio {
    namespace internal_use_do_not_use {
       extern "C" {
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void prints(const char*);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void prints_l(const char*, uint32_t);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void printi(int64_t);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void printui(uint64_t);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void printi128(const int128_t*);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void printui128(const uint128_t*);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void printsf(float);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void printdf(double);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void printqf(const long double*);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void printn(uint64_t);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void printhex(const void*, uint32_t);
       }
    };

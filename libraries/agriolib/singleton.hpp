@@ -2,13 +2,13 @@
 #include "multi_index.hpp"
 #include "system.hpp"
 
-#warning "<eosiolib/singleton.hpp> is deprecated use <eosio/singleton.hpp>"
-namespace  eosio {
+#warning "<agriolib/singleton.hpp> is deprecated use <agrio/singleton.hpp>"
+namespace  agrio {
 
    /**
     *  @defgroup singleton Singleton Table
     *  @ingroup contracts
-    *  @brief Defines EOSIO Singleton Table used with %multiindex
+    *  @brief Defines AGRIO Singleton Table used with %multiindex
     *  @{
     */
 
@@ -42,10 +42,10 @@ namespace  eosio {
           */
          uint64_t primary_key() const { return pk_value; }
 
-         EOSLIB_SERIALIZE( row, (value) )
+         AGRLIB_SERIALIZE( row, (value) )
       };
 
-      typedef eosio::multi_index<SingletonName, row> table;
+      typedef agrio::multi_index<SingletonName, row> table;
 
       public:
 
@@ -75,7 +75,7 @@ namespace  eosio {
           */
          T get() {
             auto itr = _t.find( pk_value );
-            eosio::check( itr != _t.end(), "singleton does not exist" );
+            agrio::check( itr != _t.end(), "singleton does not exist" );
             return itr->value;
          }
 
@@ -133,4 +133,4 @@ namespace  eosio {
    };
 
 /// @} singleton
-} /// namespace eosio
+} /// namespace agrio

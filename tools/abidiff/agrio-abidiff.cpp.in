@@ -9,10 +9,10 @@
 #include "clang/AST/Expr.h"
 #include "clang/Basic/Builtins.h"
 #include "llvm/Support/FileSystem.h"
-#include "eosio/utils.hpp"
-#include "eosio/gen.hpp"
-#include "eosio/whereami/whereami.hpp"
-#include "eosio/abi.hpp"
+#include "agrio/utils.hpp"
+#include "agrio/gen.hpp"
+#include "agrio/whereami/whereami.hpp"
+#include "agrio/abi.hpp"
 
 #include <exception>
 #include <iostream>
@@ -30,14 +30,14 @@
 using namespace clang::tooling;
 using namespace clang::ast_matchers;
 using namespace llvm;
-using namespace eosio;
-using namespace eosio::cdt;
+using namespace agrio;
+using namespace agrio::cdt;
 using jsoncons::json;
 using jsoncons::ojson;
 
 struct abidiff_exception : public std::exception {
    virtual const char* what() const throw() {
-      return "eosio.abidiff fatal error";
+      return "agrio.abidiff fatal error";
    }
 } abidiff_ex;
 
@@ -269,9 +269,9 @@ class abidiff {
 int main(int argc, const char **argv) {
 
    cl::SetVersionPrinter([](llvm::raw_ostream& os) {
-        os << "eosio-abidiff version " << "${VERSION_FULL}" << "\n";
+        os << "agrio-abidiff version " << "${VERSION_FULL}" << "\n";
   });
-   cl::OptionCategory cat("eosio-abidiff", "generates an abi from C++ project input");
+   cl::OptionCategory cat("agrio-abidiff", "generates an abi from C++ project input");
 
    cl::opt<std::string> input_filename1(
       cl::Positional, 
@@ -284,7 +284,7 @@ int main(int argc, const char **argv) {
       cl::Required,
       cl::cat(cat));
 
-   cl::ParseCommandLineOptions(argc, argv, std::string("eosio-abidiff"));
+   cl::ParseCommandLineOptions(argc, argv, std::string("agrio-abidiff"));
    try {
       abidiff diff(input_filename1, input_filename2);
       diff.diff();

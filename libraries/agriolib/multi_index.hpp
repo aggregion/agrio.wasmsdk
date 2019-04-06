@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
@@ -22,9 +22,9 @@
 #include <algorithm>
 #include <memory>
 
-#warning "<eosiolib/multi_index.hpp> is deprecated use <eosio/multi_index.hpp>"
+#warning "<agriolib/multi_index.hpp> is deprecated use <agrio/multi_index.hpp>"
 
-namespace eosio {
+namespace agrio {
 
 constexpr static inline name same_payer{};
 
@@ -145,28 +145,28 @@ namespace _multi_index_detail {
       static constexpr long double true_lowest() { return -std::numeric_limits<long double>::infinity(); }
    };
 
-   WRAP_SECONDARY_ARRAY_TYPE(idx256, eosio::fixed_bytes<32>)
+   WRAP_SECONDARY_ARRAY_TYPE(idx256, agrio::fixed_bytes<32>)
    template<>
-   struct secondary_key_traits<eosio::fixed_bytes<32>> {
-      static constexpr eosio::fixed_bytes<32> true_lowest() { return eosio::fixed_bytes<32>(); }
+   struct secondary_key_traits<agrio::fixed_bytes<32>> {
+      static constexpr agrio::fixed_bytes<32> true_lowest() { return agrio::fixed_bytes<32>(); }
    };
 
 }
 
 /**
- *  The indexed_by struct is used to instantiate the indices for the Multi-Index table. In EOSIO, up to 16 secondary indices can be specified.
- *  @brief The indexed_by struct is used to instantiate the indices for the Multi-Index table. In EOSIO, up to 16 secondary indices can be specified.
+ *  The indexed_by struct is used to instantiate the indices for the Multi-Index table. In AGRIO, up to 16 secondary indices can be specified.
+ *  @brief The indexed_by struct is used to instantiate the indices for the Multi-Index table. In AGRIO, up to 16 secondary indices can be specified.
  *
- *  @tparam IndexName - is the name of the index. The name must be provided as an EOSIO base32 encoded 64-bit integer and must conform to the EOSIO naming requirements of a maximum of 13 characters, the first twelve from the lowercase characters a-z, digits 1-5, and ".", and if there is a 13th character, it is restricted to lowercase characters a-p and ".".
- *  @tparam Extractor - is a function call operator that takes a const reference to the table object type and returns either a secondary key type or a reference to a secondary key type. It is recommended to use the `eosio::const_mem_fun` template, which is a type alias to the `boost::multi_index::const_mem_fun`. See the documentation for the Boost `const_mem_fun` key extractor for more details.
+ *  @tparam IndexName - is the name of the index. The name must be provided as an AGRIO base32 encoded 64-bit integer and must conform to the AGRIO naming requirements of a maximum of 13 characters, the first twelve from the lowercase characters a-z, digits 1-5, and ".", and if there is a 13th character, it is restricted to lowercase characters a-p and ".".
+ *  @tparam Extractor - is a function call operator that takes a const reference to the table object type and returns either a secondary key type or a reference to a secondary key type. It is recommended to use the `agrio::const_mem_fun` template, which is a type alias to the `boost::multi_index::const_mem_fun`. See the documentation for the Boost `const_mem_fun` key extractor for more details.
  *
  *  Example:
        *
 *
  *  @code
- *  #include <eosiolib/eosio.hpp>
- *  using namespace eosio;
- *  class mycontract: eosio::contract {
+ *  #include <agriolib/agrio.hpp>
+ *  using namespace agrio;
+ *  class mycontract: agrio::contract {
  *    struct record {
  *       uint64_t    primary;
  *       uint128_t   secondary;
@@ -182,7 +182,7 @@ namespace _multi_index_detail {
  *                   indexed_by< "bysecondary"_n, const_mem_fun<record, uint128_t, &record::get_secondary> > > table( code, scope);
  *      }
  *  }
- *  EOSIO_DISPATCH( mycontract, (myaction) )
+ *  AGRIO_DISPATCH( mycontract, (myaction) )
  *  @endcode
  */
 template<name::raw IndexName, typename Extractor>
@@ -193,18 +193,18 @@ struct indexed_by {
 
 /**
  *  @defgroup multi_index Multi Index Table
- *  @brief Defines EOSIO Multi Index Table
+ *  @brief Defines AGRIO Multi Index Table
  *  @ingroup contracts
  *
- *  @details EOSIO Multi-Index API provides a C++ interface to the EOSIO database. It is patterned after Boost Multi Index Container.
- *  EOSIO Multi-Index table requires exactly a uint64_t primary key. For the table to be able to retrieve the primary key,
+ *  @details AGRIO Multi-Index API provides a C++ interface to the AGRIO database. It is patterned after Boost Multi Index Container.
+ *  AGRIO Multi-Index table requires exactly a uint64_t primary key. For the table to be able to retrieve the primary key,
  *  the object stored inside the table is required to have a const member function called primary_key() that returns uint64_t.
- *  EOSIO Multi-Index table also supports up to 16 secondary indices. The type of the secondary indices could be any of:
+ *  AGRIO Multi-Index table also supports up to 16 secondary indices. The type of the secondary indices could be any of:
  *  - uint64_t
  *  - uint128_t
  *  - double
  *  - long double
- *  - eosio::checksum256
+ *  - agrio::checksum256
  *
  *  @tparam TableName - name of the table
  *  @tparam T - type of the data stored inside the table
@@ -213,8 +213,8 @@ struct indexed_by {
  *  Example:
        *
  *  @code
- *  #include <eosiolib/eosio.hpp>
- *  using namespace eosio;
+ *  #include <agriolib/agrio.hpp>
+ *  using namespace agrio;
  *  class mycontract: contract {
  *    struct record {
  *      uint64_t    primary;
@@ -244,7 +244,7 @@ struct indexed_by {
  *        > table( code, scope);
  *      }
  *  }
- *  EOSIO_DISPATCH( mycontract, (myaction) )
+ *  AGRIO_DISPATCH( mycontract, (myaction) )
  *  @endcode
  *  @{
  */
@@ -306,8 +306,8 @@ class multi_index
             typedef Extractor  secondary_extractor_type;
             typedef typename std::decay<decltype( Extractor()(nullptr) )>::type secondary_key_type;
 
-            constexpr static bool validate_index_name( eosio::name n ) {
-               return n.value != 0 && n != eosio::name("primary"); // Primary is a reserve index name.
+            constexpr static bool validate_index_name( agrio::name n ) {
+               return n.value != 0 && n != agrio::name("primary"); // Primary is a reserve index name.
             }
 
             static_assert( validate_index_name( name(IndexName) ), "invalid index name used in multi_index" );
@@ -350,7 +350,7 @@ class multi_index
                   const_iterator& operator++() {
                      using namespace _multi_index_detail;
 
-                     eosio::check( _item != nullptr, "cannot increment end iterator" );
+                     agrio::check( _item != nullptr, "cannot increment end iterator" );
 
                      if( _item->__iters[Number] == -1 ) {
                         secondary_key_type temp_secondary_key;
@@ -382,9 +382,9 @@ class multi_index
 
                      if( !_item ) {
                         auto ei = secondary_index_db_functions<secondary_key_type>::db_idx_end(_idx->get_code().value, _idx->get_scope(), _idx->name());
-                        eosio::check( ei != -1, "cannot decrement end iterator when the index is empty" );
+                        agrio::check( ei != -1, "cannot decrement end iterator when the index is empty" );
                         prev_itr = secondary_index_db_functions<secondary_key_type>::db_idx_previous( ei , &prev_pk );
-                        eosio::check( prev_itr >= 0, "cannot decrement end iterator when the index is empty" );
+                        agrio::check( prev_itr >= 0, "cannot decrement end iterator when the index is empty" );
                      } else {
                         if( _item->__iters[Number] == -1 ) {
                            secondary_key_type temp_secondary_key;
@@ -393,7 +393,7 @@ class multi_index
                            mi.__iters[Number] = idxitr;
                         }
                         prev_itr = secondary_index_db_functions<secondary_key_type>::db_idx_previous( _item->__iters[Number], &prev_pk );
-                        eosio::check( prev_itr >= 0, "cannot decrement iterator at beginning of index" );
+                        agrio::check( prev_itr >= 0, "cannot decrement iterator at beginning of index" );
                      }
 
                      const T& obj = *_idx->_multidx->find( prev_pk );
@@ -451,8 +451,8 @@ class multi_index
 
             const_iterator require_find( const secondary_key_type& secondary, const char* error_msg = "unable to find secondary key" )const {
                auto lb = lower_bound( secondary );
-               eosio::check( lb != cend(), error_msg );
-               eosio::check( secondary == secondary_extractor_type()(*lb), error_msg );
+               agrio::check( lb != cend(), error_msg );
+               agrio::check( secondary == secondary_extractor_type()(*lb), error_msg );
                return lb;
             }
 
@@ -463,7 +463,7 @@ class multi_index
             // Gets the object with the smallest primary key in the case where the secondary key is not unique.
             const T& get( const secondary_key_type& secondary, const char* error_msg = "unable to find secondary key" )const {
                auto result = find( secondary );
-               eosio::check( result != cend(), error_msg );
+               agrio::check( result != cend(), error_msg );
                return *result;
             }
 
@@ -507,7 +507,7 @@ class multi_index
                using namespace _multi_index_detail;
 
                const auto& objitem = static_cast<const item&>(obj);
-               eosio::check( objitem.__idx == _multidx, "object passed to iterator_to is not in multi_index" );
+               agrio::check( objitem.__idx == _multidx, "object passed to iterator_to is not in multi_index" );
 
                if( objitem.__iters[Number] == -1 ) {
                   secondary_key_type temp_secondary_key;
@@ -520,14 +520,14 @@ class multi_index
             }
 
             template<typename Lambda>
-            void modify( const_iterator itr, eosio::name payer, Lambda&& updater ) {
-               eosio::check( itr != cend(), "cannot pass end iterator to modify" );
+            void modify( const_iterator itr, agrio::name payer, Lambda&& updater ) {
+               agrio::check( itr != cend(), "cannot pass end iterator to modify" );
 
                _multidx->modify( *itr, payer, std::forward<Lambda&&>(updater) );
             }
 
             const_iterator erase( const_iterator itr ) {
-               eosio::check( itr != cend(), "cannot pass end iterator to erase" );
+               agrio::check( itr != cend(), "cannot pass end iterator to erase" );
 
                const auto& obj = *itr;
                ++itr;
@@ -537,7 +537,7 @@ class multi_index
                return itr;
             }
 
-            eosio::name get_code()const  { return _multidx->get_code(); }
+            agrio::name get_code()const  { return _multidx->get_code(); }
             uint64_t    get_scope()const { return _multidx->get_scope(); }
 
             static auto extract_secondary_key(const T& obj) { return secondary_extractor_type()(obj); }
@@ -566,10 +566,10 @@ class multi_index
          return hana::transform( indices_input_type(), [&]( auto&& idx ){
              typedef typename std::decay<decltype(hana::at_c<0>(idx))>::type num_type;
              typedef typename std::decay<decltype(hana::at_c<1>(idx))>::type idx_type;
-             return hana::make_tuple( hana::type_c<index<eosio::name::raw(static_cast<uint64_t>(idx_type::index_name)),
+             return hana::make_tuple( hana::type_c<index<agrio::name::raw(static_cast<uint64_t>(idx_type::index_name)),
                                                          typename idx_type::secondary_extractor_type,
                                                          num_type::e::value, false> >,
-                                      hana::type_c<index<eosio::name::raw(static_cast<uint64_t>(idx_type::index_name)),
+                                      hana::type_c<index<agrio::name::raw(static_cast<uint64_t>(idx_type::index_name)),
                                                          typename idx_type::secondary_extractor_type,
                                                          num_type::e::value, true> > );
 
@@ -590,7 +590,7 @@ class multi_index
             return *itr2->_item;
 
          auto size = db_get_i64( itr, nullptr, 0 );
-         eosio::check( size >= 0, "error reading iterator" );
+         agrio::check( size >= 0, "error reading iterator" );
 
          //using malloc/free here potentially is not exception-safe, although WASM doesn't support exceptions
          void* buffer = max_stack_buffer_size < size_t(size) ? malloc(size_t(size)) : alloca(size_t(size));
@@ -638,19 +638,19 @@ class multi_index
        *  @post The payer is charged for the storage usage of the new object and, if the table (and secondary index tables) must be created, for the overhead of the table creation.
        *
        *  Notes
-       *  The `eosio::multi_index` template has template parameters `<name::raw TableName, typename T, typename... Indices>`, where:
-       *  - `TableName` is the name of the table, maximum 12 characters long, characters in the name from the set of lowercase letters, digits 1 to 5, and the "." (period) character and is converted to a eosio::raw - which wraps uint64_t;
+       *  The `agrio::multi_index` template has template parameters `<name::raw TableName, typename T, typename... Indices>`, where:
+       *  - `TableName` is the name of the table, maximum 12 characters long, characters in the name from the set of lowercase letters, digits 1 to 5, and the "." (period) character and is converted to a agrio::raw - which wraps uint64_t;
        *  - `T` is the object type (i.e., row definition);
        *  - `Indices` is a list of up to 16 secondary indices.
        *  - Each must be a default constructable class or struct
        *  - Each must have a function call operator that takes a const reference to the table object type and returns either a secondary key type or a reference to a secondary key type
-       *  - It is recommended to use the eosio::const_mem_fun template, which is a type alias to the boost::multi_index::const_mem_fun.  See the documentation for the Boost const_mem_fun key extractor for more details.
+       *  - It is recommended to use the agrio::const_mem_fun template, which is a type alias to the boost::multi_index::const_mem_fun.  See the documentation for the Boost const_mem_fun key extractor for more details.
        *
        *  Example:
        *
        *  @code
-       *  #include <eosiolib/eosio.hpp>
-       *  using namespace eosio;
+       *  #include <agriolib/agrio.hpp>
+       *  using namespace agrio;
        *  using namespace std;
        *  class addressbook: contract {
        *    struct address {
@@ -664,12 +664,12 @@ class multi_index
        *    };
        *    public:
        *      addressbook(name self):contract(self) {}
-       *      typedef eosio::multi_index< "address"_n, address > address_index;
+       *      typedef agrio::multi_index< "address"_n, address > address_index;
        *      void myaction() {
        *        address_index addresses(_self, _self.value); // code, scope
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       multi_index( name code, uint64_t scope )
@@ -688,10 +688,10 @@ class multi_index
        *
        *      void myaction() {
        *        address_index addresses("dan"_n, "dan"_n); // code, scope
-       *        eosio::check(addresses.get_code() == "dan"_n, "Codes don't match.");
+       *        agrio::check(addresses.get_code() == "dan"_n, "Codes don't match.");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       name get_code()const      { return _code; }
@@ -708,10 +708,10 @@ class multi_index
        *
        *      void myaction() {
        *        address_index addresses("dan"_n, "dan"_n); // code, scope
-       *        eosio::check(addresses.get_code() == "dan"_n, "Scopes don't match");
+       *        agrio::check(addresses.get_code() == "dan"_n, "Scopes don't match");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       uint64_t get_scope()const { return _scope; }
@@ -740,7 +740,7 @@ class multi_index
          }
 
          const_iterator& operator++() {
-            eosio::check( _item != nullptr, "cannot increment end iterator" );
+            agrio::check( _item != nullptr, "cannot increment end iterator" );
 
             uint64_t next_pk;
             auto next_itr = db_next_i64( _item->__primary_itr, &next_pk );
@@ -756,12 +756,12 @@ class multi_index
 
             if( !_item ) {
                auto ei = db_end_i64(_multidx->get_code().value, _multidx->get_scope(), static_cast<uint64_t>(TableName));
-               eosio::check( ei != -1, "cannot decrement end iterator when the table is empty" );
+               agrio::check( ei != -1, "cannot decrement end iterator when the table is empty" );
                prev_itr = db_previous_i64( ei , &prev_pk );
-               eosio::check( prev_itr >= 0, "cannot decrement end iterator when the table is empty" );
+               agrio::check( prev_itr >= 0, "cannot decrement end iterator when the table is empty" );
             } else {
                prev_itr = db_previous_i64( _item->__primary_itr, &prev_pk );
-               eosio::check( prev_itr >= 0, "cannot decrement iterator at beginning of table" );
+               agrio::check( prev_itr >= 0, "cannot decrement iterator at beginning of table" );
             }
 
             _item = &_multidx->load_object_by_primary_iterator( prev_itr );
@@ -794,10 +794,10 @@ class multi_index
        *        // add dan account to table           - see emplace example below
        *
        *        auto itr = addresses.find("dan"_n);
-       *        eosio::check(itr == addresses.cbegin(), "Only address is not at front.");
+       *        agrio::check(itr == addresses.cbegin(), "Only address is not at front.");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const_iterator cbegin()const {
@@ -819,10 +819,10 @@ class multi_index
        *        // add dan account to table           - see emplace example below
        *
        *        auto itr = addresses.find("dan"_n);
-       *        eosio::check(itr == addresses.begin(), "Only address is not at front.");
+       *        agrio::check(itr == addresses.begin(), "Only address is not at front.");
        *      }
        *  }
-       *  EOSIO_ABI( addressbook, (myaction) )
+       *  AGRIO_ABI( addressbook, (myaction) )
        *  @endcode
        */
       const_iterator begin()const  { return cbegin(); }
@@ -842,10 +842,10 @@ class multi_index
        *        // add dan account to table           - see emplace example below
        *
        *        auto itr = addresses.find("dan"_n);
-       *        eosio::check(itr != addresses.cend(), "Address for account doesn't exist");
+       *        agrio::check(itr != addresses.cend(), "Address for account doesn't exist");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const_iterator cend()const   { return const_iterator( this ); }
@@ -865,10 +865,10 @@ class multi_index
        *        // add dan account to table           - see emplace example below
        *
        *        auto itr = addresses.find("dan"_n);
-       *        eosio::check(itr != addresses.end(), "Address for account doesn't exist");
+       *        agrio::check(itr != addresses.end(), "Address for account doesn't exist");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const_iterator end()const    { return cend(); }
@@ -892,17 +892,17 @@ class multi_index
        *          address.account_name = "brendan"_n;
        *          address.first_name = "Brendan";
        *          address.last_name = "Blumer";
-       *          address.street = "1 EOS Way";
+       *          address.street = "1 AGR Way";
        *          address.city = "Hong Kong";
        *          address.state = "HK";
        *        });
        *        auto itr = addresses.crbegin();
-       *        eosio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Last Record ");
+       *        agrio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Last Record ");
        *        itr++;
-       *        eosio::check(itr->account_name == name("brendan"), "Lock arf, Incorrect Second Last Record");
+       *        agrio::check(itr->account_name == name("brendan"), "Lock arf, Incorrect Second Last Record");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const_reverse_iterator crbegin()const { return std::make_reverse_iterator(cend()); }
@@ -926,17 +926,17 @@ class multi_index
        *          address.account_name = "brendan"_n;
        *          address.first_name = "Brendan";
        *          address.last_name = "Blumer";
-       *          address.street = "1 EOS Way";
+       *          address.street = "1 AGR Way";
        *          address.city = "Hong Kong";
        *          address.state = "HK";
        *        });
        *        auto itr = addresses.rbegin();
-       *        eosio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Last Record ");
+       *        agrio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Last Record ");
        *        itr++;
-       *        eosio::check(itr->account_name == name("brendan"), "Lock arf, Incorrect Second Last Record");
+       *        agrio::check(itr->account_name == name("brendan"), "Lock arf, Incorrect Second Last Record");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const_reverse_iterator rbegin()const  { return crbegin(); }
@@ -960,18 +960,18 @@ class multi_index
        *          address.account_name = "brendan"_n;
        *          address.first_name = "Brendan";
        *          address.last_name = "Blumer";
-       *          address.street = "1 EOS Way";
+       *          address.street = "1 AGR Way";
        *          address.city = "Hong Kong";
        *          address.state = "HK";
        *        });
        *        auto itr = addresses.crend();
        *        itr--;
-       *        eosio::check(itr->account_name == name("brendan"), "Lock arf, Incorrect First Record ");
+       *        agrio::check(itr->account_name == name("brendan"), "Lock arf, Incorrect First Record ");
        *        itr--;
-       *        eosio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Second Record");
+       *        agrio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Second Record");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const_reverse_iterator crend()const   { return std::make_reverse_iterator(cbegin()); }
@@ -995,18 +995,18 @@ class multi_index
        *          address.account_name = "brendan"_n;
        *          address.first_name = "Brendan";
        *          address.last_name = "Blumer";
-       *          address.street = "1 EOS Way";
+       *          address.street = "1 AGR Way";
        *          address.city = "Hong Kong";
        *          address.state = "HK";
        *        });
        *        auto itr = addresses.rend();
        *        itr--;
-       *        eosio::check(itr->account_name == name("brendan"), "Lock arf, Incorrect First Record ");
+       *        agrio::check(itr->account_name == name("brendan"), "Lock arf, Incorrect First Record ");
        *        itr--;
-       *        eosio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Second Record");
+       *        agrio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Second Record");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const_reverse_iterator rend()const    { return crend(); }
@@ -1031,7 +1031,7 @@ class multi_index
        *          address.account_name = "brendan"_n;
        *          address.first_name = "Brendan";
        *          address.last_name = "Blumer";
-       *          address.street = "1 EOS Way";
+       *          address.street = "1 AGR Way";
        *          address.city = "Hong Kong";
        *          address.state = "HK";
        *          address.zip = 93445;
@@ -1039,14 +1039,14 @@ class multi_index
        *        uint32_t zipnumb = 93445;
        *        auto zip_index = addresses.get_index<name("zip")>();
        *        auto itr = zip_index.lower_bound(zipnumb);
-       *        eosio::check(itr->account_name == name("brendan"), "Lock arf, Incorrect First Lower Bound Record ");
+       *        agrio::check(itr->account_name == name("brendan"), "Lock arf, Incorrect First Lower Bound Record ");
        *        itr++;
-       *        eosio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Second Lower Bound Record");
+       *        agrio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Second Lower Bound Record");
        *        itr++;
-       *        eosio::check(itr == zip_index.end(), "Lock arf, Incorrect End of Iterator");
+       *        agrio::check(itr == zip_index.end(), "Lock arf, Incorrect End of Iterator");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const_iterator lower_bound( uint64_t primary )const {
@@ -1076,7 +1076,7 @@ class multi_index
        *          address.account_name = "brendan"_n;
        *          address.first_name = "Brendan";
        *          address.last_name = "Blumer";
-       *          address.street = "1 EOS Way";
+       *          address.street = "1 AGR Way";
        *          address.city = "Hong Kong";
        *          address.state = "HK";
        *          address.zip = 93445;
@@ -1084,12 +1084,12 @@ class multi_index
        *        uint32_t zipnumb = 93445;
        *        auto zip_index = addresses.get_index<name("zip")>();
        *        auto itr = zip_index.upper_bound(zipnumb);
-       *        eosio::check(itr->account_name == name("dan"), "Lock arf, Incorrect First Upper Bound Record ");
+       *        agrio::check(itr->account_name == name("dan"), "Lock arf, Incorrect First Upper Bound Record ");
        *        itr++;
-       *        eosio::check(itr == zip_index.end(), "Lock arf, Incorrect End of Iterator");
+       *        agrio::check(itr == zip_index.end(), "Lock arf, Incorrect End of Iterator");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const_iterator upper_bound( uint64_t primary )const {
@@ -1120,13 +1120,13 @@ class multi_index
        *          address.key = addresses.available_primary_key();
        *          address.first_name = "Daniel";
        *          address.last_name = "Larimer";
-       *          address.street = "1 EOS Way";
+       *          address.street = "1 AGR Way";
        *          address.city = "Blacksburg";
        *          address.state = "VA";
        *        });
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       uint64_t available_primary_key()const {
@@ -1144,7 +1144,7 @@ class multi_index
             }
          }
 
-         eosio::check( _next_primary_key < no_available_primary_key, "next primary key in table is at autoincrement limit");
+         agrio::check( _next_primary_key < no_available_primary_key, "next primary key in table is at autoincrement limit");
          return _next_primary_key;
       }
 
@@ -1158,8 +1158,8 @@ class multi_index
        *  Example:
        *
        *  @code
-       *  #include <eosiolib/eosio.hpp>
-       *  using namespace eosio;
+       *  #include <agriolib/agrio.hpp>
+       *  using namespace agrio;
        *  using namespace std;
        *  class addressbook: contract {
        *    struct address {
@@ -1175,17 +1175,17 @@ class multi_index
        *    };
        *    public:
        *      addressbook(name receiver, name code, datastream<const char*> ds):contract(receiver, code, ds) {}
-       *      typedef eosio::multi_index< name("address"), address, indexed_by< name("zip"), const_mem_fun<address, uint64_t, &address::by_zip> > address_index;
+       *      typedef agrio::multi_index< name("address"), address, indexed_by< name("zip"), const_mem_fun<address, uint64_t, &address::by_zip> > address_index;
        *      void myaction() {
        *        // create reference to address_index  - see emplace example below
        *        // add dan account to table           - see emplace example below
        *        uint32_t zipnumb = 93446;
        *        auto zip_index = addresses.get_index<name("zip")>();
        *        auto itr = zip_index.find(zipnumb);
-       *        eosio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Record ");
+       *        agrio::check(itr->account_name == name("dan"), "Lock arf, Incorrect Record ");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       template<name::raw IndexName>
@@ -1222,7 +1222,7 @@ class multi_index
        *          address.account_name = "brendan"_n;
        *          address.first_name = "Brendan";
        *          address.last_name = "Blumer";
-       *          address.street = "1 EOS Way";
+       *          address.street = "1 AGR Way";
        *          address.city = "Hong Kong";
        *          address.state = "HK";
        *          address.zip = 93445;
@@ -1230,12 +1230,12 @@ class multi_index
        *        uint32_t zipnumb = 93445;
        *        auto zip_index = addresses.get_index<name("zip")>();
        *        auto itr = zip_index.upper_bound(zipnumb);
-       *        eosio::check(itr->account_name == name("dan"), "Lock arf, Incorrect First Upper Bound Record ");
+       *        agrio::check(itr->account_name == name("dan"), "Lock arf, Incorrect First Upper Bound Record ");
        *        itr++;
-       *        eosio::check(itr == zip_index.end(), "Lock arf, Incorrect End of Iterator");
+       *        agrio::check(itr == zip_index.end(), "Lock arf, Incorrect End of Iterator");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       template<name::raw IndexName>
@@ -1272,22 +1272,22 @@ class multi_index
        *          address.account_name = "brendan"_n;
        *          address.first_name = "Brendan";
        *          address.last_name = "Blumer";
-       *          address.street = "1 EOS Way";
+       *          address.street = "1 AGR Way";
        *          address.city = "Hong Kong";
        *          address.state = "HK";
        *          address.zip = 93445;
        *        });
        *        auto user = addresses.get("dan"_n);
        *        auto itr = address.find("dan"_n);
-       *        eosio::check(iterator_to(user) == itr, "Invalid iterator");
+       *        agrio::check(iterator_to(user) == itr, "Invalid iterator");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const_iterator iterator_to( const T& obj )const {
          const auto& objitem = static_cast<const item&>(obj);
-         eosio::check( objitem.__idx == this, "object passed to iterator_to is not in multi_index" );
+         agrio::check( objitem.__idx == this, "object passed to iterator_to is not in multi_index" );
          return {this, &objitem};
       }
       /**
@@ -1317,20 +1317,20 @@ class multi_index
        *          address.account_name = "dan"_n;
        *          address.first_name = "Daniel";
        *          address.last_name = "Larimer";
-       *          address.street = "1 EOS Way";
+       *          address.street = "1 AGR Way";
        *          address.city = "Blacksburg";
        *          address.state = "VA";
        *        });
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       template<typename Lambda>
       const_iterator emplace( name payer, Lambda&& constructor ) {
          using namespace _multi_index_detail;
 
-         eosio::check( _code.value == current_receiver(), "cannot create objects in table of another contract" ); // Quick fix for mutating db using multi_index that shouldn't allow mutation. Real fix can come in RC2.
+         agrio::check( _code.value == current_receiver(), "cannot create objects in table of another contract" ); // Quick fix for mutating db using multi_index that shouldn't allow mutation. Real fix can come in RC2.
 
          auto itm = std::make_unique<item>( this, [&]( auto& i ){
             T& obj = static_cast<T&>(i);
@@ -1400,19 +1400,19 @@ class multi_index
        *        // add dan account to table           - see emplace example
        *
        *        auto itr = addresses.find("dan"_n);
-       *        eosio::check(itr != addresses.end(), "Address for account not found");
+       *        agrio::check(itr != addresses.end(), "Address for account not found");
        *        addresses.modify( itr, account payer, [&]( auto& address ) {
        *          address.city = "San Luis Obispo";
        *          address.state = "CA";
        *        });
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       template<typename Lambda>
       void modify( const_iterator itr, name payer, Lambda&& updater ) {
-         eosio::check( itr != end(), "cannot pass end iterator to modify" );
+         agrio::check( itr != end(), "cannot pass end iterator to modify" );
 
          modify( *itr, payer, std::forward<Lambda&&>(updater) );
       }
@@ -1446,15 +1446,15 @@ class multi_index
        *        // add dan account to table           - see emplace example
        *
        *        auto itr = addresses.find("dan"_n);
-       *        eosio::check(itr != addresses.end(), "Address for account not found");
+       *        agrio::check(itr != addresses.end(), "Address for account not found");
        *        addresses.modify( *itr, payer, [&]( auto& address ) {
        *          address.city = "San Luis Obispo";
        *          address.state = "CA";
        *        });
-       *        eosio::check(itr->city == "San Luis Obispo", "Lock arf, Address not modified");
+       *        agrio::check(itr->city == "San Luis Obispo", "Lock arf, Address not modified");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       template<typename Lambda>
@@ -1462,9 +1462,9 @@ class multi_index
          using namespace _multi_index_detail;
 
          const auto& objitem = static_cast<const item&>(obj);
-         eosio::check( objitem.__idx == this, "object passed to modify is not in multi_index" );
+         agrio::check( objitem.__idx == this, "object passed to modify is not in multi_index" );
          auto& mutableitem = const_cast<item&>(objitem);
-         eosio::check( _code.value == current_receiver(), "cannot modify objects in table of another contract" ); // Quick fix for mutating db using multi_index that shouldn't allow mutation. Real fix can come in RC2.
+         agrio::check( _code.value == current_receiver(), "cannot modify objects in table of another contract" ); // Quick fix for mutating db using multi_index that shouldn't allow mutation. Real fix can come in RC2.
 
          auto secondary_keys = hana::transform( _indices, [&]( auto&& idx ) {
             typedef typename decltype(+hana::at_c<0>(idx))::type index_type;
@@ -1477,7 +1477,7 @@ class multi_index
          auto& mutableobj = const_cast<T&>(obj); // Do not forget the auto& otherwise it would make a copy and thus not update at all.
          updater( mutableobj );
 
-         eosio::check( pk == obj.primary_key(), "updater cannot change primary key when modifying an object" );
+         agrio::check( pk == obj.primary_key(), "updater cannot change primary key when modifying an object" );
 
          size_t size = pack_size( obj );
          //using malloc/free here potentially is not exception-safe, although WASM doesn't support exceptions
@@ -1531,15 +1531,15 @@ class multi_index
        *        // add dan account to table           - see emplace example
        *
        *        auto user = addresses.get("dan"_n);
-       *        eosio::check(user.first_name == "Daniel", "Couldn't get him.");
+       *        agrio::check(user.first_name == "Daniel", "Couldn't get him.");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const T& get( uint64_t primary, const char* error_msg = "unable to find key" )const {
          auto result = find( primary );
-         eosio::check( result != cend(), error_msg );
+         agrio::check( result != cend(), error_msg );
          return *result;
       }
 
@@ -1559,10 +1559,10 @@ class multi_index
        *        // add dan account to table           - see emplace example
        *
        *        auto itr = addresses.find("dan"_n);
-       *        eosio::check(itr != addresses.end(), "Couldn't get him.");
+       *        agrio::check(itr != addresses.end(), "Couldn't get him.");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       const_iterator find( uint64_t primary )const {
@@ -1595,7 +1595,7 @@ class multi_index
             return iterator_to(*(itr2->_item));
 
          auto itr = db_find_i64( _code.value, _scope, static_cast<uint64_t>(TableName), primary );
-         eosio::check( itr >= 0,  error_msg );
+         agrio::check( itr >= 0,  error_msg );
 
          const item& i = load_object_by_primary_iterator( itr );
          return iterator_to(static_cast<const T&>(i));
@@ -1628,16 +1628,16 @@ class multi_index
        *        // add dan account to table           - see emplace example
        *
        *        auto itr = addresses.find("dan"_n);
-       *        eosio::check(itr != addresses.end(), "Address for account not found");
+       *        agrio::check(itr != addresses.end(), "Address for account not found");
        *        addresses.erase( itr );
-       *        eosio::check(itr != addresses.end(), "Everting lock arf, Address not erased properly");
+       *        agrio::check(itr != addresses.end(), "Everting lock arf, Address not erased properly");
        *      }
        *  }
-       *  EOSIO_ABI( addressbook, (myaction) )
+       *  AGRIO_ABI( addressbook, (myaction) )
        *  @endcode
        */
       const_iterator erase( const_iterator itr ) {
-         eosio::check( itr != end(), "cannot pass end iterator to erase" );
+         agrio::check( itr != end(), "cannot pass end iterator to erase" );
 
          const auto& obj = *itr;
          ++itr;
@@ -1669,28 +1669,28 @@ class multi_index
        *
        *      void myaction() {
        *        auto itr = addresses.find("dan"_n);
-       *        eosio::check(itr != addresses.end(), "Record is not found");
+       *        agrio::check(itr != addresses.end(), "Record is not found");
        *        addresses.erase(*itr);
        *        itr = addresses.find("dan"_n);
-       *        eosio::check(itr == addresses.end(), "Record is not deleted");
+       *        agrio::check(itr == addresses.end(), "Record is not deleted");
        *      }
        *  }
-       *  EOSIO_DISPATCH( addressbook, (myaction) )
+       *  AGRIO_DISPATCH( addressbook, (myaction) )
        *  @endcode
        */
       void erase( const T& obj ) {
          using namespace _multi_index_detail;
 
          const auto& objitem = static_cast<const item&>(obj);
-         eosio::check( objitem.__idx == this, "object passed to erase is not in multi_index" );
-         eosio::check( _code.value == current_receiver(), "cannot erase objects in table of another contract" ); // Quick fix for mutating db using multi_index that shouldn't allow mutation. Real fix can come in RC2.
+         agrio::check( objitem.__idx == this, "object passed to erase is not in multi_index" );
+         agrio::check( _code.value == current_receiver(), "cannot erase objects in table of another contract" ); // Quick fix for mutating db using multi_index that shouldn't allow mutation. Real fix can come in RC2.
 
          auto pk = objitem.primary_key();
          auto itr2 = std::find_if(_items_vector.rbegin(), _items_vector.rend(), [&](const item_ptr& ptr) {
             return ptr._item->primary_key() == pk;
          });
 
-         eosio::check( itr2 != _items_vector.rend(), "attempt to remove object that was not in multi_index" );
+         agrio::check( itr2 != _items_vector.rend(), "attempt to remove object that was not in multi_index" );
 
          _items_vector.erase(--(itr2.base()));
 
@@ -1711,4 +1711,4 @@ class multi_index
 
 };
   /// @}
-}  /// eosio
+}  /// agrio

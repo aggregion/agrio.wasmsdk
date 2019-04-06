@@ -2,7 +2,7 @@
 
 #include "check.hpp"
 
-namespace eosio {
+namespace agrio {
     /**
     *  @defgroup binary_extension Binary Extension
     *  @ingroup core
@@ -179,7 +179,7 @@ namespace eosio {
     *  @return DataStream& - Reference to the datastream
     */
    template<typename DataStream, typename T>
-   inline DataStream& operator<<(DataStream& ds, const eosio::binary_extension<T>& be) {
+   inline DataStream& operator<<(DataStream& ds, const agrio::binary_extension<T>& be) {
      ds << be.value_or();
      return ds;
    }
@@ -195,7 +195,7 @@ namespace eosio {
     *  @return DataStream& - Reference to the datastream
     */
    template<typename DataStream, typename T>
-   inline DataStream& operator>>(DataStream& ds, eosio::binary_extension<T>& be) {
+   inline DataStream& operator>>(DataStream& ds, agrio::binary_extension<T>& be) {
      if( ds.remaining() ) {
         T val;
         ds >> val;
@@ -206,4 +206,4 @@ namespace eosio {
 
    /// @endcond
 
-} // namespace eosio
+} // namespace agrio

@@ -12,6 +12,6 @@ add_test( system_tests ${CMAKE_BINARY_DIR}/tests/unit/system_tests )
 add_test( time_tests ${CMAKE_BINARY_DIR}/tests/unit/time_tests )
 add_test( varint_tests ${CMAKE_BINARY_DIR}/tests/unit/varint_tests )
 
-if (eosio_FOUND AND EOSIO_RUN_INTEGRATION_TESTS)
+if (agrio_FOUND AND AGRIO_RUN_INTEGRATION_TESTS)
    add_test(integration_tests ${CMAKE_BINARY_DIR}/tests/integration/integration_tests)
 endif()

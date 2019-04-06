@@ -1,9 +1,9 @@
 #pragma once
 #include "print.hpp"
 
-#warning "<eosiolib/binary_extension.hpp> is deprecated use <eosio/binary_extension.hpp>"
+#warning "<agriolib/binary_extension.hpp> is deprecated use <agrio/binary_extension.hpp>"
 
- namespace eosio {
+ namespace agrio {
     /**
     *  Container to hold a binary payload for an extension
     *
@@ -72,14 +72,14 @@
           /** get the contained value */
          constexpr T& value()& {
             if (!_has_value) {
-               eosio_assert(false, "cannot get value of empty binary_extension");
+               agrio_assert(false, "cannot get value of empty binary_extension");
             }
             return _get();
          }
           /** get the contained value */
          constexpr const T& value()const & {
             if (!_has_value) {
-               eosio_assert(false, "cannot get value of empty binary_extension");
+               agrio_assert(false, "cannot get value of empty binary_extension");
             }
             return _get();
          }
@@ -176,7 +176,7 @@
            *  @return DataStream& - Reference to the datastream
            */
          template<typename DataStream>
-         friend inline DataStream& operator<<(DataStream& ds, const eosio::binary_extension<T>& be) {
+         friend inline DataStream& operator<<(DataStream& ds, const agrio::binary_extension<T>& be) {
             ds << be.value_or();
             return ds;
          }
@@ -191,7 +191,7 @@
            *  @return DataStream& - Reference to the datastream
            */
          template<typename DataStream>
-         friend inline DataStream& operator>>(DataStream& ds, eosio::binary_extension<T>& be) {
+         friend inline DataStream& operator>>(DataStream& ds, agrio::binary_extension<T>& be) {
             if( ds.remaining() ) {
                T val;
                ds >> val;
@@ -214,4 +214,4 @@
             return *reinterpret_cast<const T*>(&_data);
          }
    };
-} // namespace eosio
+} // namespace agrio

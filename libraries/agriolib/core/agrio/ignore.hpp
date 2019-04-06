@@ -2,7 +2,7 @@
 
 #include "datastream.hpp"
 
-namespace eosio {
+namespace agrio {
    /**
     * @defgroup ignore
     * @ingroup core
@@ -17,7 +17,7 @@ namespace eosio {
     * @note This restriction will be relaxed in a later release. Currently non-ignore types can not succeed an ignore type in a method definition, i.e. void foo(float, ignore<int>) is allowed and void foo(float, ignore<int>, int) is not allowed.
     */
    template <typename T>
-   struct [[eosio::ignore]] ignore {};
+   struct [[agrio::ignore]] ignore {};
 
     /**
     * Wrapper class to allow sending inline actions with the correct payload
@@ -43,7 +43,7 @@ namespace eosio {
     *  @return DataStream& - Reference to the datastream
     */
    template<typename DataStream, typename T>
-   inline DataStream& operator<<(DataStream& ds, const ::eosio::ignore_wrapper<T>& val) {
+   inline DataStream& operator<<(DataStream& ds, const ::agrio::ignore_wrapper<T>& val) {
      ds << val.value;
      return ds;
    }
@@ -58,7 +58,7 @@ namespace eosio {
     *  @return DataStream& - Reference to the datastream
     */
    template<typename DataStream, typename T>
-   inline DataStream& operator<<(DataStream& ds, const ::eosio::ignore<T>& val) {
+   inline DataStream& operator<<(DataStream& ds, const ::agrio::ignore<T>& val) {
      return ds;
    }
 
@@ -72,7 +72,7 @@ namespace eosio {
     *  @return DataStream& - Reference to the datastream
     */
    template<typename DataStream, typename T>
-   inline DataStream& operator>>(DataStream& ds, ::eosio::ignore<T>&) {
+   inline DataStream& operator>>(DataStream& ds, ::agrio::ignore<T>&) {
      return ds;
    }
 }

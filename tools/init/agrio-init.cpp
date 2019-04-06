@@ -9,10 +9,10 @@
 #include "clang/AST/Expr.h"
 #include "clang/Basic/Builtins.h"
 #include "llvm/Support/FileSystem.h"
-#include "eosio/utils.hpp"
-#include "eosio/gen.hpp"
-#include "eosio/whereami/whereami.hpp"
-#include "eosio/abi.hpp"
+#include "agrio/utils.hpp"
+#include "agrio/gen.hpp"
+#include "agrio/whereami/whereami.hpp"
+#include "agrio/abi.hpp"
 
 #include <exception>
 #include <iostream>
@@ -28,8 +28,8 @@
 using namespace clang::tooling;
 using namespace clang::ast_matchers;
 using namespace llvm;
-using namespace eosio;
-using namespace eosio::cdt;
+using namespace agrio;
+using namespace agrio::cdt;
 
 struct project {
    std::string project_name;
@@ -53,8 +53,8 @@ struct project {
                            "   print_f(\"Name : %\\n\",nm);\n"
                            "}";
 
-   const std::string hpp = "#include <eosio/eosio.hpp>\n"
-                           "using namespace eosio;\n\n"
+   const std::string hpp = "#include <agrio/agrio.hpp>\n"
+                           "using namespace agrio;\n\n"
                            "CONTRACT @ : public contract {\n"
                            "   public:\n"
                            "      using contract::contract;\n\n"
@@ -66,22 +66,22 @@ struct project {
                                  "Stub for hi action's ricardian contract";
 
    const std::string cmake = "project(@)\n\n"
-                             "set(EOSIO_WASM_OLD_BEHAVIOR \"Off\")\n"
-                             "find_package(eosio.cdt)\n\n"
+                             "set(AGRIO_WASM_OLD_BEHAVIOR \"Off\")\n"
+                             "find_package(agrio.cdt)\n\n"
                              "add_contract( @ @ @.cpp )\n"
                              "target_include_directories( @ PUBLIC ${CMAKE_SOURCE_DIR}/../include )\n"
                              "target_ricardian_directory( @ ${CMAKE_SOURCE_DIR}/../ricardian )";
 
    const std::string cmake_extern = "include(ExternalProject)\n"
                                     "# if no cdt root is given use default path\n"
-                                    "if(EOSIO_CDT_ROOT STREQUAL \"\" OR NOT EOSIO_CDT_ROOT)\n"
-                                    "   find_package(eosio.cdt)\n"
+                                    "if(AGRIO_CDT_ROOT STREQUAL \"\" OR NOT AGRIO_CDT_ROOT)\n"
+                                    "   find_package(agrio.cdt)\n"
                                     "endif()\n\n"
                                     "ExternalProject_Add(\n"
                                     "   @_project\n"
                                     "   SOURCE_DIR ${CMAKE_SOURCE_DIR}/src\n"
                                     "   BINARY_DIR ${CMAKE_BINARY_DIR}/@\n"
-                                    "   CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=${EOSIO_CDT_ROOT}/lib/cmake/eosio.cdt/EosioWasmToolchain.cmake\n"
+                                    "   CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=${AGRIO_CDT_ROOT}/lib/cmake/agrio.cdt/AgrioWasmToolchain.cmake\n"
                                     "   UPDATE_COMMAND \"\"\n"
                                     "   PATCH_COMMAND \"\"\n"
                                     "   TEST_COMMAND \"\"\n"
@@ -96,12 +96,12 @@ struct project {
                                     "   - run the command 'make'\n\n"
                                     " - After build -\n" 
                                     "   - The built smart contract is under the '@' directory in the 'build' directory\n"
-                                    "   - You can then do a 'set contract' action with 'cleos' and point in to the './build/@' directory\n\n"
+                                    "   - You can then do a 'set contract' action with 'clagr' and point in to the './build/@' directory\n\n"
                                     " - Additions to CMake should be done to the CMakeLists.txt in the './src' directory and not in the top level CMakeLists.txt";
 
    const std::string readme_bare = " --- @ Project ---\n\n"
                                    " - How to Build -\n"
-                                   "   - run the command 'eosio-cpp -abigen -o @.wasm @.cpp'\n";
+                                   "   - run the command 'agrio-cpp -abigen -o @.wasm @.cpp'\n";
 
    std::string replace_name( const std::string& in ) {
       std::stringstream ss;
@@ -185,9 +185,9 @@ struct project {
 int main(int argc, const char **argv) {
 
    cl::SetVersionPrinter([](llvm::raw_ostream& os) {
-        os << "eosio-init version " << "@VERSION_FULL@" << "\n";
+        os << "agrio-init version " << "@VERSION_FULL@" << "\n";
   });
-   cl::OptionCategory cat("eosio-init", "generates an eosio smart contract project");
+   cl::OptionCategory cat("agrio-init", "generates an agrio smart contract project");
    
    cl::opt<bool> bare_opt(
       "bare",
@@ -203,7 +203,7 @@ int main(int argc, const char **argv) {
       cl::desc("directory to place the project"),
       cl::cat(cat));
 
-   cl::ParseCommandLineOptions(argc, argv, std::string("eosio-proj"));
+   cl::ParseCommandLineOptions(argc, argv, std::string("agrio-proj"));
    try {
       if (!std::regex_match(project_name, std::regex("^[_a-zA-Z][_a-zA-Z0-9]*$"))) {
          throw std::runtime_error("ERROR: invalid identifier: " + project_name + " (ensure that it is a valid C++ identifier)");

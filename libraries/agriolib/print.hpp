@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 #include "print.h"
@@ -11,7 +11,7 @@
 #include <utility>
 #include <string>
 
-#warning "<eosiolib/print.hpp> is deprecated use <eosio/print.hpp>"
+#warning "<agriolib/print.hpp> is deprecated use <agrio/print.hpp>"
 /**
    *  @defgroup console Console C++ API
    *  @ingroup core
@@ -36,7 +36,7 @@
    */
 
 
-namespace eosio {
+namespace agrio {
 
    /**
     *  Prints string
@@ -137,7 +137,7 @@ namespace eosio {
     *
     * @param sym_code symbol code to be printed
     */
-   inline void print( eosio::symbol_code sym_code ) {
+   inline void print( agrio::symbol_code sym_code ) {
       char buffer[7];
       auto end = sym_code.write_as_string( buffer, buffer + sizeof(buffer) );
       if( buffer < end )

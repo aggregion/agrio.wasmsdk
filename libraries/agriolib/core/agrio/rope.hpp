@@ -7,7 +7,7 @@
 #include "check.hpp"
 #include "print.hpp"
 
-namespace eosio {
+namespace agrio {
    template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
    template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
@@ -99,7 +99,7 @@ namespace eosio {
 
          void append(rope_node* rn, bool use_left=false) {
             auto cc = std::get_if<concat_t>(rn);
-            eosio::check(cc, "append should only allow concat nodes");
+            agrio::check(cc, "append should only allow concat nodes");
             if (use_left)
                root = new rope_node(concat_t{rn, root});
             else {
@@ -211,7 +211,7 @@ namespace eosio {
          }
          
          void print()const {
-            eosio::print(c_str());
+            agrio::print(c_str());
          }
          
          char* c_str()const {
@@ -228,4 +228,4 @@ namespace eosio {
             return {c_str(), size};
          }
    };
-} // ns eosio
+} // ns agrio

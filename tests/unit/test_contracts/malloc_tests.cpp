@@ -1,6 +1,6 @@
-#include <eosio/eosio.hpp>
+#include <agrio/agrio.hpp>
 
-using namespace eosio;
+using namespace agrio;
 
 // simple macro to add line info to string
 #define STRINGIFY(x) #x
@@ -55,7 +55,7 @@ CONTRACT malloc_tests : public contract{
             ptr[i] = 'a';
          }
          for (size_t i=0; i < (max_heap-diff); i++) {
-            eosio::check(ptr[i] == 'a', "should have written to memory");
+            agrio::check(ptr[i] == 'a', "should have written to memory");
          }
 
       }

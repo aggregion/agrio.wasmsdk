@@ -7,4 +7,4 @@ ACTION send_inline::test( name user, name inline_code ) {
    hi.send(user);
 }
 
-EOSIO_DISPATCH( send_inline, (test) )
+AGRIO_DISPATCH( send_inline, (test) )

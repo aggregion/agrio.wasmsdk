@@ -1,33 +1,33 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
 #include "transaction.hpp"
-#include "../../core/eosio/crypto.hpp"
-#include "../../core/eosio/name.hpp"
-#include "../../core/eosio/time.hpp"
+#include "../../core/agrio/crypto.hpp"
+#include "../../core/agrio/name.hpp"
+#include "../../core/agrio/time.hpp"
 
 #include <set>
 #include <limits>
 
-namespace eosio {
+namespace agrio {
    namespace internal_use_do_not_use {
       extern "C" {
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          int32_t check_transaction_authorization(const char*,  uint32_t,
                                           const char*, uint32_t,
                                           const char*, uint32_t);
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          int32_t check_permission_authorization( uint64_t, uint64_t,
                                                  const char*, uint32_t,
                                                  const char*, uint32_t,
                                                  uint64_t);
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          int64_t get_permission_last_used(uint64_t, uint64_t);
 
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          int64_t get_account_creation_time(uint64_t);
       }
    }

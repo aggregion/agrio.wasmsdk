@@ -1,32 +1,32 @@
 #pragma once
 #include "producer_schedule.hpp"
-#include "../../core/eosio/crypto.hpp"
-#include "../../core/eosio/name.hpp"
-#include "../../core/eosio/serialize.hpp"
+#include "../../core/agrio/crypto.hpp"
+#include "../../core/agrio/name.hpp"
+#include "../../core/agrio/serialize.hpp"
 
-namespace eosio {
+namespace agrio {
 
    namespace internal_use_do_not_use {
       extern "C" {
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          bool is_privileged( uint64_t account );
 
-        __attribute__((eosio_wasm_import))
+        __attribute__((agrio_wasm_import))
         void get_resource_limits( uint64_t account, int64_t* ram_bytes, int64_t* net_weight, int64_t* cpu_weight );
 
-        __attribute__((eosio_wasm_import))
+        __attribute__((agrio_wasm_import))
         void set_resource_limits( uint64_t account, int64_t ram_bytes, int64_t net_weight, int64_t cpu_weight );
 
-        __attribute__((eosio_wasm_import))
+        __attribute__((agrio_wasm_import))
         void set_privileged( uint64_t account, bool is_priv );
 
-        __attribute__((eosio_wasm_import))
+        __attribute__((agrio_wasm_import))
         void set_blockchain_parameters_packed( char* data, uint32_t datalen );
 
-        __attribute__((eosio_wasm_import))
+        __attribute__((agrio_wasm_import))
         uint32_t get_blockchain_parameters_packed( char* data, uint32_t datalen );
 
-        __attribute((eosio_wasm_import))
+        __attribute((agrio_wasm_import))
         int64_t set_proposed_producers( char*, uint32_t );
       }
    }
@@ -146,7 +146,7 @@ namespace eosio {
       uint16_t max_authority_depth;
 
 
-      EOSLIB_SERIALIZE( blockchain_parameters,
+      AGRLIB_SERIALIZE( blockchain_parameters,
                         (max_block_net_usage)(target_block_net_usage_pct)
                         (max_transaction_net_usage)(base_per_transaction_net_usage)(net_usage_leeway)
                         (context_free_discount_net_usage_num)(context_free_discount_net_usage_den)
@@ -165,7 +165,7 @@ namespace eosio {
     *  @ingroup privileged
     *  @param params - New blockchain parameters to set
     */
-   void set_blockchain_parameters(const eosio::blockchain_parameters& params);
+   void set_blockchain_parameters(const agrio::blockchain_parameters& params);
 
    /**
     *  Retrieve the blolckchain parameters
@@ -173,7 +173,7 @@ namespace eosio {
     *  @ingroup privileged
     *  @param params - It will be replaced with the retrieved blockchain params
     */
-   void get_blockchain_parameters(eosio::blockchain_parameters& params);
+   void get_blockchain_parameters(agrio::blockchain_parameters& params);
 
     /**
     *  Get the resource limits of an account

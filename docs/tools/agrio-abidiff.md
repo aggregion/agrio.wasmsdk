@@ -1,18 +1,18 @@
-# eosio-abidiff
+# agrio-abidiff
 
 Tool to diff two ABI files to flag and output differences.
-To report differences with ```eosio-abidiff```, you only need to pass the two ABI file names as command line arguments.
+To report differences with ```agrio-abidiff```, you only need to pass the two ABI file names as command line arguments.
 
 Example:
 ```bash
-$ eosio-abidiff hello.abi old_hello.abi
+$ agrio-abidiff hello.abi old_hello.abi
 ```
 
 This will generate dump the report output to the console.
 ---
 ```
-OVERVIEW: eosio-abidiff
-USAGE: eosio-abidiff [options] <input file1> ... <input file2> ...
+OVERVIEW: agrio-abidiff
+USAGE: agrio-abidiff [options] <input file1> ... <input file2> ...
 
 OPTIONS:
 

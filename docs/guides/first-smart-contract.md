@@ -1,15 +1,15 @@
 ### Building your first smart contract
 ```c++
-#include <eosio/eosio.hpp>
-#include <eosio/name.hpp>
+#include <agrio/agrio.hpp>
+#include <agrio/name.hpp>
 
-class [[eosio::contract]] hello : public eosio::contract {
+class [[agrio::contract]] hello : public agrio::contract {
    public:
-      using eosio::contract::contract;
+      using agrio::contract::contract;
 
-      [[eosio::action]]
-      void hi(eosio::name nm) {
-         eosio::print_f("Hello, %\n", nm);
+      [[agrio::action]]
+      void hi(agrio::name nm) {
+         agrio::print_f("Hello, %\n", nm);
       }
 };
 ```
@@ -18,7 +18,7 @@ class [[eosio::contract]] hello : public eosio::contract {
 - You should then see the hello.cpp file
 - Now run the compiler
 ```sh
-$ eosio-cpp -abigen hello.cpp -o hello.wasm
+$ agrio-cpp -abigen hello.cpp -o hello.wasm
 ```
 - Or with CMake
 ```sh

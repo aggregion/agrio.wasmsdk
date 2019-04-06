@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
@@ -10,9 +10,9 @@
 #include <algorithm>
 #include <type_traits>
 
-#warning "<eosiolib/fixed_bytes.hpp> is deprecated use <eosio/fixed_bytes.hpp>"
+#warning "<agriolib/fixed_bytes.hpp> is deprecated use <agrio/fixed_bytes.hpp>"
 
-namespace eosio {
+namespace agrio {
 
    template<size_t Size>
    class fixed_bytes;
@@ -73,7 +73,7 @@ namespace eosio {
                    continue;
                }
 
-               eosio::check( sub_words_left == 1, "unexpected error in fixed_bytes constructor" );
+               agrio::check( sub_words_left == 1, "unexpected error in fixed_bytes constructor" );
                temp_word |= static_cast<word_t>(*w_itr);
                sub_words_left = num_sub_words;
 

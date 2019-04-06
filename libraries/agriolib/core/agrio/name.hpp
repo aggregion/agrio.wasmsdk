@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
@@ -10,10 +10,10 @@
 #include <string>
 #include <string_view>
 
-namespace eosio {
+namespace agrio {
    namespace internal_use_do_not_use {
       extern "C" {
-         __attribute__((eosio_wasm_import))
+         __attribute__((agrio_wasm_import))
          void printn(uint64_t);
       }
    }
@@ -22,7 +22,7 @@ namespace eosio {
     * @defgroup name
     * @ingroup core
     * @ingroup types
-    * @brief EOSIO Name Type
+    * @brief AGRIO Name Type
     */
 
    /**
@@ -77,7 +77,7 @@ namespace eosio {
       :value(0)
       {
          if( str.size() > 13 ) {
-            eosio::check( false, "string is too long to be a valid name" );
+            agrio::check( false, "string is too long to be a valid name" );
          }
          if( str.empty() ) {
             return;
@@ -92,7 +92,7 @@ namespace eosio {
          if( str.size() == 13 ) {
             uint64_t v = char_to_value( str[12] );
             if( v > 0x0Full ) {
-               eosio::check(false, "thirteenth character in name cannot be a letter that comes after j");
+               agrio::check(false, "thirteenth character in name cannot be a letter that comes after j");
             }
             value |= v;
          }
@@ -112,7 +112,7 @@ namespace eosio {
          else if( c >= 'a' && c <= 'z' )
             return (c - 'a') + 6;
          else
-            eosio::check( false, "character is not in allowed character set for names" );
+            agrio::check( false, "character is not in allowed character set for names" );
 
          return 0; // control flow will never reach here; just added to suppress warning
       }
@@ -265,7 +265,7 @@ namespace eosio {
 
       uint64_t value = 0;
 
-      EOSLIB_SERIALIZE( name, (value) )
+      AGRLIB_SERIALIZE( name, (value) )
    };
 
    namespace detail {
@@ -274,7 +274,7 @@ namespace eosio {
          static constexpr const char value[] = {Str...};
       };
    } /// namespace detail
-} /// namespace eosio
+} /// namespace agrio
 
 /// @cond IMPLEMENTATIONS
 
@@ -287,8 +287,8 @@ namespace eosio {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wgnu-string-literal-operator-template"
 template <typename T, T... Str>
-inline constexpr eosio::name operator""_n() {
-   constexpr auto x = eosio::name{std::string_view{eosio::detail::to_const_char_arr<Str...>::value, sizeof...(Str)}};
+inline constexpr agrio::name operator""_n() {
+   constexpr auto x = agrio::name{std::string_view{agrio::detail::to_const_char_arr<Str...>::value, sizeof...(Str)}};
    return x;
 }
 #pragma clang diagnostic pop

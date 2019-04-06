@@ -1,11 +1,11 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 #include "types.h"
 
-#warning "<eosiolib/permission.h> is deprecated use <eosio/permission.h>. If you are using C++ the .h header files will be removed from inclusion entirely in v1.7.0"
+#warning "<agriolib/permission.h> is deprecated use <agrio/permission.h>. If you are using C++ the .h header files will be removed from inclusion entirely in v1.7.0"
 
 extern "C" {
 
@@ -29,7 +29,7 @@ extern "C" {
     *
     *  @return 1 if the transaction is authorized, 0 otherwise
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    int32_t
    check_transaction_authorization( const char* trx_data,     uint32_t trx_size,
                                     const char* pubkeys_data, uint32_t pubkeys_size,
@@ -49,7 +49,7 @@ extern "C" {
     *
     *  @return 1 if the permission is authorized, 0 otherwise
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    int32_t
    check_permission_authorization( capi_name account,
                                    capi_name permission,
@@ -66,7 +66,7 @@ extern "C" {
     *
     *  @return the last used time (in microseconds since Unix epoch) of the permission
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    int64_t get_permission_last_used( capi_name account, capi_name permission );
 
 
@@ -77,7 +77,7 @@ extern "C" {
     *
     *  @return the creation time (in microseconds since Unix epoch) of the account
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    int64_t get_account_creation_time( capi_name account );
 
    ///@}

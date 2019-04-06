@@ -1,11 +1,11 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 #include "system.hpp"
 
-#warning "<eosiolib/action.h> is deprecated use <eosio/action.h>. If you are using C++ the .h header files will be removed from inclusion entirely in v1.7.0"
+#warning "<agriolib/action.h> is deprecated use <agrio/action.h>. If you are using C++ the .h header files will be removed from inclusion entirely in v1.7.0"
 
 extern "C" {
    /**
@@ -14,7 +14,7 @@ extern "C" {
     * @brief Defines API for querying action and sending action
     *
     *
-    * A EOS.IO action has the following abstract structure:
+    * A AGR.IO action has the following abstract structure:
     *
     * ```
     *   struct action {
@@ -31,7 +31,7 @@ extern "C" {
     * @code
     * // Assume this action is used for the following examples:
     * // {
-    * //  "code": "eos",
+    * //  "code": "agr",
     * //  "type": "transfer",
     * //  "authorization": [{ "account": "inita", "permission": "active" }],
     * //  "data": {
@@ -72,7 +72,7 @@ extern "C" {
     *  @pre `msg` is a valid pointer to a range of memory at least `len` bytes long
     *  @post `msg` is filled with packed action data
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    uint32_t read_action_data( void* msg, uint32_t len );
 
    /**
@@ -81,7 +81,7 @@ extern "C" {
     * @brief Get the length of current action's data field
     * @return the length of the current action's data field
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    uint32_t action_data_size();
 
    /**
@@ -90,7 +90,7 @@ extern "C" {
     *  @brief Add the specified account to set of accounts to be notified
     *  @param name - name of the account to be verified
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    void require_recipient( capi_name name );
 
    /**
@@ -99,7 +99,7 @@ extern "C" {
     *  @brief Verify specified account exists in the set of provided auths
     *  @param name - name of the account to be verified
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    void require_auth( capi_name name );
 
     /**
@@ -108,7 +108,7 @@ extern "C" {
     *  @brief Verifies that name has auth.
     *  @param name - name of the account to be verified
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    bool has_auth( capi_name name );
 
    /**
@@ -118,7 +118,7 @@ extern "C" {
     *  @param name - name of the account to be verified
     *  @param permission - permission level to be verified
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    void require_auth2( capi_name name, capi_name permission );
 
    /**
@@ -127,7 +127,7 @@ extern "C" {
     *  @brief Verifies that @ref name is an existing account.
     *  @param name - name of the account to check
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    bool is_account( capi_name name );
 
    /**
@@ -137,7 +137,7 @@ extern "C" {
     *  @param size - size of serialized action in bytes
     *  @pre `serialized_action` is a valid pointer to an array at least `size` bytes long
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    void send_inline(char *serialized_action, size_t size);
 
    /**
@@ -148,7 +148,7 @@ extern "C" {
     *  @param size - size of serialized action in bytes
     *  @pre `serialized_action` is a valid pointer to an array at least `size` bytes long
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    void send_context_free_inline(char *serialized_action, size_t size);
 
    /**
@@ -156,7 +156,7 @@ extern "C" {
     *  @brief Get the publication time
     *  @return the time in microseconds from 1970 of the publication_time
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    uint64_t  publication_time();
 
    /**
@@ -164,7 +164,7 @@ extern "C" {
     *  @brief Get the current receiver of the action
     *  @return the account which specifies the current receiver of the action
     */
-   __attribute__((eosio_wasm_import))
+   __attribute__((agrio_wasm_import))
    capi_name current_receiver();
 
    /// @} action

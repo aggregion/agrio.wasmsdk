@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in agrio.cdt/LICENSE.txt
  */
 
 #include <algorithm>
@@ -9,9 +9,9 @@
 #include <tuple>
 #include <vector>
 
-#include <eosio/tester.hpp>
-#include <eosio/datastream.hpp>
-#include <eosio/serialize.hpp>
+#include <agrio/tester.hpp>
+#include <agrio/datastream.hpp>
+#include <agrio/serialize.hpp>
 
 using std::begin;
 using std::end;
@@ -21,11 +21,11 @@ using std::string;
 using std::tie;
 using std::vector;
 
-using eosio::datastream;
+using agrio::datastream;
 
 struct B {
    const char c{};
-   EOSLIB_SERIALIZE( B, (c) )
+   AGRLIB_SERIALIZE( B, (c) )
 
    friend bool operator==(const B& lhs, const B& rhs) {
          return lhs.c == rhs.c;
@@ -34,7 +34,7 @@ struct B {
 
 struct D1 : public B {
    const int i{};
-   EOSLIB_SERIALIZE_DERIVED( D1, B, (i) )
+   AGRLIB_SERIALIZE_DERIVED( D1, B, (i) )
 
    friend bool operator==(const D1& lhs, const D1& rhs) {
       return tie(lhs.c, lhs.i) == tie(rhs.c, rhs.i);
@@ -43,15 +43,15 @@ struct D1 : public B {
 
 struct D2 : public D1 {
    const vector<double> v{};
-   EOSLIB_SERIALIZE_DERIVED( D2, D1, (v) )
+   AGRLIB_SERIALIZE_DERIVED( D2, D1, (v) )
 
    friend bool operator==(const D2& lhs, const D2& rhs) {
       return tie(lhs.c, lhs.i, lhs.v) == tie(rhs.c, rhs.i, rhs.v);
    }
 };
 
-// Definitions in `eosio.cdt/libraries/eosio/serialize.hpp`
-EOSIO_TEST_BEGIN(serialize_test)
+// Definitions in `agrio.cdt/libraries/agrio/serialize.hpp`
+AGRIO_TEST_BEGIN(serialize_test)
    silence_output(true);
 
    static constexpr uint16_t buffer_size{256};
@@ -103,9 +103,9 @@ EOSIO_TEST_BEGIN(serialize_test)
    REQUIRE_EQUAL( d2, dd2 )
    
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
 int main(int argc, char* argv[]) {
-   EOSIO_TEST(serialize_test)
+   AGRIO_TEST(serialize_test)
    return has_failed();
 }

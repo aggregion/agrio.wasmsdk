@@ -1,5 +1,5 @@
-#include <eosio/eosio.hpp>
-using namespace eosio;
+#include <agrio/agrio.hpp>
+using namespace agrio;
 
 CONTRACT send_inline : public contract {
    public:

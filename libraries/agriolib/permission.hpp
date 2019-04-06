@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 
@@ -11,8 +11,8 @@
 #include <set>
 #include <limits>
 
-#warning "<eosiolib/permission.hpp> is deprecated use <eosio/permission.hpp>"
-namespace eosio {
+#warning "<agriolib/permission.hpp> is deprecated use <agrio/permission.hpp>"
+namespace agrio {
 
   /**
    * @addtogroup permission Permission C++ API

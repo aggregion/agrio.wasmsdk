@@ -18,15 +18,15 @@ cp -R ${BUILD_DIR}/bin/* ${CDT_PREFIX}/bin
 cp -R ${BUILD_DIR}/licenses/* ${CDT_PREFIX}/licenses
 
 # install cmake modules
-sed "s/_PREFIX_/\/${SPREFIX}/g" ${BUILD_DIR}/modules/EosioCDTMacrosPackage.cmake &> ${CDT_PREFIX}/lib/cmake/${PROJECT}/EosioCDTMacros.cmake
-sed "s/_PREFIX_/\/${SPREFIX}/g" ${BUILD_DIR}/modules/EosioWasmToolchainPackage.cmake &> ${CDT_PREFIX}/lib/cmake/${PROJECT}/EosioWasmToolchain.cmake
+sed "s/_PREFIX_/\/${SPREFIX}/g" ${BUILD_DIR}/modules/AgrioCDTMacrosPackage.cmake &> ${CDT_PREFIX}/lib/cmake/${PROJECT}/AgrioCDTMacros.cmake
+sed "s/_PREFIX_/\/${SPREFIX}/g" ${BUILD_DIR}/modules/AgrioWasmToolchainPackage.cmake &> ${CDT_PREFIX}/lib/cmake/${PROJECT}/AgrioWasmToolchain.cmake
 sed "s/_PREFIX_/\/${SPREFIX}\/${SSUBPREFIX}/g" ${BUILD_DIR}/modules/${PROJECT}-config.cmake.package &> ${CDT_PREFIX}/lib/cmake/${PROJECT}/${PROJECT}-config.cmake
 
 # install scripts
 cp -R ${BUILD_DIR}/scripts/* ${CDT_PREFIX}/scripts 
 
 # install misc.
-cp ${BUILD_DIR}/eosio.imports ${CDT_PREFIX}
+cp ${BUILD_DIR}/agrio.imports ${CDT_PREFIX}
 
 # install wasm includes
 cp -R ${BUILD_DIR}/include/* ${CDT_PREFIX}/include
@@ -37,8 +37,8 @@ cp ${BUILD_DIR}/lib/*.a ${CDT_PREFIX}/lib
 # make symlinks
 pushd ${PREFIX}/lib/cmake/${PROJECT} &> /dev/null
 ln -sf ../../../${SUBPREFIX}/lib/cmake/${PROJECT}/${PROJECT}-config.cmake ${PROJECT}-config.cmake
-ln -sf ../../../${SUBPREFIX}/lib/cmake/${PROJECT}/EosioWasmToolchain.cmake EosioWasmToolchain.cmake
-ln -sf ../../../${SUBPREFIX}/lib/cmake/${PROJECT}/EosioCDTMacros.cmake EosioCDTMacros.cmake
+ln -sf ../../../${SUBPREFIX}/lib/cmake/${PROJECT}/AgrioWasmToolchain.cmake AgrioWasmToolchain.cmake
+ln -sf ../../../${SUBPREFIX}/lib/cmake/${PROJECT}/AgrioCDTMacros.cmake AgrioCDTMacros.cmake
 popd &> /dev/null
 
 create_symlink() {
@@ -47,14 +47,14 @@ create_symlink() {
    popd &> /dev/null
 }
 
-create_symlink "eosio-cc eosio-cc"
-create_symlink "eosio-cpp eosio-cpp"
-create_symlink "eosio-ld eosio-ld"
-create_symlink "eosio-pp eosio-pp"
-create_symlink "eosio-init eosio-init"
-create_symlink "eosio-abigen eosio-abigen"
-create_symlink "eosio-wasm2wast eosio-wasm2wast"
-create_symlink "eosio-wast2wasm eosio-wast2wasm"
+create_symlink "agrio-cc agrio-cc"
+create_symlink "agrio-cpp agrio-cpp"
+create_symlink "agrio-ld agrio-ld"
+create_symlink "agrio-pp agrio-pp"
+create_symlink "agrio-init agrio-init"
+create_symlink "agrio-abigen agrio-abigen"
+create_symlink "agrio-wasm2wast agrio-wasm2wast"
+create_symlink "agrio-wast2wasm agrio-wast2wasm"
 
 tar -cvzf $NAME ./${PREFIX}/*
 rm -r ${PREFIX}

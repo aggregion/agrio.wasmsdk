@@ -1,7 +1,7 @@
 SET(SRC_FILENAMES algorithm.cpp any.cpp bind.cpp condition_variable.cpp functional.cpp
                   future.cpp ios.cpp iostream.cpp locale.cpp memory.cpp mutex.cpp new.cpp optional.cpp
                   regex.cpp stdexcept.cpp string.cpp strstream.cpp system_error.cpp exception.cpp
-                  typeinfo.cpp utility.cpp valarray.cpp variant.cpp vector.cpp eosio.cpp)
+                  typeinfo.cpp utility.cpp valarray.cpp variant.cpp vector.cpp agrio.cpp)
 
 SET(SRC_FILES "")
 FOREACH(FN ${SRC_FILENAMES})
@@ -21,7 +21,7 @@ target_include_directories(c++
                            ${CMAKE_SOURCE_DIR}/libc/musl/include
                            ${CMAKE_SOURCE_DIR}/libc/musl/src/internal
                            ${CMAKE_SOURCE_DIR}/libc/musl/src/crypt
-                           ${CMAKE_SOURCE_DIR}/libc/musl/arch/eos
+                           ${CMAKE_SOURCE_DIR}/libc/musl/arch/agr
                            ${CMAKE_CURRENT_SOURCE_DIR}/libcxx/include)
 
 target_include_directories(native_c++
@@ -29,7 +29,7 @@ target_include_directories(native_c++
                            ${CMAKE_SOURCE_DIR}/libc/musl/include
                            ${CMAKE_SOURCE_DIR}/libc/musl/src/internal
                            ${CMAKE_SOURCE_DIR}/libc/musl/src/crypt
-                           ${CMAKE_SOURCE_DIR}/libc/musl/arch/eos
+                           ${CMAKE_SOURCE_DIR}/libc/musl/arch/agr
                            ${CMAKE_CURRENT_SOURCE_DIR}/libcxx/include)
 
 target_link_libraries(c++ c)

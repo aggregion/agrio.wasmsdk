@@ -35,7 +35,7 @@ steps:
       queue: "automation-large-builder-fleet"
     plugins:
       docker#v2.0.0:
-        image: "eosio/ci:ubuntu18"
+        image: "agrio/ci:ubuntu18"
         workdir: /data/job
     timeout: 120
 
@@ -50,7 +50,7 @@ steps:
       queue: "automation-large-builder-fleet"
     plugins:
       docker#v2.0.0:
-        image: "eosio/ci:fedora"
+        image: "agrio/ci:fedora"
         workdir: /data/job
     timeout: 120
 
@@ -65,7 +65,7 @@ steps:
       queue: "automation-large-builder-fleet"
     plugins:
       docker#v2.0.0:
-        image: "eosio/ci:centos"
+        image: "agrio/ci:centos"
         workdir: /data/job
     timeout: 120
   
@@ -80,7 +80,7 @@ steps:
       queue: "automation-large-builder-fleet"
     plugins:
       docker#v2.0.0:
-        image: "eosio/ci:amazonlinux"
+        image: "agrio/ci:amazonlinux"
         workdir: /data/job
     timeout: 120
 
@@ -125,7 +125,7 @@ steps:
       queue: "automation-large-builder-fleet"
     plugins:
       docker#v2.0.0:
-        image: "eosio/ci:ubuntu18"
+        image: "agrio/ci:ubuntu18"
         workdir: /data/job
     timeout: 120
 
@@ -141,7 +141,7 @@ steps:
       queue: "automation-large-builder-fleet"
     plugins:
       docker#v2.0.0:
-        image: "eosio/ci:fedora"
+        image: "agrio/ci:fedora"
         workdir: /data/job
     timeout: 120
 
@@ -157,7 +157,7 @@ steps:
       queue: "automation-large-builder-fleet"
     plugins:
       docker#v2.0.0:
-        image: "eosio/ci:centos"
+        image: "agrio/ci:centos"
         workdir: /data/job
     timeout: 120
   
@@ -173,7 +173,7 @@ steps:
       queue: "automation-large-builder-fleet"
     plugins:
       docker#v2.0.0:
-        image: "eosio/ci:amazonlinux"
+        image: "agrio/ci:amazonlinux"
         workdir: /data/job
     timeout: 120
 
@@ -221,7 +221,7 @@ steps:
       - "build/packages/*.deb"
     plugins:
       docker#v1.4.0:
-        image: "eosio/ci:ubuntu18"
+        image: "agrio/ci:ubuntu18"
         workdir: /data/job
     env:
       OS: "ubuntu-18.04"
@@ -248,7 +248,7 @@ steps:
       - "build/packages/x86_64/*.rpm"
     plugins:
       docker#v1.4.0:
-        image: "eosio/ci:fedora"
+        image: "agrio/ci:fedora"
         workdir: /data/job
     env:
       OS: "fedora"
@@ -275,7 +275,7 @@ steps:
       - "build/packages/x86_64/*.rpm"
     plugins:
       docker#v1.4.0:
-        image: "eosio/ci:centos"
+        image: "agrio/ci:centos"
         workdir: /data/job
     env:
       OS: "centos"
@@ -293,25 +293,25 @@ steps:
         docker-credential-gcr configure-docker && \
         echo "--- :hammer_and_wrench: BUILDING BUILD IMAGE" && \
         cd docker/dev && \
-        [[ "$BUILDKITE_TAG" != "" ]] && docker build -t eosio/cdt:latest -t eosio/cdt:$BUILDKITE_COMMIT -t eosio/cdt:$BUILDKITE_BRANCH -t eosio/cdt:$BUILDKITE_TAG . || docker build -t eosio/cdt:latest -t eosio/cdt:$BUILDKITE_COMMIT -t eosio/cdt:$BUILDKITE_BRANCH . && \
-        docker tag eosio/cdt:$BUILDKITE_COMMIT gcr.io/b1-automation-dev/eosio/cdt:$BUILDKITE_COMMIT && \
-        docker tag eosio/cdt:$BUILDKITE_BRANCH gcr.io/b1-automation-dev/eosio/cdt:$BUILDKITE_BRANCH && \
-        [[ "$BUILDKITE_TAG" != "" ]] && docker tag eosio/cdt:$BUILDKITE_TAG gcr.io/b1-automation-dev/eosio/cdt:$BUILDKITE_TAG || : && \
-        docker tag eosio/cdt:latest gcr.io/b1-automation-dev/eosio/cdt:latest && \
+        [[ "$BUILDKITE_TAG" != "" ]] && docker build -t agrio/cdt:latest -t agrio/cdt:$BUILDKITE_COMMIT -t agrio/cdt:$BUILDKITE_BRANCH -t agrio/cdt:$BUILDKITE_TAG . || docker build -t agrio/cdt:latest -t agrio/cdt:$BUILDKITE_COMMIT -t agrio/cdt:$BUILDKITE_BRANCH . && \
+        docker tag agrio/cdt:$BUILDKITE_COMMIT gcr.io/b1-automation-dev/agrio/cdt:$BUILDKITE_COMMIT && \
+        docker tag agrio/cdt:$BUILDKITE_BRANCH gcr.io/b1-automation-dev/agrio/cdt:$BUILDKITE_BRANCH && \
+        [[ "$BUILDKITE_TAG" != "" ]] && docker tag agrio/cdt:$BUILDKITE_TAG gcr.io/b1-automation-dev/agrio/cdt:$BUILDKITE_TAG || : && \
+        docker tag agrio/cdt:latest gcr.io/b1-automation-dev/agrio/cdt:latest && \
         echo "--- :hand: PUSHING DOCKER IMAGES" && \
-        docker push gcr.io/b1-automation-dev/eosio/cdt:$BUILDKITE_COMMIT && \
-        docker push gcr.io/b1-automation-dev/eosio/cdt:$BUILDKITE_BRANCH && \
-        [[ "$BUILDKITE_TAG" != "" ]] && docker push gcr.io/b1-automation-dev/eosio/cdt:$BUILDKITE_TAG || : && \
-        docker push gcr.io/b1-automation-dev/eosio/cdt:latest && \
+        docker push gcr.io/b1-automation-dev/agrio/cdt:$BUILDKITE_COMMIT && \
+        docker push gcr.io/b1-automation-dev/agrio/cdt:$BUILDKITE_BRANCH && \
+        [[ "$BUILDKITE_TAG" != "" ]] && docker push gcr.io/b1-automation-dev/agrio/cdt:$BUILDKITE_TAG || : && \
+        docker push gcr.io/b1-automation-dev/agrio/cdt:latest && \
         echo "--- :thought_balloon: TRASHING OLD IMAGES" && \
-        docker rmi eosio/cdt:$BUILDKITE_COMMIT && \
-        docker rmi eosio/cdt:$BUILDKITE_BRANCH && \
-        [[ "$BUILDKITE_TAG" != "" ]] && docker rmi eosio/cdt:$BUILDKITE_TAG || : && \
-        docker rmi eosio/cdt:latest && \
-        docker rmi gcr.io/b1-automation-dev/eosio/cdt:$BUILDKITE_COMMIT && \
-        docker rmi gcr.io/b1-automation-dev/eosio/cdt:$BUILDKITE_BRANCH && \
-        [[ "$BUILDKITE_TAG" != "" ]] && docker rmi gcr.io/b1-automation-dev/eosio/cdt:$BUILDKITE_TAG || : && \
-        docker rmi gcr.io/b1-automation-dev/eosio/cdt:latest
+        docker rmi agrio/cdt:$BUILDKITE_COMMIT && \
+        docker rmi agrio/cdt:$BUILDKITE_BRANCH && \
+        [[ "$BUILDKITE_TAG" != "" ]] && docker rmi agrio/cdt:$BUILDKITE_TAG || : && \
+        docker rmi agrio/cdt:latest && \
+        docker rmi gcr.io/b1-automation-dev/agrio/cdt:$BUILDKITE_COMMIT && \
+        docker rmi gcr.io/b1-automation-dev/agrio/cdt:$BUILDKITE_BRANCH && \
+        [[ "$BUILDKITE_TAG" != "" ]] && docker rmi gcr.io/b1-automation-dev/agrio/cdt:$BUILDKITE_TAG || : && \
+        docker rmi gcr.io/b1-automation-dev/agrio/cdt:latest
     label: "Docker Build Builder"
     agents:
       queue: "automation-docker-builder-fleet"

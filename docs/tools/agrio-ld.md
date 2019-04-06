@@ -1,7 +1,7 @@
-### eosio-ld
+### agrio-ld
 ---
 ```
-USAGE: eosio-ld [options] <input file> ...
+USAGE: agrio-ld [options] <input file> ...
 
 OPTIONS:
 

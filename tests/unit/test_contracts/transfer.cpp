@@ -1,7 +1,7 @@
-#include <eosio/eosio.hpp>
-#include <eosio/asset.hpp>
+#include <agrio/agrio.hpp>
+#include <agrio/asset.hpp>
 
-using namespace eosio;
+using namespace agrio;
 
 CONTRACT transfer_contract : public contract {
    public:

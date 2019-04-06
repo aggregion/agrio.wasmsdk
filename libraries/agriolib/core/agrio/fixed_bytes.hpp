@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eos/LICENSE
+ *  @copyright defined in agr/LICENSE
  */
 #pragma once
 #include "datastream.hpp"
@@ -10,7 +10,7 @@
 #include <functional>
 #include <type_traits>
 
-namespace eosio {
+namespace agrio {
 
    /// @cond IMPLEMENTATIONS
 
@@ -74,7 +74,7 @@ namespace eosio {
                    continue;
                }
 
-               eosio::check( sub_words_left == 1, "unexpected error in fixed_bytes constructor" );
+               agrio::check( sub_words_left == 1, "unexpected error in fixed_bytes constructor" );
                temp_word |= static_cast<word_t>(*w_itr);
                sub_words_left = num_sub_words;
 

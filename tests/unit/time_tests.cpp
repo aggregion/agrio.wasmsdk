@@ -1,22 +1,22 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in agrio.cdt/LICENSE.txt
  */
 
-#include <eosio/tester.hpp>
-#include <eosio/time.hpp>
+#include <agrio/tester.hpp>
+#include <agrio/time.hpp>
 
 using std::numeric_limits;
 
-using eosio::days;
-using eosio::hours;
-using eosio::microseconds;
-using eosio::milliseconds;
-using eosio::minutes;
-using eosio::seconds;
-using eosio::time_point;
-using eosio::time_point_sec;
-using eosio::block_timestamp;
+using agrio::days;
+using agrio::hours;
+using agrio::microseconds;
+using agrio::milliseconds;
+using agrio::minutes;
+using agrio::seconds;
+using agrio::time_point;
+using agrio::time_point_sec;
+using agrio::block_timestamp;
 
 static constexpr int64_t i64min = numeric_limits<int64_t>::min(); // -9223372036854775808
 static constexpr int64_t i64max = numeric_limits<int64_t>::max(); //  9223372036854775807
@@ -24,8 +24,8 @@ static constexpr int64_t i64max = numeric_limits<int64_t>::max(); //  9223372036
 static constexpr uint32_t u32min = numeric_limits<uint32_t>::min(); // 0
 static constexpr uint32_t u32max = numeric_limits<uint32_t>::max(); // 4294967295
 
-// Definitions in `eosio.cdt/libraries/eosio/time.hpp`
-EOSIO_TEST_BEGIN(microseconds_type_test)
+// Definitions in `agrio.cdt/libraries/agrio/time.hpp`
+AGRIO_TEST_BEGIN(microseconds_type_test)
 silence_output(true);
 
    //// explicit microseconds(uint64_t)/int64_t count()
@@ -122,10 +122,10 @@ silence_output(true);
    CHECK_EQUAL( days(60LL), microseconds{24LL*60LL*60LL*60LL*1000000LL} )
    
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
-// Definitions in `eosio.cdt/libraries/eosio/time.hpp`
-EOSIO_TEST_BEGIN(time_point_type_test)
+// Definitions in `agrio.cdt/libraries/agrio/time.hpp`
+AGRIO_TEST_BEGIN(time_point_type_test)
    silence_output(true);
 
    static const microseconds ms0 { 0LL};
@@ -209,10 +209,10 @@ EOSIO_TEST_BEGIN(time_point_type_test)
    CHECK_EQUAL( (time_point{ms0} >= time_point{ms1}), false )
 
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
-// Definitions in `eosio.cdt/libraries/eosio/time.hpp`
-EOSIO_TEST_BEGIN(time_point_sec_type_test)
+// Definitions in `agrio.cdt/libraries/agrio/time.hpp`
+AGRIO_TEST_BEGIN(time_point_sec_type_test)
    silence_output(true);
 
    static const microseconds ms0 { 0LL};
@@ -376,10 +376,10 @@ EOSIO_TEST_BEGIN(time_point_sec_type_test)
    CHECK_EQUAL( (time_point_sec{1} >= time_point_sec{2}), false )
 
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
-// Definitions in `eosio.cdt/libraries/eosio/time.hpp`
-EOSIO_TEST_BEGIN(block_timestamp_type_test)
+// Definitions in `agrio.cdt/libraries/agrio/time.hpp`
+AGRIO_TEST_BEGIN(block_timestamp_type_test)
    silence_output(true);
 
    static const int64_t bt_epoch{946684800000LL};
@@ -484,12 +484,12 @@ EOSIO_TEST_BEGIN(block_timestamp_type_test)
    CHECK_EQUAL( block_timestamp{1} >= block_timestamp{2}, false )
    
    silence_output(false);
-EOSIO_TEST_END
+AGRIO_TEST_END
 
 int main(int argc, char* argv[]) {
-   EOSIO_TEST(microseconds_type_test);
-   EOSIO_TEST(time_point_type_test);
-   EOSIO_TEST(time_point_sec_type_test);
-   EOSIO_TEST(block_timestamp_type_test);
+   AGRIO_TEST(microseconds_type_test);
+   AGRIO_TEST(time_point_type_test);
+   AGRIO_TEST(time_point_sec_type_test);
+   AGRIO_TEST(block_timestamp_type_test);
    return has_failed();
 }

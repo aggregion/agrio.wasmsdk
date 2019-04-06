@@ -1,3 +1,3 @@
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/eosio-ld.cpp.in ${CMAKE_BINARY_DIR}/eosio-ld.cpp)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/agrio-ld.cpp.in ${CMAKE_BINARY_DIR}/agrio-ld.cpp)
 
-add_tool(eosio-ld)
+add_tool(agrio-ld)

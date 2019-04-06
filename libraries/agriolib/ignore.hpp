@@ -1,8 +1,8 @@
 #pragma once
 
-#warning "<eosiolib/ignore.hpp> is deprecated use <eosio/ignore.hpp>"
+#warning "<agriolib/ignore.hpp> is deprecated use <agrio/ignore.hpp>"
 
-namespace eosio {
+namespace agrio {
    /**
     * @brief Tells the datastream to ignore this type, but allows the abi generator to add the correct type.
     * 
@@ -12,7 +12,7 @@ namespace eosio {
     * This restriction will be relaxed in a later release.
     */
    template <typename T>
-   struct [[eosio::ignore]] ignore {};
+   struct [[agrio::ignore]] ignore {};
 
     /**
     * Wrapper class to allow sending inline actions with the correct payload
@@ -27,4 +27,4 @@ namespace eosio {
       constexpr operator ignore<T>() { return {}; }
       T value;
    };
-} //ns eosio
+} //ns agrio

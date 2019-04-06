@@ -3,23 +3,23 @@ find_package(Git REQUIRED)
 include(GNUInstallDirs)
 
 ExternalProject_Add(
-  EosioWasmTests
+  AgrioWasmTests
   SOURCE_DIR "${CMAKE_SOURCE_DIR}/tests/unit"
   BINARY_DIR "${CMAKE_BINARY_DIR}/tests/unit"
-  CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=${CMAKE_BINARY_DIR}/lib/cmake/eosio.cdt/EosioWasmToolchain.cmake -DCMAKE_BUILD_TYPE=Debug -DEOSIO_CDT_BIN=${CMAKE_BINARY_DIR}/lib/cmake/eosio.cdt/ -DBASE_BINARY_DIR=${CMAKE_BINARY_DIR} -D__APPLE=${APPLE}
+  CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=${CMAKE_BINARY_DIR}/lib/cmake/agrio.cdt/AgrioWasmToolchain.cmake -DCMAKE_BUILD_TYPE=Debug -DAGRIO_CDT_BIN=${CMAKE_BINARY_DIR}/lib/cmake/agrio.cdt/ -DBASE_BINARY_DIR=${CMAKE_BINARY_DIR} -D__APPLE=${APPLE}
   UPDATE_COMMAND ""
   PATCH_COMMAND  ""
   TEST_COMMAND   ""
   INSTALL_COMMAND ""
   BUILD_ALWAYS 1
-  DEPENDS EosioWasmLibraries EosioTools
+  DEPENDS AgrioWasmLibraries AgrioTools
 )
 
 
-if (EOSIO_RUN_INTEGRATION_TESTS)
-   find_package(eosio)
+if (AGRIO_RUN_INTEGRATION_TESTS)
+   find_package(agrio)
 
-   if (eosio_FOUND)
+   if (agrio_FOUND)
       if(CMAKE_BUILD_TYPE STREQUAL "Debug")
          set(TEST_BUILD_TYPE "Debug")
          set(CMAKE_BUILD_TYPE "Release")
@@ -31,10 +31,10 @@ if (EOSIO_RUN_INTEGRATION_TESTS)
       string(REPLACE ";" "|" TEST_MODULE_PATH "${CMAKE_MODULE_PATH}")
 
       ExternalProject_Add(
-        EosioIntegrationTests
+        AgrioIntegrationTests
         SOURCE_DIR "${CMAKE_SOURCE_DIR}/tests/integration"
         BINARY_DIR "${CMAKE_BINARY_DIR}/tests/integration"
-        CMAKE_ARGS -DCMAKE_BUILD_TYPE=${TEST_BUILD_TYPE} -DCMAKE_FRAMEWORK_PATH=${TEST_FRAMEWORK_PATH} -DCMAKE_MODULE_PATH=${TEST_MODULE_PATH} -DEOSIO_ROOT=${EOSIO_ROOT} -DLLVM_DIR=${LLVM_DIR}
+        CMAKE_ARGS -DCMAKE_BUILD_TYPE=${TEST_BUILD_TYPE} -DCMAKE_FRAMEWORK_PATH=${TEST_FRAMEWORK_PATH} -DCMAKE_MODULE_PATH=${TEST_MODULE_PATH} -DAGRIO_ROOT=${AGRIO_ROOT} -DLLVM_DIR=${LLVM_DIR}
         UPDATE_COMMAND ""
         PATCH_COMMAND  ""
         TEST_COMMAND   ""
